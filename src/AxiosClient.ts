@@ -1,18 +1,22 @@
 import axios from 'axios';
+import {getToken, setToken} from "./storage/AuthStorage";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080',
-    headers: {
-    },
+    baseURL: 'http://localhost:8080'
 });
 
-let authToken = '';
+
+let authToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMWE0YmFiNC1kNDJiLTRiNzEtYTU4Ny1jZGRkNTBmNWEyOTYiLCJleHAiOjE3MTg0MjU5MTF9.DK7OkBhZ1xaEpJvvRk4ehmT4zCg1BCX8RrAm-nSy07w'
+setToken(authToken)
+
 
 axiosInstance.interceptors.request.use(
     config => {
-        if (authToken) {
-            config.headers['Authorization'] = `Bearer ${authToken}`;
+        const token = getToken()
+        if(token){
+            config.headers['Authorization'] = `Bearer ${getToken()}`;
         }
+
         return config;
     },
     error => {
@@ -27,46 +31,5 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-const authenticate = async () => {
-    try {
-        const response = await axiosInstance.post('http://localhost:8080/auth/login', {
-            email: 'admin@test.pl',
-            password: 'password123'
-        });
 
-        if (response.data && response.data.token) {
-            authToken = response.data.token;
-        }
-
-        return response.data;
-    } catch (error) {
-        console.error('Authentication error:', error);
-        throw error;
-    }
-};
-
-const axiosClientAuth = axios.create({
-    baseURL: 'http://localhost:8080',
-
-});
-
-axiosClientAuth.interceptors.request.use(
-    config => {
-        if (authToken) {
-            config.headers['Authorization'] = `Bearer ${authenticate()}`;
-        }
-        return config;
-    },
-    error => {
-        return Promise.reject(error);
-    }
-);
-
-axiosClientAuth.interceptors.response.use(
-    response => response,
-    error => {
-        return Promise.reject(error);
-    }
-);
-
-export { axiosClientAuth, authenticate };
+export {axiosInstance};

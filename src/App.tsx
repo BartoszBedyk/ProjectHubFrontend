@@ -1,22 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
-import ResourceApiMock from "./api/resources/api/ResourceApiMock";
-import ResourcesApiAxios from "./api/resources/api/ResourcesApiAxios";
-
-
+import {api} from "./api/AppApi";
+import {ResourceDto} from "./api/resources/response/ResourceDto";
 
 
 function App() {
+    const [resource, setResource] = useState<ResourceDto>()
 
-  return (
-    <div className="App">
-    <ResourceApiMock></ResourceApiMock>
-      <p>________________</p>
-      <ResourcesApiAxios></ResourcesApiAxios>
+    useEffect(() => {
+        console.log("kdkdkdkdkdkdkdkdkdkdkdkdkdk")
+        api.resources.get().then(data => {
+            console.log("DUPA", data)
+            setResource(data)
+        })
 
+    }, []);
 
-    </div>
-  );
+    return (
+        <div className="App">
+            <div>
+                <p>{resource?.resourceType}</p>
+
+            </div>
+
+        </div>
+    );
 }
 
 export default App;

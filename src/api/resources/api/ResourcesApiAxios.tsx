@@ -1,33 +1,32 @@
-import React, {useState} from 'react';
-import {ResourceData} from "../form/ResourceForm";
-import {getResource} from "../ResourceApi";
+import { ResourceDto } from '../response/ResourceDto';
+import { ResourcesApi } from '../ResourcesApi';
+import { axiosInstance } from '../../../AxiosClient';
 
+export class ResourcesApiAxios implements ResourcesApi {
+    private data = {
+        criteria: [
+            {
+                fieldName: 'name',
+                value: 'Wybitny plik png',
+                operator: 'EQUALS'
+            }
+        ],
+        page: 1,
+        size: 1,
+        searchSort: [
+            {
+                by: 'name',
+                order: 'ASC'
+            }
+        ]
+    };
 
-
-const ResourcesList: React.FC = () => {
-    let [resources, setResources] = useState<ResourceData[]>([]);
-
-
-
-
-    getResource().then(resources => {
-        console.log('Taken resources:', resources);
-        setResources(resources);
-    }).catch(error => {
-        console.error('Failed: ', error);
-    });
-
-
-    return (
-        <div>
-            {resources.map(resource => (
-                    <li key={resource.id}>{resource.name} | {resource.value} | {resource.description} | {resource.createdById}</li>
-                ))}
-        </div>
-    );
-
-
-
-};
-
-export default ResourcesList;
+    get(): Promise<ResourceDto> {
+        return axiosInstance.post<ResourceDto>('/resource/search', this.data)
+            .then(response => response.data)
+            .catch(error => {
+                console.error('Error fetching resources:', error);
+                throw error;
+            });
+    }
+}
