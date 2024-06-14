@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import {api} from "./api/AppApi";
+import {ResourceDto} from "./api/resources/response/ResourceDto";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [resource, setResource] = useState<ResourceDto>()
+
+    useEffect(() => {
+        console.log("kdkdkdkdkdkdkdkdkdkdkdkdkdk")
+        api.resources.get().then(data => {
+            console.log("DUPA", data)
+            setResource(data)
+        })
+
+    }, []);
+
+    return (
+        <div className="App">
+            <div>
+                <p>{resource?.resourceType}</p>
+
+            </div>
+
+        </div>
+    );
 }
 
 export default App;
