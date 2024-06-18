@@ -2,6 +2,10 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import {api} from "./api/AppApi";
 import {ResourceDto} from "./api/resources/response/ResourceDto";
+import {LoginGrid} from "./components/LoginGrid";
+import LogInCard from "./components/LogInCard";
+
+
 
 
 function App() {
@@ -11,19 +15,17 @@ function App() {
         console.log("kdkdkdkdkdkdkdkdkdkdkdkdkdk")
         api.resources.get().then(data => {
             console.log("DUPA", data)
+            console.log(data.resourceType)
             setResource(data)
         })
 
     }, []);
 
     return (
-        <div className="App">
-            <div>
-                <p>{resource?.resourceType}</p>
+        <LoginGrid>
+            <LogInCard></LogInCard>
+        </LoginGrid>
 
-            </div>
-
-        </div>
     );
 }
 
