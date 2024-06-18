@@ -1,15 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
-import {RouterProvider} from "react-router-dom";
-import {router} from "./router/router";
+import {api} from "./api/AppApi";
+import {ResourceDto} from "./api/resources/response/ResourceDto";
+
 
 function App() {
-  return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
-  );
+    const [resource, setResource] = useState<ResourceDto>()
+
+    useEffect(() => {
+        console.log("kdkdkdkdkdkdkdkdkdkdkdkdkdk")
+        api.resources.get().then(data => {
+            console.log("DUPA", data)
+            setResource(data)
+        })
+
+    }, []);
+
+    return (
+        <div className="App">
+            <div>
+                <p>{resource?.resourceType}</p>
+
+            </div>
+
+        </div>
+    );
 }
 
 export default App;

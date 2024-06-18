@@ -6,13 +6,19 @@ import {mockTimeout} from "../../../ApiUtils";
 
 export class ProjectEnvironmentApiMock implements ProjectEnvironmentApi {
     create(form: CreateProjectEnvironmentForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return mockTimeout(2000).then(() => {
+            console.log("Project environment created successfully", form);
+        });
     }
     update(form: UpdateProjectEnvironmentForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return mockTimeout(2000).then(() => {
+            console.log("Project Environment updated successfully", form);
+        });
     }
     delete(id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        return mockTimeout(2000).then(() => {
+            console.log("Project Environment deleted successfully", id);
+        });
     }
     findAll(projectId: string): Promise<ProjectEnvironmentDto[]> {
         return mockTimeout(2000).then(() => ([

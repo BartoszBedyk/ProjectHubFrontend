@@ -14,13 +14,18 @@ export class LoginPassAuthApiMock implements LoginPassAuthApi {
         }))
     }
     register(form: CreateUserWithPasswordForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return mockTimeout(2000).then(() => {
+           console.log("User registered successfully", form);
+        });
     }
     resetPasswordRequest(form: ResetPasswordForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return mockTimeout(2000).then(() => {
+            console.log("Password reset request sent successfully", form);
+        });
     }
     resetPassword(form: ResetPasswordConfirmForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return mockTimeout(2000).then(() => {
+            console.log("Password reset successfully", form);
+        });
     }
-
 }

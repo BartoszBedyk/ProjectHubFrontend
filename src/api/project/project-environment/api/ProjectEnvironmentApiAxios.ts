@@ -2,19 +2,24 @@ import { CreateProjectEnvironmentForm } from "../form/CreateProjectEnvironmentFo
 import { UpdateProjectEnvironmentForm } from "../form/UpdateProjectEnvironmentForm";
 import {ProjectEnvironmentApi} from "../ProjectEnvironmentApi";
 import {ProjectEnvironmentDto} from "../response/ProjectEnvironmentDto";
+import {axiosInstance} from "../../../../AxiosClient";
 
 export class ProjectEnvironmentApiAxios implements ProjectEnvironmentApi {
     create(form: CreateProjectEnvironmentForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return axiosInstance.post('/project-environment/save', form)
+            .then(() => {});
     }
     update(form: UpdateProjectEnvironmentForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return axiosInstance.put('project-environment/update', form)
+            .then(() => {});
     }
     delete(id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        return axiosInstance.delete(`project-environment/${id}`)
+            .then(() => {});
     }
     findAll(projectId: string): Promise<ProjectEnvironmentDto[]> {
-        throw new Error("Method not implemented.");
+        return axiosInstance.get<ProjectEnvironmentDto[]>(`project-environment/${projectId}`)
+            .then(response => response.data)
     }
 
 }

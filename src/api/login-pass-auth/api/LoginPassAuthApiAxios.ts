@@ -4,19 +4,23 @@ import {LoginResponseDto} from "../response/LoginResponseDto";
 import {CreateUserWithPasswordForm} from "../form/CreateUserWithPasswordForm";
 import {ResetPasswordForm} from "../form/ResetPasswordForm";
 import {ResetPasswordConfirmForm} from "../form/ResetPasswordConfirmForm";
+import {axiosInstance} from "../../../AxiosClient";
 
 export class LoginPassAuthApiAxios implements LoginPassAuthApi {
     login(form: LoginForm): Promise<LoginResponseDto> {
-        throw new Error("Method not implemented.");
+        return axiosInstance.post<LoginResponseDto>('/auth/login', form)
+            .then(response => response.data);
     }
     register(form: CreateUserWithPasswordForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return axiosInstance.post('/auth/register', form)
+            .then(() => {});
     }
     resetPasswordRequest(form: ResetPasswordForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return axiosInstance.post('/auth/resetPasswordRequest', form)
+            .then(() => {});
     }
     resetPassword(form: ResetPasswordConfirmForm): Promise<void> {
-        throw new Error("Method not implemented.");
+        return axiosInstance.put('/auth/resetPasswordConfirm', form)
+            .then(() => {});
     }
-
 }
