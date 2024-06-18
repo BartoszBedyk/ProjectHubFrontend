@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 });
 
 
-let authToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMWE0YmFiNC1kNDJiLTRiNzEtYTU4Ny1jZGRkNTBmNWEyOTYiLCJleHAiOjE3MTg0MjU5MTF9.DK7OkBhZ1xaEpJvvRk4ehmT4zCg1BCX8RrAm-nSy07w'
+let authToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhMGQ1NGJmNi01ZGEzLTQwOTQtOGZlZC00ZjQ3OGU2OWVmODQiLCJleHAiOjE3MTkzMDk3OTh9.6VeDzpgxMHbFsiW7d6K9dbgx-vOXw3_L9mGifvZ0yBU'
 setToken(authToken)
 
 
