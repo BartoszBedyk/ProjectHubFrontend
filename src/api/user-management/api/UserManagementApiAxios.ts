@@ -8,31 +8,31 @@ import {SearchResponse} from "../../../commons/Search/SearchResponse";
 
 export class UserManagementApiAxios implements UserManagementApi {
     get(id: string): Promise<UserDto> {
-        return axiosInstance.get<UserDto>(`user-management/${id}`)
+        return axiosInstance.get<UserDto>(`/user-management/${id}`)
             .then(response => response.data);
     }
     save(form: CreateUserForm): Promise<UserDto> {
-        return axiosInstance.post<UserDto>('user-management/save', form)
+        return axiosInstance.post<UserDto>('/user-management/save', form)
             .then(response => response.data);
     }
     update(form: EditUserForm): Promise<UserDto> {
-        return axiosInstance.put<UserDto>('user-management/update', form)
+        return axiosInstance.put<UserDto>('/user-management/update', form)
             .then(response => response.data);
     }
     block(id: string): Promise<UserDto> {
-        return axiosInstance.put<UserDto>(`user-management/block/${id}`)
+        return axiosInstance.put<UserDto>(`/user-management/block/${id}`)
             .then(response => response.data);
     }
     unblock(id: string): Promise<UserDto> {
-        return axiosInstance.put<UserDto>(`user-management/unblock/${id}`)
+        return axiosInstance.put<UserDto>(`/user-management/unblock/${id}`)
             .then(response => response.data);
     }
     delete(id: string): Promise<void> {
-        return axiosInstance.delete(`user-management/delete/${id}`)
+        return axiosInstance.delete(`/user-management/delete/${id}`)
             .then(() => {});
     }
     search(form: SearchForm): Promise<SearchResponse<UserDto>> {
-        return axiosInstance.post<SearchResponse<UserDto>>('user-management/search', form)
+        return axiosInstance.post<SearchResponse<UserDto>>('/user-management/search', form)
             .then(response => response.data);
     }
 }
