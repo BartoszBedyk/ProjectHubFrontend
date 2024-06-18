@@ -16,11 +16,11 @@ export class LoginPassAuthApiAxios implements LoginPassAuthApi {
             .then(() => {});
     }
     resetPasswordRequest(form: ResetPasswordForm): Promise<void> {
-        return axiosInstance.post('/auth/resetPasswordRequest', form)
+        return axiosInstance.post('/auth/reset-password-request', form)
             .then(() => {});
     }
     resetPassword(form: ResetPasswordConfirmForm): Promise<void> {
-        return axiosInstance.put('/auth/resetPasswordConfirm', form)
+        return axiosInstance.put('/auth/reset-password', form)
             .then(() => {});
     }
 }

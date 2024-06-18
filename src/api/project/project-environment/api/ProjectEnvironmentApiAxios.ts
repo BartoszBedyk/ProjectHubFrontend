@@ -14,11 +14,11 @@ export class ProjectEnvironmentApiAxios implements ProjectEnvironmentApi {
             .then(() => {});
     }
     delete(id: string): Promise<void> {
-        return axiosInstance.delete(`/project-environment/${id}`)
+        return axiosInstance.delete(`/project-environment/delete/${id}`)
             .then(() => {});
     }
     findAll(projectId: string): Promise<ProjectEnvironmentDto[]> {
-        return axiosInstance.get<ProjectEnvironmentDto[]>(`/project-environment/${projectId}`)
+        return axiosInstance.get<ProjectEnvironmentDto[]>(`/project-environment/find-all/${projectId}`)
             .then(response => response.data)
     }
 
