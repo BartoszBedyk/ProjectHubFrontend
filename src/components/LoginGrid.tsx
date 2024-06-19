@@ -14,18 +14,17 @@ export const LoginGrid: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                position="inherit"
-                style={{ minHeight: '100vh' }}
+                position="fixed"
+                style={{ minHeight: '100vh', backgroundColor: '#f4f7fa' }}
             >
-                <AnimatedSensilabsLogo positionX={1200} positionY={100} size={1.2}></AnimatedSensilabsLogo>
-                <AnimatedSensilabsLogo positionX={1100} positionY={220} size={0.5}></AnimatedSensilabsLogo>
-                <AnimatedSensilabsLogo positionX={100} positionY={620} size={0.5}></AnimatedSensilabsLogo>
-                <AnimatedSensilabsLogo positionX={200} positionY={490} size={1}></AnimatedSensilabsLogo>
+                <AnimatedSensilabsLogo positionX={54.3} positionY={10} size={1.5}></AnimatedSensilabsLogo>
+                <AnimatedSensilabsLogo positionX={38} positionY={65} size={2}></AnimatedSensilabsLogo>
+                <AnimatedSensilabsLogo positionX={54} positionY={40} size={2.5}></AnimatedSensilabsLogo>
 
-                <AnimatedSensilabsLogo positionX={920} positionY={640} size={0.1}></AnimatedSensilabsLogo>
-                <AnimatedSensilabsLogo positionX={820} positionY={640} size={0.09}></AnimatedSensilabsLogo>
-                <AnimatedSensilabsLogo positionX={700} positionY={640} size={0.09}></AnimatedSensilabsLogo>
-                <AnimatedSensilabsLogo positionX={600} positionY={640} size={0.1}></AnimatedSensilabsLogo>
+
+
+                <AnimatedSensilabsLogo positionX={950} positionY={600} size={2}></AnimatedSensilabsLogo>
+
 
 
                 <Grid xs={4}></Grid>

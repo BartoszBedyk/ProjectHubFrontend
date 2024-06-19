@@ -23,17 +23,18 @@ const  AnimatedSensilabsLogo = (props: AnimationProps) => {
 `;
 
 
-    return (<div>
+    return (<span style={{zIndex:"-1"}}>
             <style>{animationStyle}</style>
             <div
                 style={{
                     animation: 'rotate',
                     animationDuration: "5s",
                     animationIterationCount: "infinite",
-                    position: "absolute",
-                    top: props.positionY,
-                    left: props.positionX,
-                    float:"left"
+                    position: "fixed",
+                    top: `${props.positionY}vh`,
+                    left: `${props.positionX}vw`,
+
+
                 }}
             >
                 <img
@@ -44,7 +45,7 @@ const  AnimatedSensilabsLogo = (props: AnimationProps) => {
 
                 />
             </div>
-        </div>
+        </span>
     );
 
 }

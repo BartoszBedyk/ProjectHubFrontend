@@ -10,7 +10,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import LockSensilabsColor from '../assets/Login/SensilabsLogoThick2.png'
+import LockSensilabsColor from '../assets/Login/SensilabsLock.png'
 import {grey} from "@mui/material/colors";
 
 
@@ -39,7 +39,12 @@ export default function LogInCard() {
                 marginBottom: "10px"
             },
             buttonProps:{
-
+                alignSelf: "center",
+                fontsize: "inherit",
+                height: "inherit",
+                margin: "inherit",
+                padding: "inherit",
+                width: "50%"
             }
 
         }
@@ -55,7 +60,8 @@ export default function LogInCard() {
                             <Box
                                 component="img"
                                 sx={stylesLogIn.imageProps}
-                                width="15%"
+                                width="40px"
+                                height="auto"
                                 alt="Lock"
                                 src={LockSensilabsColor}
                                 />
@@ -65,8 +71,9 @@ export default function LogInCard() {
                         <TextField id="login" label="Login" variant="outlined"  sx={stylesLogIn.textFields}/>
                         <TextField id="password" label="Password" variant="outlined" sx={stylesLogIn.textFields} type="password"/>
                         <FormControlLabel id="credentialsAllowance" control={<Checkbox/>} label="Save credentials" sx={stylesLogIn.formContainer}/>
-                        <Button variant="contained" size="medium" sx={stylesLogIn.formContainer}>Login</Button>
+                        <Button variant="contained" size="medium" sx={stylesLogIn.buttonProps}>Login</Button>
                     </FormGroup>
+
                     <Typography variant="body2" component="p">Forgot password? <b>Reset</b></Typography>
                     <Typography variant="body2" component="p">Don’t have an account? <b>Signup</b></Typography>
 
