@@ -1,11 +1,12 @@
 import {ResourcesApi} from "../ResourcesApi";
 import {ResourceDto, ResourceType} from '../response/ResourceDto';
 import {mockTimeout} from "../../ApiUtils";
+import {SearchForm} from "../../../commons/Search/SearchForm";
 
 
 export class ResourcesApiMock implements ResourcesApi {
 
-    get(): Promise<ResourceDto> {
+    search(form: SearchForm | null): Promise<ResourceDto> {
         return mockTimeout(5000).then(() => ({
             id: "111223",
             name: 'Zasoby wlasne',

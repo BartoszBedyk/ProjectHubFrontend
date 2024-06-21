@@ -4,6 +4,7 @@ import {api} from "./api/AppApi";
 import {ResourceDto} from "./api/resources/response/ResourceDto";
 import {LoginGrid} from "./components/LoginGrid";
 import LogInCard from "./components/LogInCard";
+import Login from "./pages/login/login";
 
 
 
@@ -11,6 +12,7 @@ import LogInCard from "./components/LogInCard";
 function App() {
     const [resource, setResource] = useState<ResourceDto>()
 
+    /**
     useEffect(() => {
         console.log("kdkdkdkdkdkdkdkdkdkdkdkdkdk")
         api.resources.get().then(data => {
@@ -20,11 +22,10 @@ function App() {
         })
 
     }, []);
+    **/
 
     return (
-        <LoginGrid>
-            <LogInCard></LogInCard>
-        </LoginGrid>
+       <Login></Login>
 
     );
 }

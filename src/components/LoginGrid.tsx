@@ -7,7 +7,7 @@ import AnimatedSensilabsLogo from "./AnimatedSensilabsLogo";
 export const LoginGrid: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
     return (
-        <div className="login-background">
+        <div>
 
             <Grid
                 container
@@ -27,10 +27,10 @@ export const LoginGrid: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
 
 
 
-                <Grid xs={4}></Grid>
 
-                <Grid xs={4}>{children}</Grid>
-                <Grid xs={4}></Grid>
+
+                <Grid >{children}</Grid>
+
 
             </Grid>
 

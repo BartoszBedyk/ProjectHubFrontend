@@ -1,5 +1,6 @@
 import {ResourceDto} from "./response/ResourceDto";
+import {SearchForm} from "../../commons/Search/SearchForm";
 
 export interface ResourcesApi {
-    get(): Promise<ResourceDto>
+    search(form: SearchForm): Promise<ResourceDto>
 }

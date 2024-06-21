@@ -28,8 +28,9 @@ const  AnimatedSensilabsLogo = (props: AnimationProps) => {
             <div
                 style={{
                     animation: 'rotate',
-                    animationDuration: "5s",
+                    animationDuration: "10s",
                     animationIterationCount: "infinite",
+                    animationTimingFunction: "linear",
                     position: "fixed",
                     top: `${props.positionY}vh`,
                     left: `${props.positionX}vw`,
