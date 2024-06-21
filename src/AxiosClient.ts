@@ -6,9 +6,6 @@ const axiosInstance = axios.create({
 });
 
 
-let authToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMWE0YmFiNC1kNDJiLTRiNzEtYTU4Ny1jZGRkNTBmNWEyOTYiLCJleHAiOjE3MTk0NzYyNTR9.YdvlIWEepv3Ydun8-bfgAGnnpCc5_D55kvEUXcge9e4'
-setToken(authToken)
-
 
 axiosInstance.interceptors.request.use(
     config => {
