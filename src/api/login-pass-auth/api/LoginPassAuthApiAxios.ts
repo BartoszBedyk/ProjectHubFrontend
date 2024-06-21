@@ -10,8 +10,6 @@ export class LoginPassAuthApiAxios implements LoginPassAuthApi {
     login(form: LoginForm): Promise<LoginResponseDto> {
         return axiosInstance.post<LoginResponseDto>('/auth/login', form)
             .then(response => response.data);
-
-
     }
     register(form: CreateUserWithPasswordForm): Promise<void> {
         return axiosInstance.post('/auth/register', form)
