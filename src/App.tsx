@@ -1,29 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
-import {ResourceDto} from "./api/resources/response/ResourceDto";
-
-
+import ResponsiveAppBar from "./components/AppBar/AppBar";
 
 function App() {
-    const [resource, setResource] = useState<ResourceDto>()
-
-    /**
-    useEffect(() => {
-        console.log("kdkdkdkdkdkdkdkdkdkdkdkdkdk")
-        api.resources.get().then(data => {
-            console.log("DUPA", data)
-            console.log(data.resourceType)
-            setResource(data)
-        })
-
-    }, []);
-    **/
-
-    return (
-       //<Login></Login>
-        <div></div>
-
-    );
+  return (
+      <ResponsiveAppBar />
+  );
 }
 
 export default App;
