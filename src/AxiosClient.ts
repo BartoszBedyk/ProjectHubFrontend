@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import {getToken, setToken} from "./storage/AuthStorage";
 
 const axiosInstance = axios.create({
@@ -6,8 +6,6 @@ const axiosInstance = axios.create({
 });
 
 
-let authToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhMGQ1NGJmNi01ZGEzLTQwOTQtOGZlZC00ZjQ3OGU2OWVmODQiLCJleHAiOjE3MTkzMDk3OTh9.6VeDzpgxMHbFsiW7d6K9dbgx-vOXw3_L9mGifvZ0yBU'
-setToken(authToken)
 
 
 axiosInstance.interceptors.request.use(

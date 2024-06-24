@@ -1,28 +1,13 @@
 import { ResourceDto } from '../response/ResourceDto';
 import { ResourcesApi } from '../ResourcesApi';
 import { axiosInstance } from '../../../AxiosClient';
+import {SearchForm} from "../../../commons/Search/SearchForm";
 
 export class ResourcesApiAxios implements ResourcesApi {
-    private data = {
-        criteria: [
-            {
-                fieldName: 'name',
-                value: 'Wybitny plik png',
-                operator: 'EQUALS'
-            }
-        ],
-        page: 1,
-        size: 1,
-        searchSort: [
-            {
-                by: 'name',
-                order: 'ASC'
-            }
-        ]
-    };
 
-    get(): Promise<ResourceDto> {
-        return axiosInstance.post<ResourceDto>('/resource/search', this.data)
+
+    search(form: SearchForm): Promise<ResourceDto> {
+        return axiosInstance.post<ResourceDto>('/resource/search', form )
             .then(response => response.data)
             .catch(error => {
                 console.error('Error fetching resources:', error);
