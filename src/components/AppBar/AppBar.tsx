@@ -81,15 +81,6 @@ const ResponsiveAppBar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    {/*<Box
-                        component="img"
-                        sx={{
-                            height: 48,
-                            marginRight: 3,
-                        }}
-                        alt="Logo"
-                        src={logo}
-                    />*/}
                     <Box sx={{ flexGrow: 1 }}>
                         <ProjectsDropdown />
                     </Box>
@@ -102,7 +93,7 @@ const ResponsiveAppBar = () => {
                     <Box
                         component="img"
                         sx={{
-                            height: 25,
+                            height: 22,
                             width: 190,
                             marginRight: 1,
                             marginLeft: 2.5,
