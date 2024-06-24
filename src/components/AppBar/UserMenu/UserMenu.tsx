@@ -2,7 +2,7 @@ import React from 'react';
 import {Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import userImg from "../../../assets/user-profile-image-test.png";
 
-const settings = ["Settings", "Profile", "Smth", "Logout"];
+const settings = ["Settings", "Profile", "Smth", "Smth 2"];
 const userName = "Kacper Koncki";
 
 const UserMenu = () => {
