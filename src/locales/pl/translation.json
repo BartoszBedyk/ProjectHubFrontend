@@ -1,0 +1,11 @@
+{
+  "Login" : "Zaloguj",
+  "LoginName": "Adres email",
+  "Password": "Hasło",
+  "LoginCred": "Zapamiętaj dane logowania",
+  "LoginLink1": "Zapomniałeś hasło?",
+  "LoginLink1b": "Zresetuj",
+  "LoginLink2": "Nie masz konta?",
+  "LoginLink2b": "Zarejestruj się",
+  "LoggingError": "Niepoprawny adres email lub hasło"
+}

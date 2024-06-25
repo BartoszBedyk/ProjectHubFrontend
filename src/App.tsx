@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {ResourceDto} from "./api/resources/response/ResourceDto";
+import Login from "./pages/login/login";
+import "./i18n"
+import {useTranslation} from "react-i18next";
+import i18n from "i18next";
 
 
 
 function App() {
-    const [resource, setResource] = useState<ResourceDto>()
+    //const [resource, setResource] = useState<ResourceDto>()
 
     /**
     useEffect(() => {
@@ -20,8 +24,7 @@ function App() {
     **/
 
     return (
-       //<Login></Login>
-        <div></div>
+        <Login></Login>
 
     );
 }

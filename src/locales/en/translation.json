@@ -1,0 +1,12 @@
+
+{
+  "Login" : "Login",
+  "LoginName": "Email address",
+  "Password": "Password",
+  "LoginCred": "Save credentials",
+  "LoginLink1": "Forgot password?",
+  "LoginLink1b": "Reset",
+  "LoginLink2": "Don’t have an account?",
+  "LoginLink2b": "Signup",
+  "LoggingError": "Incorrect email address or password"
+}
