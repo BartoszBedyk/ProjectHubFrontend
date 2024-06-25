@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
+import ResponsiveAppBar from "./components/AppBar/AppBar";
 import {ResourceDto} from "./api/resources/response/ResourceDto";
 import Login from "./pages/login/login";
 import "./i18n"
