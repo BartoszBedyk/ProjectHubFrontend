@@ -35,7 +35,7 @@ const mockApi: AppApi = {
     resources: new ResourcesApiMock()
 }
 
-const isProd = false;
+const isProd = true;
 
 const api = isProd ? axiosApi : mockApi;
 export {

@@ -8,10 +8,10 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 export const languageResources ={
     en: {
 
-       translation: translationEnglish,
+        login: translationPolish.pages.login,
     },
     pl: {
-        translation: translationPolish,
+        login: translationEnglish.pages.login,
     }
 }
 const options = {
@@ -21,13 +21,13 @@ const options = {
 
 
 i18n.use(initReactI18next).use(LanguageDetector).init({
-        supportedLngs: ['pl', 'en'],
-        detection: options,
-        fallbackLng: 'en',
-        resources: languageResources
+    supportedLngs: ['pl', 'en'],
+    detection: options,
+    fallbackLng: 'en',
+    resources: languageResources
 
 
-    });
+});
 
 i18n.changeLanguage()
 export default i18n;

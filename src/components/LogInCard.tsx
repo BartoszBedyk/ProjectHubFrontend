@@ -15,12 +15,16 @@ import { useTranslation } from 'react-i18next';
 import LockSensilabsColor from '../assets/Login/SensilabsLock.png';
 import { api } from "../api/AppApi";
 import { LoginForm } from "../api/login-pass-auth/form/LoginForm";
-import { setToken } from "../storage/AuthStorage";
+import {getToken, setToken} from "../storage/AuthStorage";
 import secureLocalStorage from "react-secure-storage";
 import { stylesLogin } from "./styles/LoginStyles";
+import {useNavigate} from "react-router-dom";
 
 export const LogInCard = () => {
-    const { t } = useTranslation();
+    const { t } = useTranslation("login");
+
+    const linkToHomePage = "/"
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -35,15 +39,14 @@ export const LogInCard = () => {
 
     useEffect(() => {
         if (!secureLocalStorage) return;
+        const tokenFromStorage = secureLocalStorage.getItem("token") as string;
+        if (tokenFromStorage) {setToken(tokenFromStorage); navigate(linkToHomePage); }
 
-        const nameFromStorage = secureLocalStorage.getItem("username") as string;
-        const passFromStorage = secureLocalStorage.getItem("password") as string;
-        if (nameFromStorage) setUsername(nameFromStorage);
-        if (passFromStorage) setPassword(passFromStorage);
     }, []);
 
     useEffect(() => {
         if (!submitted) return;
+
         let form: LoginForm = {
             email: username,
             password: password,
@@ -52,18 +55,18 @@ export const LogInCard = () => {
         api.loginPassAuth.login(form).then(data => {
             setToken(data.token);
             setErrorMessage("");
+            navigate(linkToHomePage);
         }).catch(() => {
-            setErrorMessage(t("LoggingError"));
+            setErrorMessage(t("loggingError"));
         });
         setSubmitted(false);
     }, [submitted, username, password, saveCredentials, t]);
 
     useEffect(() => {
-        if (!saveCredentials) return;
-        secureLocalStorage.setItem("username", username);
-        secureLocalStorage.setItem("password", password);
+        if (!saveCredentials && !getToken()) return;
+        secureLocalStorage.setItem("token", getToken() as string);
         secureLocalStorage.setItem("allowedCredentials", saveCredentials);
-    }, [submitted, username, password, saveCredentials]);
+    }, [submitted, saveCredentials]);
 
     return (
         <Card variant={"outlined"} sx={{ "--Card-radius": "0px" }}>
@@ -75,13 +78,13 @@ export const LogInCard = () => {
                     src={LockSensilabsColor}
                 />
 
-                <Typography variant="h4" component="p">{t("Login")} </Typography>
+                <Typography variant="h4" component="p">{t("login")} </Typography>
                 <span style={stylesLogin.errorProps}>{errorMessage}</span>
                 <form onSubmit={handleSubmit} autoComplete="on">
                     <FormControl style={stylesLogin.formContainer}>
                         <TextField
                             id="username"
-                            label={t("LoginName")}
+                            label={t("loginName")}
                             variant="outlined"
                             value={username}
                             autoComplete="on"
@@ -91,7 +94,7 @@ export const LogInCard = () => {
 
                         <TextField
                             id="password"
-                            label={t("Password")}
+                            label={t("password")}
                             variant="outlined"
                             value={password}
                             autoComplete="on"
@@ -104,7 +107,7 @@ export const LogInCard = () => {
                             id="credentialsAllowance"
                             control={<Checkbox checked={saveCredentials}
                                                onChange={(e) => setSaveCredentials(e.target.checked)} />}
-                            label={t("LoginCred")}
+                            label={t("loginCred")}
                             sx={stylesLogin.formContainer}
                         />
 
@@ -114,13 +117,13 @@ export const LogInCard = () => {
                             sx={stylesLogin.buttonProps}
                             type="submit"
                         >
-                            {t("Login")}
+                            {t("login")}
                         </Button>
                     </FormControl>
                 </form>
 
-                <Typography variant="body2" component="p">{t("LoginLink1")} <b>{t("LoginLink1b")}</b></Typography>
-                <Typography variant="body2" component="p">{t("LoginLink2")} <b>{t("LoginLink2b")}</b></Typography>
+                <Typography variant="body2" component="p">{t("loginLink1")} <b>{t("loginLink1b")}</b></Typography>
+                <Typography variant="body2" component="p">{t("loginLink2")} <b>{t("loginLink2b")}</b></Typography>
             </CardContent>
         </Card>
     );

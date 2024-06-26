@@ -1,11 +1,20 @@
 {
-  "Login" : "Zaloguj",
-  "LoginName": "Adres email",
-  "Password": "Hasło",
-  "LoginCred": "Zapamiętaj dane logowania",
-  "LoginLink1": "Zapomniałeś hasło?",
-  "LoginLink1b": "Zresetuj",
-  "LoginLink2": "Nie masz konta?",
-  "LoginLink2b": "Zarejestruj się",
-  "LoggingError": "Niepoprawny adres email lub hasło"
+  "buttons": {
+    "save": "Zapisz"
+  },
+  "pages": {
+    "home": {
+    },
+    "login": {
+      "login": "Zaloguj",
+      "loginName": "Adres email",
+      "password": "Hasło",
+      "loginCred": "Zapamiętaj dane logowania",
+      "loginLink1": "Zapomniałeś hasło?",
+      "loginLink1b": "Zresetuj",
+      "loginLink2": "Nie masz konta?",
+      "loginLink2b": "Zarejestruj się",
+      "loggingError": "Niepoprawny adres email lub hasło"
+    }
+  }
 }
