@@ -24,7 +24,7 @@ export interface ColumnDefinition {
     minWidth?: number;
     align?: 'left' | 'right' | 'center';
     enumValues?: string[];
-    operator?: string;
+    operator?: 'EQUALS' | 'GR' | 'GRE' | 'LS' | 'LSE' | 'NOT_EQUALS' | 'LIKE';
 }
 
 export interface RowData {

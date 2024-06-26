@@ -82,6 +82,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
 
     const renderInputField = (column: ColumnDefinition) => {
         const filterValue = filters[column.id]?.value || '';
+        const operator = column.operator || getOperatorForType(column.type);
 
         if (column.type === 'DATE' || column.type === 'DATE_TIME') {
             return (
@@ -125,12 +126,16 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                 size="small"
                 value={filterValue}
                 sx={{ minWidth: 200 }}
-                onChange={(e) => handleChange(column.id, getOperatorForType(column.type), e.target.value)}
+                onChange={(e) => handleChange(column.id, operator, e.target.value)}
             />
         );
     };
 
-    const getOperatorForType = (type: ColumnType): string => {
+    const getOperatorForType = (type: ColumnType, operator?: 'EQUALS' | 'GR' | 'GRE' | 'LS' | 'LSE' | 'NOT_EQUALS' | 'LIKE'): string => {
+        if (operator) {
+            return operator;
+        }
+
         switch (type) {
             case 'NUMBER':
                 return 'EQUALS';
@@ -139,7 +144,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
             case 'ENUM':
                 return 'EQUALS';
             default:
-                return 'LIKE';
+                return 'EQUALS';
         }
     };
 

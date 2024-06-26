@@ -1,12 +1,13 @@
-import {SearchForm} from "../../../forms/SearchForm";
-import {SearchResponse} from "../../../forms/SearchResponse";
 import {ActivityApi} from "../ActivityApi";
 import {ActivityDTO} from "../response/ActivityDto";
 import {ActivityTypeDto} from "../response/ActivityTypeDto";
+import {SearchForm} from "../../../commons/Search/SearchForm";
+import {SearchResponse} from "../../../commons/Search/SearchResponse";
+import {mockTimeout} from "../../ApiUtils";
 
 export class ActivityApiMock implements ActivityApi {
     async search(searchForm: SearchForm): Promise<SearchResponse<ActivityDTO>> {
-        return {
+        return mockTimeout(2000).then(() => ({
             items: [
                 {
                     id: '1',
@@ -32,6 +33,6 @@ export class ActivityApiMock implements ActivityApi {
                 },
             ],
             total: 2,
-        };
+        }));
     }
 }
