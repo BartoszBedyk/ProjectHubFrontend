@@ -1,0 +1,20 @@
+{
+  "buttons": {
+    "save": "Zapisz"
+  },
+  "pages": {
+    "home": {
+    },
+    "login": {
+      "login": "Zaloguj",
+      "loginName": "Adres email",
+      "password": "Hasło",
+      "loginCred": "Zapamiętaj dane logowania",
+      "loginLink1": "Zapomniałeś hasło?",
+      "loginLink1b": "Zresetuj",
+      "loginLink2": "Nie masz konta?",
+      "loginLink2b": "Zarejestruj się",
+      "loggingError": "Niepoprawny adres email lub hasło"
+    }
+  }
+}
