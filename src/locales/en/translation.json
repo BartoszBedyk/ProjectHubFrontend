@@ -14,7 +14,8 @@
       "loginLink1b": "Reset",
       "loginLink2": "Don't have an account?",
       "loginLink2b": "Register",
-      "loggingError": "Incorrect email or password"
+      "loggingError": "Incorrect email or password",
+      "loggingTokenError": "Log in again"
     }
   }
 }

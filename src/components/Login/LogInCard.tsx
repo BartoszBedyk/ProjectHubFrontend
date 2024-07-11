@@ -33,6 +33,9 @@ export const LogInCard = () => {
     const [submitted, setSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+
+
+
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         setSubmitted(true);
@@ -41,6 +44,17 @@ export const LogInCard = () => {
     useEffect(() => {
         if (!secureLocalStorage) return;
         //secureLocalStorage.clear();
+        const expirationDate = secureLocalStorage.getItem("expirationDate")
+        if( expirationDate === null ) return;
+
+
+        const brake = expirationDate as number + 604800000;
+        if(brake < new Date().getTime()) {
+            secureLocalStorage.clear();
+            console.log(secureLocalStorage.getItem("expirationDate"));
+            setErrorMessage(t("loggingTokenError"))
+            return;
+        }
         const tokenFromStorage = secureLocalStorage.getItem("token") as string;
         if (tokenFromStorage) {setToken(tokenFromStorage); navigate(linkToHomePage); }
 
@@ -68,6 +82,7 @@ export const LogInCard = () => {
         if (!saveCredentials && !getToken()) return;
         secureLocalStorage.setItem("token", getToken() as string);
         secureLocalStorage.setItem("allowedCredentials", saveCredentials);
+        secureLocalStorage.setItem("expirationDate", new Date())
     }, [submitted, saveCredentials]);
 
     return (

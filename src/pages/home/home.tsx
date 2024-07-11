@@ -1,8 +1,10 @@
+import AllResourcesTable from "../../components/TableImpl/AllResourcesTable";
 
 
 function HomePage() {
     return(
-        <p>Home Page</p>
+
+        <p> This is home...</p>
     )
 }
 

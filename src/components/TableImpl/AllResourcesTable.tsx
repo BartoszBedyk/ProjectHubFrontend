@@ -9,20 +9,25 @@ import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
 
-function AllResourcesTable() {
+
+interface AllResourcesTableProps {
+    children : string;
+}
+const AllResourcesTable: React.FC<AllResourcesTableProps> = ({ children }) => {
     const columns: ColumnDefinition[] = [
-        { id: 'id', label: 'Id', type: 'TEXT', minWidth: 100 },
-        {id: 'name', label: 'Name', type: 'TEXT', minWidth: 100 },
-        {id: 'value', label: 'Value', type: 'TEXT', minWidth: 100 },
-        {id: 'date', label: 'Date', type: 'TEXT', minWidth: 100 },
-        {id: 'createdBy', label: 'Created By', type: 'TEXT', minWidth: 100 },
+        //{ id: 'id', label: 'Id', type: 'TEXT', minWidth: 50},
+        {id: 'name', label: 'Name', type: 'TEXT', minWidth: 100},
+        {id: 'value', label: 'Value', type: 'TEXT', minWidth: 100},
+        {id: 'date', label: 'Date', type: 'DATE', minWidth: 50},
+        {id: 'type', label: 'Type', type: 'TEXT', minWidth: 50},
+        {id: 'createdBy', label: 'Created By', type: 'TEXT', minWidth: 100},
     ];
 
     const searchFormCriteria: SearchFormCriteria[] = [
         {
             fieldName: 'name',
-            value: 'zdjątko_zrobione_przez_EG_STUDIO',
-            operator: CriteriaOperator.EQUALS
+            value: `%${children}%`,
+            operator: CriteriaOperator.LIKE
         }
     ];
 
@@ -34,7 +39,7 @@ function AllResourcesTable() {
     const searchForm: SearchForm = {
         criteria: searchFormCriteria,
         page: 1,
-        size: 5,
+        size: 50,
         sort: searchSort
     };
 
@@ -47,9 +52,10 @@ function AllResourcesTable() {
             setRows([]);
             response.items.map((responseValue) => {
                 const newRow: RowData = {
-                    id: responseValue.id,
+                    //id: responseValue.id,
                     name: responseValue.name,
                     value: responseValue.value,
+                    type: responseValue.resourceType,
                     date: responseValue.createdOn,
                     createdBy: responseValue.createdById
                 }
@@ -60,7 +66,7 @@ function AllResourcesTable() {
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={'Resource'} />
+            <CustomTable columns={columns} rows={rows} title={'Resources'} />
         </div>
 );
 }
