@@ -12,13 +12,14 @@ import {
 } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 
-import LockSensilabsColor from '../assets/Login/SensilabsLock.png';
-import { api } from "../api/AppApi";
-import { LoginForm } from "../api/login-pass-auth/form/LoginForm";
-import {getToken, setToken} from "../storage/AuthStorage";
+import LockSensilabsColor from '../../assets/Login/SensilabsLock.png';
+import { api } from "../../api/AppApi";
+import { LoginForm } from "../../api/login-pass-auth/form/LoginForm";
+import {getToken, setToken} from "../../storage/AuthStorage";
 import secureLocalStorage from "react-secure-storage";
-import { stylesLogin } from "./styles/LoginStyles";
+
 import {useNavigate} from "react-router-dom";
+import {stylesLogin} from "./styles/LoginStyles";
 
 export const LogInCard = () => {
     const { t } = useTranslation("login");
@@ -32,6 +33,9 @@ export const LogInCard = () => {
     const [submitted, setSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+
+
+
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         setSubmitted(true);
@@ -39,6 +43,18 @@ export const LogInCard = () => {
 
     useEffect(() => {
         if (!secureLocalStorage) return;
+        //secureLocalStorage.clear();
+        const expirationDate = secureLocalStorage.getItem("expirationDate")
+        if( expirationDate === null ) return;
+
+
+        const brake = expirationDate as number + 604800000;
+        if(brake < new Date().getTime()) {
+            secureLocalStorage.clear();
+            console.log(secureLocalStorage.getItem("expirationDate"));
+            setErrorMessage(t("loggingTokenError"))
+            return;
+        }
         const tokenFromStorage = secureLocalStorage.getItem("token") as string;
         if (tokenFromStorage) {setToken(tokenFromStorage); navigate(linkToHomePage); }
 
@@ -66,6 +82,7 @@ export const LogInCard = () => {
         if (!saveCredentials && !getToken()) return;
         secureLocalStorage.setItem("token", getToken() as string);
         secureLocalStorage.setItem("allowedCredentials", saveCredentials);
+        secureLocalStorage.setItem("expirationDate", new Date())
     }, [submitted, saveCredentials]);
 
     return (

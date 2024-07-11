@@ -8,12 +8,14 @@ import {useTranslation} from "react-i18next";
 import i18n from "i18next";
 import {RouterProvider} from "react-router-dom";
 import {router} from "./router/router";
+import CustomTable from "./components/table/CustomTable";
 
 
 
 function App() {
   return (
       <RouterProvider router={router} />
+
   );
 }
 

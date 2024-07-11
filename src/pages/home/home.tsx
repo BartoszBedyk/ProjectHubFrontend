@@ -1,9 +1,11 @@
-import React from 'react';
+import AllResourcesTable from "../../components/TableImpl/AllResourcesTable";
+
 
 function HomePage() {
-    return (
-        <div>HomePage</div>
-    );
+    return(
+
+        <p> This is home...</p>
+    )
 }
 
 export default HomePage;

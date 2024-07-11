@@ -7,8 +7,8 @@ export interface ResourceDto {
     environmentId: string
     projectId: string
     createdById: string
-    createdOn: Date
-    lastModifiedOn: Date
+    createdOn: string
+    lastModifiedOn: string
 }
 
 export enum ResourceType {
