@@ -11,9 +11,9 @@ export class AttachmentApiAxios implements AttachmentApi {
                 throw error;
             });
     }
-    download(id: string): Promise<Blob> {
-        return axiosInstance.get<Blob>(`/attachment/download/${id}`)
-            .then(response => response.data)
+    download(id: string): Promise<Blob|any> {
+        return axiosInstance.get<Blob>(`/attachment/download/${id}`, {responseType : 'blob'})
+            .then(response => response)
             .catch(error => {
                 console.error('Error downloading file:', error);
                 throw error;

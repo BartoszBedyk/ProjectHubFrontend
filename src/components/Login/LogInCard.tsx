@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Button,
@@ -10,11 +10,11 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 import LockSensilabsColor from '../../assets/Login/SensilabsLock.png';
-import { api } from "../../api/AppApi";
-import { LoginForm } from "../../api/login-pass-auth/form/LoginForm";
+import {api} from "../../api/AppApi";
+import {LoginForm} from "../../api/login-pass-auth/form/LoginForm";
 import {getToken, setToken} from "../../storage/AuthStorage";
 import secureLocalStorage from "react-secure-storage";
 
@@ -22,7 +22,7 @@ import {useNavigate} from "react-router-dom";
 import {stylesLogin} from "./styles/LoginStyles";
 
 export const LogInCard = () => {
-    const { t } = useTranslation("login");
+    const {t} = useTranslation("login");
 
     const linkToHomePage = "/"
     const navigate = useNavigate();
@@ -34,8 +34,6 @@ export const LogInCard = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
 
-
-
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         setSubmitted(true);
@@ -45,18 +43,21 @@ export const LogInCard = () => {
         if (!secureLocalStorage) return;
         //secureLocalStorage.clear();
         const expirationDate = secureLocalStorage.getItem("expirationDate")
-        if( expirationDate === null ) return;
+        if (expirationDate === null) return;
 
 
         const brake = expirationDate as number + 604800000;
-        if(brake < new Date().getTime()) {
+        if (brake < new Date().getTime()) {
             secureLocalStorage.clear();
             console.log(secureLocalStorage.getItem("expirationDate"));
             setErrorMessage(t("loggingTokenError"))
             return;
         }
         const tokenFromStorage = secureLocalStorage.getItem("token") as string;
-        if (tokenFromStorage) {setToken(tokenFromStorage); navigate(linkToHomePage); }
+        if (tokenFromStorage) {
+            setToken(tokenFromStorage);
+            navigate(linkToHomePage);
+        }
 
     }, []);
 
@@ -86,9 +87,9 @@ export const LogInCard = () => {
     }, [submitted, saveCredentials]);
 
     return (
-        <Card variant={"outlined"} sx={{ "--Card-radius": "0px" }}>
+        <Card variant={"outlined"} sx={{"--Card-radius": "0px"}}>
             <CardContent
-                sx={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "30px 25px" }}>
+                sx={{display: "flex", flexDirection: "column", alignItems: "center", padding: "30px 25px"}}>
                 <Box
                     component="img"
                     sx={stylesLogin.lockIconProps}
@@ -123,7 +124,7 @@ export const LogInCard = () => {
                         <FormControlLabel
                             id="credentialsAllowance"
                             control={<Checkbox checked={saveCredentials}
-                                               onChange={(e) => setSaveCredentials(e.target.checked)} />}
+                                               onChange={(e) => setSaveCredentials(e.target.checked)}/>}
                             label={t("loginCred")}
                             sx={stylesLogin.formContainer}
                         />
