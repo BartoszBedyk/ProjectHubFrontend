@@ -1,26 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import CustomTable, {ColumnDefinition, RowData} from "../../components/table/CustomTable";
 import {api} from "../../api/AppApi";
-import {ResourceDto} from "../../api/resources/response/ResourceDto";
+import {ResourceDto, ResourceType} from "../../api/resources/response/ResourceDto";
 import {SearchFormCriteria} from "../../commons/Search/SearchFormCriteria";
 import {CriteriaOperator} from "../../commons/Search/CriteriaOperator";
 import {SearchSort} from "../../commons/Search/SearchSort";
 import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
+import {Button, Link} from "@mui/material";
+import {DownloadFileButton} from "./DownloadFileButton";
+import SecretDialog from "./SecretDialog";
+import OpenLinkButton from "./OpenLinkButton";
+import ReadTextButton from "./ReadTextButton";
 
 
 interface AllResourcesTableProps {
-    children : string;
+    children: string;
 }
-const AllResourcesTable: React.FC<AllResourcesTableProps> = ({ children }) => {
+
+const AllResourcesTable: React.FC<AllResourcesTableProps> = ({children}) => {
     const columns: ColumnDefinition[] = [
         //{ id: 'id', label: 'Id', type: 'TEXT', minWidth: 50},
-        {id: 'name', label: 'Name', type: 'TEXT', minWidth: 100},
-        {id: 'value', label: 'Value', type: 'TEXT', minWidth: 100},
-        {id: 'date', label: 'Date', type: 'DATE', minWidth: 50},
-        {id: 'type', label: 'Type', type: 'TEXT', minWidth: 50},
-        {id: 'createdBy', label: 'Created By', type: 'TEXT', minWidth: 100},
+        {id: 'name', label: 'Name', type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
+        {id: 'value', label: 'Value', type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
+        {id: 'date', label: 'Date', type: 'DATE', minWidth: 50, sortable: true, filterable: true},
+        {id: 'type', label: 'Type', type: 'TEXT', minWidth: 50, sortable: true, filterable: true},
+        {id: 'createdBy', label: 'Created By', type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
+        {id: 'action', label: '', type: 'TEXT', minWidth: 100, sortable: false, filterable: false},
     ];
 
     const searchFormCriteria: SearchFormCriteria[] = [
@@ -48,27 +55,92 @@ const AllResourcesTable: React.FC<AllResourcesTableProps> = ({ children }) => {
     ]);
 
     useEffect(() => {
-        api.resources.search(searchForm).then((response:SearchResponse<ResourceDto>) => {
+        api.resources.search(searchForm).then((response: SearchResponse<ResourceDto>) => {
             setRows([]);
             response.items.map((responseValue) => {
-                const newRow: RowData = {
-                    //id: responseValue.id,
-                    name: responseValue.name,
-                    value: responseValue.value,
-                    type: responseValue.resourceType,
-                    date: responseValue.createdOn,
-                    createdBy: responseValue.createdById
+                switch (responseValue.resourceType) {
+                    case  'ATTACHMENT': {
+                        const newRow: RowData = {
+                            //id: responseValue.id,
+                            name: responseValue.name,
+                            value: responseValue.value,
+                            type: responseValue.resourceType,
+                            date: responseValue.createdOn,
+                            createdBy: responseValue.createdById,
+                            action: <DownloadFileButton>{responseValue.value}</DownloadFileButton>
+                        }
+                        setRows(prevRows => [...prevRows, newRow]);
+                        break;
+
+                    }
+                    case 'SECRET': {
+                        const newRow: RowData = {
+                            //id: responseValue.id,
+                            name: responseValue.name,
+                            value: responseValue.value,
+                            type: responseValue.resourceType,
+                            date: responseValue.createdOn,
+                            createdBy: responseValue.createdById,
+                            action: <SecretDialog>{responseValue.id}</SecretDialog>
+                        }
+                        setRows(prevRows => [...prevRows, newRow]);
+                        break;
+                    }
+                    case 'LINK':
+                    {
+                        const newRow: RowData = {
+                            //id: responseValue.id,
+                            name: responseValue.name,
+                            value:
+                                <Link href={responseValue.value} underline="hover" color="inherit" rel="noreferrer" target="_blank"> {responseValue.value} </Link>,
+                            type: responseValue.resourceType,
+                            date: responseValue.createdOn,
+                            createdBy: responseValue.createdById,
+                            action: <OpenLinkButton>{responseValue.value}</OpenLinkButton>
+                        }
+                        setRows(prevRows => [...prevRows, newRow]);
+                        break;
+                    }
+                    case 'TEXT':
+                    {
+                        const newRow: RowData = {
+                            //id: responseValue.id,
+                            name: responseValue.name,
+                            value: responseValue.value,
+                            type: responseValue.resourceType,
+                            date: responseValue.createdOn,
+                            createdBy: responseValue.createdById,
+                            action: <ReadTextButton>{responseValue.value}</ReadTextButton>
+                        }
+                        setRows(prevRows => [...prevRows, newRow]);
+                        break;
+                    }
+                    default: {
+                        const newRow: RowData = {
+                            //id: responseValue.id,
+                            name: responseValue.name,
+                            value: responseValue.value,
+                            type: responseValue.resourceType,
+                            date: responseValue.createdOn,
+                            createdBy: responseValue.createdById,
+                            action: ''
+                        }
+                        setRows(prevRows => [...prevRows, newRow]);
+                        break;
+
+                    }
                 }
-                setRows(prevRows => [...prevRows, newRow]);
+
+
             })
         })
     }, []);
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={'Resources'} />
+            <CustomTable columns={columns} rows={rows} title={'Resources'}/>
         </div>
-);
+    );
 }
 
 export default AllResourcesTable;
