@@ -1,4 +1,4 @@
-import sensilabsLogo from '../assets/Login/SensilabsLogo.png'
+import sensilabsLogo from '../../assets/Login/SensilabsLogo.png'
 
 type AnimationProps = {
     positionX: number

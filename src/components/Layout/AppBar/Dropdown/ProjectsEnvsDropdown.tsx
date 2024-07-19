@@ -3,7 +3,7 @@ import {FormControl, SelectChangeEvent} from "@mui/material";
 import {CustomSelect} from "./CustomSelect";
 import {CustomMenuItem} from "./CustomMenuItem";
 
-const ProjectsDropdown = () => {
+const ProjectsEnvsDropdown = () => {
     const [selectedProject, setSelectedProject] = useState<string>("");
 
     function handleChange(event: SelectChangeEvent<unknown>) {
@@ -35,4 +35,4 @@ const ProjectsDropdown = () => {
     );
 };
 
-export default ProjectsDropdown;
+export default ProjectsEnvsDropdown;

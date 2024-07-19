@@ -1,0 +1,21 @@
+{
+  "buttons": {
+    "save": "Save"
+  },
+  "pages": {
+    "home": {
+    },
+    "login": {
+      "login": "Login",
+      "loginName": "Email address",
+      "password": "Password",
+      "loginCred": "Save credentials",
+      "loginLink1": "Forgot your password?",
+      "loginLink1b": "Reset",
+      "loginLink2": "Don't have an account?",
+      "loginLink2b": "Register",
+      "loggingError": "Incorrect email or password",
+      "loggingTokenError": "Log in again"
+    }
+  }
+}

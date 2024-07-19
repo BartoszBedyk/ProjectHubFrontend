@@ -1,6 +1,6 @@
 import React from 'react';
-import {LoginGrid} from "../../components/LoginGrid";
-import LogInCard from "../../components/LogInCard";
+import {LoginGrid} from "../../components/Login/LoginGrid";
+import {LogInCard} from "../../components/Login/LogInCard";
 
 function Login() {
     return (
