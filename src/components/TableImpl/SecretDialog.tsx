@@ -8,11 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {Icon} from "@mui/material";
 import {Close, CopyAll, VisibilityOutlined} from "@mui/icons-material";
 import {api} from "../../api/AppApi";
-import {SearchFormCriteria} from "../../commons/Search/SearchFormCriteria";
-import {CriteriaOperator} from "../../commons/Search/CriteriaOperator";
-import {SearchSort} from "../../commons/Search/SearchSort";
-import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
-import {SearchForm} from "../../commons/Search/SearchForm";
+import {useTranslation} from "react-i18next";
+
 
 
 
@@ -22,6 +19,9 @@ interface SecretProps {
 
 
 const SecretDialog: React.FC<SecretProps> = ({ children }) => {
+
+    const {t} = useTranslation("resources");
+
     const [open, setOpen] = React.useState(false);
     const [secret, setSecret] = React.useState("");
 
@@ -37,7 +37,7 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
         handleClose();
 
     };
-    
+
     api.resources.readSecret(children).then((response: string)=>
     {
         setSecret(response);
@@ -63,7 +63,7 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
                 aria-describedby="secret-dialog-description"
             >
                 <DialogTitle id="dialog-secret-title">
-                    {"Secret unmasked"}
+                    {t('unmaskedSecret')}
                 </DialogTitle>
 
                 <DialogContent>
@@ -72,12 +72,12 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>
+                    <Button onClick={handleClose} title={t('closeTxt')}>
                         <Icon>
                             <Close></Close>
                         </Icon>
                     </Button>
-                    <Button onClick={handleCopy}>
+                    <Button onClick={handleCopy} title={t('copyTxt')}>
                         <Icon>
                             <CopyAll></CopyAll>
                         </Icon>

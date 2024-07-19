@@ -13,6 +13,7 @@ import {DownloadFileButton} from "./DownloadFileButton";
 import SecretDialog from "./SecretDialog";
 import OpenLinkButton from "./OpenLinkButton";
 import ReadTextButton from "./ReadTextButton";
+import {useTranslation} from "react-i18next";
 
 
 interface AllResourcesTableProps {
@@ -20,6 +21,8 @@ interface AllResourcesTableProps {
 }
 
 const AllResourcesTable: React.FC<AllResourcesTableProps> = ({children}) => {
+
+
     const columns: ColumnDefinition[] = [
         //{ id: 'id', label: 'Id', type: 'TEXT', minWidth: 50},
         {id: 'name', label: 'Name', type: 'TEXT', minWidth: 100, sortable: true, filterable: true},

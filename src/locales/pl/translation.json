@@ -17,6 +17,12 @@
       "loginLink2b": "Zarejestruj się",
       "loggingError": "Niepoprawny adres email lub hasło",
       "loggingTokenError": "Zaloguj się ponownie"
+    },
+    "resources" : {
+      "resourcestxt" : " - zasoby projektu.",
+      "secretUnmasked" : "Odszyfrowany sekret to: ",
+      "copyTxt": "Skopiuj tekst",
+      "closeTxt": "Zamknij"
     }
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {api} from "../../api/AppApi";
 import {Button, Icon} from "@mui/material";
 import {Download, DownloadSharp} from "@mui/icons-material";
-import {useParams} from "react-router-dom";
+
 
 interface DownloadFileButtonProps {
     children : string;
@@ -17,7 +17,6 @@ export const DownloadFileButton = ({ children }: DownloadFileButtonProps) => {
 
             api.attachment.download(children)
                 .then(response => {
-                    console.log('Response Headers:', response.headers);
                     const blob = new Blob([response.data], {
                         type: response.data.type,
                     });

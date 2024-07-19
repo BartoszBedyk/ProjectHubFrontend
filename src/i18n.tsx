@@ -9,9 +9,13 @@ export const languageResources ={
     en: {
 
         login: translationPolish.pages.login,
+        resources: translationPolish.pages.resources,
+        buttons: translationPolish.buttons,
     },
     pl: {
         login: translationEnglish.pages.login,
+        resources: translationEnglish.pages.resources,
+        buttons: translationEnglish.buttons,
     }
 }
 const options = {

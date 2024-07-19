@@ -1,7 +1,9 @@
 {
   "buttons": {
     "save": "Save",
-    "secretDialog" : "Unmasked secret"
+    "secretDialog" : "Unmasked secret",
+    "copyTxt": "Copy text",
+    "closeTxt": "Close"
   },
   "pages": {
     "home": {
@@ -17,6 +19,11 @@
       "loginLink2b": "Register",
       "loggingError": "Incorrect email or password",
       "loggingTokenError": "Log in again"
-    }
+    },
+    "resources" : {
+      "resourcestxt" : "project resources.",
+      "secretUnmasked" : "Secret is unmasked as: ",
+
+}
   }
 }
