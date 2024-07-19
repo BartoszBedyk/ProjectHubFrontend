@@ -1,12 +1,14 @@
-
-import {LogInCard} from "../../components/Login/LogInCard";
-import {DownloadFileButton} from "../../components/DownloadFileButton";
-
+import React from 'react';
+import CustomLayout from "../../components/Layout/Layout";
 
 function HomePage() {
     return (
-        <p> This is home...</p>
-    )
+        <CustomLayout>
+            <h1>TEST</h1>
+            <h2>TEST</h2>
+            <h3>lorem ipsum</h3>
+        </CustomLayout>
+    );
 }
 
 export default HomePage;
