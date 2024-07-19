@@ -2,6 +2,7 @@ import React from 'react';
 import {api} from "../../api/AppApi";
 import {Button, Icon} from "@mui/material";
 import {Download, DownloadSharp} from "@mui/icons-material";
+import {useTranslation} from "react-i18next";
 
 
 interface DownloadFileButtonProps {
@@ -9,9 +10,10 @@ interface DownloadFileButtonProps {
 }
 
 export const DownloadFileButton = ({ children }: DownloadFileButtonProps) => {
-
+    const {t} = useTranslation("resources");
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
+
 
         const downloadFile = async (children: string) => {
 
@@ -57,6 +59,7 @@ export const DownloadFileButton = ({ children }: DownloadFileButtonProps) => {
                 variant="contained"
                 size="medium"
                 type="submit"
+                title={t("downloadAttachment")}
             >
                 <Icon >
                     <DownloadSharp/>

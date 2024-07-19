@@ -1,7 +1,23 @@
 {
   "buttons": {
     "save": "Zapisz",
-    "secretDialog" : "Zdemaskowany sekret"
+    "secretDialog" : "Zdemaskowany sekret",
+    "copyTxt": "Skopiuj tekst",
+    "closeTxt": "Zamknij"
+  },
+  "sidebar": {
+    "home": "Strona startowa",
+    "project": "Projekt",
+    "addProject": "Utwórz projekt",
+    "main": "Strona główna",
+    "resources": "Zasoby",
+    "resourcesLink": "Linki",
+    "resourcesDocumentation": "Dokumentacja",
+    "resourcesMembers": "Członkowie",
+    "resourcesFiles": "Pliki",
+    "userManagement": "Zarządzanie urzytkownikami",
+    "activities": "Aktywności",
+    "logout": "Wyloguj się"
   },
   "pages": {
     "home": {
@@ -22,7 +38,11 @@
       "resourcestxt" : " - zasoby projektu.",
       "secretUnmasked" : "Odszyfrowany sekret to: ",
       "copyTxt": "Skopiuj tekst",
-      "closeTxt": "Zamknij"
+      "closeTxt": "Zamknij",
+      "openLink": "Otwórz link ",
+      "downloadAttachment": "Pobierz załącznik",
+      "readSecret": "Odszyfruj sekret",
+      "readText": "Odczytaj tekst"
     }
   }
 }

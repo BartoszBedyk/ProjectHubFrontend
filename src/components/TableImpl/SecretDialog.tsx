@@ -22,6 +22,7 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
 
     const {t} = useTranslation("resources");
 
+
     const [open, setOpen] = React.useState(false);
     const [secret, setSecret] = React.useState("");
 
@@ -48,6 +49,7 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
             <Button  variant="contained"
                      size="medium"
                      onClick={handleClickOpen}
+                     title={t('readSecret')}
             >
 
                 <Icon

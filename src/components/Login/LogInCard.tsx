@@ -20,7 +20,7 @@ import {useNavigate} from "react-router-dom";
 import {stylesLogin} from "./styles/LoginStyles";
 
 export const LogInCard = () => {
-    const {t} = useTranslation("resources");
+    const {t} = useTranslation("login");
 
     const linkToHomePage = "/"
     const navigate = useNavigate();

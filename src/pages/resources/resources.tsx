@@ -8,7 +8,7 @@ function Resources() {
     return (
         <div><CustomLayout>
 
-            <h1>{t('resourcestxt')}</h1>
+            <h1>ProjectName {t('resourcestxt')}</h1>
             <h2>Here are resources of te project</h2>
             <h3> Then Dorlas by his black sword, the fame whereof had come even into the deeps of Brethil,
                 and by his quest of the King’s daughter, knew that this Wildman was indeed the Mormegil of Nargothrond,
