@@ -10,25 +10,21 @@ export class ProjectApiMock implements ProjectApi {
     create(form: CreateProjectForm): Promise<ProjectDTO> {
         return mockTimeout(2000).then(() => ({
             id: "1",
-            name: "Projekt 1",
-            description: "Opis Projektu 1",
+            name: form.name,
+            description: form.description,
             createdOn: new Date(),
             createdById: "user1",
-            technologies: [
-                { id: "tech1", name: "Technologia 1", description: "Opis Technologii 1" }
-            ]
+            technologies: form.technologyList,
         }));
     }
     update(form: UpdateProjectForm): Promise<ProjectDTO> {
         return mockTimeout(2000).then(() => ({
             id: "1",
-            name: "Projekt 1",
-            description: "Opis Projektu 1",
+            name: form.name,
+            description: form.description,
             createdOn: new Date(),
             createdById: "user1",
-            technologies: [
-                { id: "tech1", name: "Technologia 1", description: "Opis Technologii 1" }
-            ]
+            technologies: form.technologyList,
         }));
     }
     get(id: string): Promise<ProjectDTO> {
@@ -38,9 +34,7 @@ export class ProjectApiMock implements ProjectApi {
             description: "Opis Projektu 1",
             createdOn: new Date(),
             createdById: "user1",
-            technologies: [
-                { id: "tech1", name: "Technologia 1", description: "Opis Technologii 1" }
-            ]
+            technologies: ["1", "2", "3"],
         }));
     }
     search(form: SearchForm): Promise<SearchResponse<ProjectDTO>> {
@@ -52,9 +46,7 @@ export class ProjectApiMock implements ProjectApi {
                     description: "Opis Projektu 1",
                     createdOn: new Date(),
                     createdById: "user1",
-                    technologies: [
-                        { id: "tech1", name: "Technologia 1", description: "Opis Technologii 1" }
-                    ]
+                    technologies: ["1", "2", "3"],
                 },
                 {
                     id: "2",
@@ -62,9 +54,7 @@ export class ProjectApiMock implements ProjectApi {
                     description: "Opis Projektu 2",
                     createdOn: new Date(),
                     createdById: "user2",
-                    technologies: [
-                        { id: "tech2", name: "Technologia 2", description: "Opis Technologii 2" }
-                    ]
+                    technologies: ["1", "2", "3"],
                 },
             ],
             total: 2,
