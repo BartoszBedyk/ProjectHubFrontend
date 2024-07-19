@@ -37,27 +37,8 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
         handleClose();
 
     };
-
-    const searchFormCriteria: SearchFormCriteria[] = [
-        {
-            fieldName: 'id',
-            value: children,
-            operator: CriteriaOperator.EQUALS
-        }
-    ];
-
-    const searchSort: SearchSort = {
-        by: 'id',
-        order: SearchSortOrder.DSC
-    };
-
-    const searchForm: SearchForm = {
-        criteria: searchFormCriteria,
-        page: 1,
-        size: 1,
-        sort: searchSort
-    };
-    api.resources.readSecret(searchForm).then((response: string)=>
+    
+    api.resources.readSecret(children).then((response: string)=>
     {
         setSecret(response);
     });

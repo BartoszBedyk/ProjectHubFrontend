@@ -4,19 +4,18 @@ import {Button, Icon} from "@mui/material";
 import {Download, DownloadSharp} from "@mui/icons-material";
 import {useParams} from "react-router-dom";
 
-interface DownloadFileProps {
+interface DownloadFileButtonProps {
     children : string;
 }
 
-export const DownloadFileButton : React.FC<DownloadFileProps> = ({ children }) => {
-    //let {fileId} = useParams(); TODO
-    let fileId = children
+export const DownloadFileButton = ({ children }: DownloadFileButtonProps) => {
+
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 
-        const downloadFile = async (fileId: string) => {
+        const downloadFile = async (children: string) => {
 
-            api.attachment.download(fileId)
+            api.attachment.download(children)
                 .then(response => {
                     console.log('Response Headers:', response.headers);
                     const blob = new Blob([response.data], {
@@ -47,7 +46,7 @@ export const DownloadFileButton : React.FC<DownloadFileProps> = ({ children }) =
                 });
 
         }
-        downloadFile(fileId).then(() => {
+        downloadFile(children).then(() => {
             console.log("file_downloaded")
         });
 
@@ -60,10 +59,8 @@ export const DownloadFileButton : React.FC<DownloadFileProps> = ({ children }) =
                 size="medium"
                 type="submit"
             >
-                <Icon
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <DownloadSharp />
+                <Icon >
+                    <DownloadSharp/>
                 </Icon>
             </Button>
         </form>

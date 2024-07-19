@@ -26,9 +26,9 @@ export class ResourcesApiAxios implements ResourcesApi {
             })
     }
 
-    async readSecret(form: SearchForm): Promise<string> {
+    async readSecret(id: string): Promise<string> {
         try {
-            const response = await axiosInstance.post("/resource/secret-unmasked", form);
+            const response = await axiosInstance.post(`/resource/secret-unmasked/${id}`);
             return response.data;
         } catch (error) {
             console.error('Error reading secret:', error);

@@ -1,6 +1,7 @@
 {
   "buttons": {
-    "save": "Zapisz"
+    "save": "Zapisz",
+    "secretDialog" : "Zdemaskowany sekret"
   },
   "pages": {
     "home": {

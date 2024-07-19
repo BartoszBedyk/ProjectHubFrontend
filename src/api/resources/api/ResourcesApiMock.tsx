@@ -74,7 +74,7 @@ export class ResourcesApiMock implements ResourcesApi {
 
     }
 
-    async readSecret(form: SearchForm): Promise<string>{
+    async readSecret(id: string): Promise<string>{
         return mockTimeout(5000).then();
     }
 
