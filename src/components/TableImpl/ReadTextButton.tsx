@@ -10,7 +10,7 @@ interface OpenLinkButtonProps {
 const OpenLinkButton = ({ children }: OpenLinkButtonProps) => {
     return(
         //TODO
-        //otwieranie okienka z teksterm lub otwieranie podstrony z tekstem
+        //otwieranie okienka z teksterm lub otwieranie
         <React.Fragment>
             <Button
 
