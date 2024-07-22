@@ -51,6 +51,8 @@ const AllResourcesTable: React.FC<AllResourcesTableProps> = ({ children }) => {
         api.resources.search(searchForm).then((response:SearchResponse<ResourceDto>) => {
             setRows([]);
             response.items.map((responseValue) => {
+
+
                 const newRow: RowData = {
                     //id: responseValue.id,
                     name: responseValue.name,
@@ -59,6 +61,8 @@ const AllResourcesTable: React.FC<AllResourcesTableProps> = ({ children }) => {
                     date: responseValue.createdOn,
                     createdBy: responseValue.createdById
                 }
+
+
                 setRows(prevRows => [...prevRows, newRow]);
             })
         })

@@ -2,6 +2,15 @@
   "buttons": {
     "save": "Save"
   },
+  "table": {
+    "previous": "Go to previous page",
+    "next": "Go to next page",
+    "last": "Go to last page",
+    "first": "Go to first page",
+    "labelDisplayedRows1": "from",
+    "labelDisplayedRows2": "more than",
+    "labelRowsPerPage": "Rows per page"
+  },
   "pages": {
     "home": {
     },

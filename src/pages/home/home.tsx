@@ -1,11 +1,13 @@
 
 import {LogInCard} from "../../components/Login/LogInCard";
-import {DownloadFileButton} from "../../components/DownloadFileButton";
+import {DownloadFileButton} from "../../components/TableImpl/DownloadFileButton";
+import AllResourcesTable from "../../components/TableImpl/AllResourcesTable";
 
 
 function HomePage() {
     return (
-        <p> This is home...</p>
+
+        <AllResourcesTable>name1</AllResourcesTable>
     )
 }
 

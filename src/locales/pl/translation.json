@@ -2,6 +2,15 @@
   "buttons": {
     "save": "Zapisz"
   },
+  "table": {
+  "previous": "Przejdź do poprzedniej strony",
+  "next": "Przejdź do następnej strony",
+  "last": "Przejdź do ostatniej strony",
+  "first": "Przejdź do pierwszej strony",
+  "labelDisplayedRows1": "z",
+  "labelDisplayedRows2": "więcej niż",
+  "labelRowsPerPage": "Wiersze na stronę"
+},
   "pages": {
     "home": {
     },
