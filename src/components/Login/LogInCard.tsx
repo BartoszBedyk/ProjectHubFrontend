@@ -11,13 +11,11 @@ import {
     Typography,
 } from "@mui/material";
 import {useTranslation} from 'react-i18next';
-
 import LockSensilabsColor from '../../assets/Login/SensilabsLock.png';
 import {api} from "../../api/AppApi";
 import {LoginForm} from "../../api/login-pass-auth/form/LoginForm";
 import {getToken, setToken} from "../../storage/AuthStorage";
 import secureLocalStorage from "react-secure-storage";
-
 import {useNavigate} from "react-router-dom";
 import {stylesLogin} from "./styles/LoginStyles";
 

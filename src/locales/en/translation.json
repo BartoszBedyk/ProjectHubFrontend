@@ -2,14 +2,19 @@
   "buttons": {
     "save": "Save"
   },
-  "table": {
-    "previous": "Go to previous page",
-    "next": "Go to next page",
-    "last": "Go to last page",
-    "first": "Go to first page",
-    "labelDisplayedRows1": "from",
-    "labelDisplayedRows2": "more than",
-    "labelRowsPerPage": "Rows per page"
+  "sidebar": {
+    "home": "Home",
+    "project": "Project",
+    "addProject": "Create project",
+    "main": "Main",
+    "resources": "Resources",
+    "resourcesLink": "Links",
+    "resourcesDocumentation": "Documentation",
+    "resourcesMembers": "Members",
+    "resourcesFiles": "Files",
+    "userManagement": "User Management",
+    "activities": "Activities",
+    "logout" : "Logout"
   },
   "pages": {
     "home": {
@@ -25,6 +30,17 @@
       "loginLink2b": "Register",
       "loggingError": "Incorrect email or password",
       "loggingTokenError": "Log in again"
+    },
+    "resources": {
+      "resourcestxt": "project resources.",
+      "secretUnmasked": "Secret is unmasked as: ",
+      "secretDialog": "Unmasked secret",
+      "copyTxt": "Copy text",
+      "closeTxt": "Close",
+      "openLink": "Open link",
+      "downloadAttachment": "Download attachment",
+      "readSecret": "Read secret",
+      "readText": "Read text"
     }
   }
 }

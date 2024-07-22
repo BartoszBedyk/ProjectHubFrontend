@@ -1,14 +1,14 @@
-
-import {LogInCard} from "../../components/Login/LogInCard";
-import {DownloadFileButton} from "../../components/TableImpl/DownloadFileButton";
-import AllResourcesTable from "../../components/TableImpl/AllResourcesTable";
-
+import React from 'react';
+import CustomLayout from "../../components/Layout/Layout";
 
 function HomePage() {
     return (
-
-        <AllResourcesTable>name1</AllResourcesTable>
-    )
+        <CustomLayout>
+            <h1>TEST</h1>
+            <h2>TEST</h2>
+            <h3>lorem ipsum</h3>
+        </CustomLayout>
+    );
 }
 
 export default HomePage;

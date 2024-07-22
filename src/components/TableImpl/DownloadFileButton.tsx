@@ -2,20 +2,23 @@ import React from 'react';
 import {api} from "../../api/AppApi";
 import {Button, Icon} from "@mui/material";
 import {Download, DownloadSharp} from "@mui/icons-material";
-import {useParams} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
-export const DownloadFileButton = () => {
-    //let {fileId} = useParams(); TODO
-    let fileId = "b84487e1-2349-436f-a6d6-12c341d3d2fb"
+interface DownloadFileButtonProps {
+    children : string;
+}
+
+export const DownloadFileButton = ({ children }: DownloadFileButtonProps) => {
+    const {t} = useTranslation("resources");
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 
-        const downloadFile = async (fileId: string) => {
 
-            api.attachment.download(fileId)
+        const downloadFile = async (children: string) => {
+
+            api.attachment.download(children)
                 .then(response => {
-                    console.log('Response Headers:', response.headers);
                     const blob = new Blob([response.data], {
                         type: response.data.type,
                     });
@@ -44,7 +47,7 @@ export const DownloadFileButton = () => {
                 });
 
         }
-        downloadFile(fileId).then(() => {
+        downloadFile(children).then(() => {
             console.log("file_downloaded")
         });
 
@@ -56,6 +59,7 @@ export const DownloadFileButton = () => {
                 variant="contained"
                 size="medium"
                 type="submit"
+                title={t("downloadAttachment")}
             >
                 <Icon >
                     <DownloadSharp/>
