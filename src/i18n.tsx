@@ -7,11 +7,16 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 export const languageResources ={
     en: {
-
-        login: translationPolish.pages.login,
+        login: translationEnglish.pages.login,
+        resources: translationEnglish.pages.resources,
+        buttons: translationEnglish.buttons,
+        sideBar: translationEnglish.sidebar
     },
     pl: {
-        login: translationEnglish.pages.login,
+        login: translationPolish.pages.login,
+        resources: translationPolish.pages.resources,
+        buttons: translationPolish.buttons,
+        sideBar: translationPolish.sidebar
     }
 }
 const options = {

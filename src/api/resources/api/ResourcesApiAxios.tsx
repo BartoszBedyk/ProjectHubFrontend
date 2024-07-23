@@ -18,12 +18,22 @@ export class ResourcesApiAxios implements ResourcesApi {
     }
 
     searchByPath(form: SearchForm): Promise<SearchResponse<ResourceDto>> {
-        return axiosInstance.post<SearchResponse<ResourceDto>>('/', form)
+        return axiosInstance.post<SearchResponse<ResourceDto>>('evnID/resID', form)
             .then(response => response.data)
             .catch(error => {
                 console.error('Error fetching resources:', error);
                 throw error;
             })
+    }
+
+    async readSecret(id: string): Promise<string> {
+        try {
+            const response = await axiosInstance.post(`/resource/secret-unmasked/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error reading secret:', error);
+            throw error;
+        }
     }
 
 

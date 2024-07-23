@@ -1,6 +1,4 @@
-import React, {ReactNode} from "react";
 import {Grid} from "@mui/material";
-import styled from "@emotion/styled";
 import AnimatedSensilabsLogo from "./AnimatedSensilabsLogo";
 
 

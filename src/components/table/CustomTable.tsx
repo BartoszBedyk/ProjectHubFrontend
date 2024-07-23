@@ -11,6 +11,7 @@ import {
     TableRow,
     TableSortLabel,
     Typography,
+    Fade,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import FilterContainer from './FilterContainer';
@@ -25,6 +26,8 @@ export interface ColumnDefinition {
     align?: 'left' | 'right' | 'center';
     enumValues?: string[];
     operator?: 'EQUALS' | 'GR' | 'GRE' | 'LS' | 'LSE' | 'NOT_EQUALS' | 'LIKE';
+    sortable?: boolean;
+    filterable?: boolean;
 }
 
 export interface RowData {
@@ -43,6 +46,7 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [filters, setFilters] = useState<Record<string, { operator: string; value: string }>>({});
+    const [fadeKey, setFadeKey] = useState(0);
 
     const handleRequestSort = (property: string) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -51,10 +55,12 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
+        setFadeKey(fadeKey + 1);
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFadeKey(fadeKey + 1);
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
@@ -103,7 +109,7 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
         Object.keys(filters).forEach((columnId) => {
             const { operator, value } = filters[columnId];
             const column = columns.find(col => col.id === columnId.split('_')[0]);
-            if (column) {
+            if (column && column.filterable) {
                 filtered = filtered.filter(row =>
                     applyFilter(String(row[columnId.split('_')[0]]), value, operator, column.type)
                 );
@@ -115,7 +121,7 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
 
     const descendingComparator = <T extends RowData>(a: T, b: T, orderBy: keyof T) => {
         const orderByColumn = columns.find(column => column.id === orderBy);
-        if (!orderByColumn) return 0;
+        if (!orderByColumn || !orderByColumn.sortable) return 0;
 
         const cellA = a[orderBy];
         const cellB = b[orderBy];
@@ -158,7 +164,7 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
     };
 
     return (
-        <Paper sx={{ width: 'auto', mb: 2, margin: 3}}>
+        <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
                 <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
                 <Typography variant="h5" component="div">
@@ -166,57 +172,64 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
                 </Typography>
                 <Box sx={{ flexGrow: 2 }} />
                 <FilterContainer
-                    columns={columns}
+                    columns={columns.filter(col => col.filterable)}
                     onFilterChange={(filters) => setFilters(filters)}
                     onClearFilters={() => setFilters({})}
                 />
             </Box>
-            <TableContainer sx={{padding: 2, width: 'auto' }}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    sortDirection={orderBy === column.id ? order : false}
-                                >
-                                    <TableSortLabel
-                                        active={orderBy === column.id}
-                                        direction={orderBy === column.id ? order : 'asc'}
-                                        onClick={() => handleRequestSort(column.id)}
-                                        sx ={{fontWeight: 700}}
+            <TableContainer sx={{ padding: 2, width: 'auto' }}>
+                <Fade in={true} key={fadeKey} timeout={{ enter: 500, exit: 500 }}>
+                    <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        sortDirection={orderBy === column.id ? order : false}
+                                        sx={{ fontWeight: 700 }}
                                     >
-                                        {column.label}
-                                        {orderBy === column.id ? (
-                                            <Box component="span" sx={visuallyHidden}>
-                                                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                            </Box>
-                                        ) : null}
-                                    </TableSortLabel>
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {sortedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                            return (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                    {columns.map((column) => (
-                                        <TableCell key={column.id} align={column.align}>
-                                            {renderCellValue(column, row[column.id])}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            );
-                        })}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={columns.length} />
+                                        {column.sortable ? (
+                                            <TableSortLabel
+                                                active={orderBy === column.id}
+                                                direction={orderBy === column.id ? order : 'asc'}
+                                                onClick={() => handleRequestSort(column.id)}
+                                                sx={{ fontWeight: 700 }}
+                                            >
+                                                {column.label}
+                                                {orderBy === column.id ? (
+                                                    <Box component="span" sx={visuallyHidden}>
+                                                        {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                                    </Box>
+                                                ) : null}
+                                            </TableSortLabel>
+                                        ) : (
+                                            column.label
+                                        )}
+                                    </TableCell>
+                                ))}
                             </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {sortedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                return (
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                        {columns.map((column) => (
+                                            <TableCell key={column.id} align={column.align}>
+                                                {renderCellValue(column, row[column.id])}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                );
+                            })}
+                            {emptyRows > 0 && (
+                                <TableRow style={{ height: 53 * emptyRows }}>
+                                    <TableCell colSpan={columns.length} />
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </Fade>
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
@@ -241,7 +254,14 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
                         return 'Przejdź do ostatniej strony';
                     }
                     return 'Przejdź do pierwszej strony';
-
+                }}
+                sx={{
+                    '.MuiTablePagination-actions': {
+                        transition: 'transform 0.3s ease-in-out',
+                    },
+                    '.MuiTablePagination-actions button': {
+                        transition: 'transform 0.3s ease-in-out',
+                    },
                 }}
             />
         </Paper>
@@ -249,4 +269,3 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
 }
 
 export default CustomTable;
-

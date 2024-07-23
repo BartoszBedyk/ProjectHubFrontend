@@ -10,6 +10,8 @@ import {ChangePasswordApiAxios} from "./login-pass-auth/api/ChangePasswordApiAxi
 import {ProjectEnvironmentApiAxios} from "./project/project-environment/api/ProjectEnvironmentApiAxios";
 import {UserManagementApiAxios} from "./user-management/api/UserManagementApiAxios";
 import {ChangePasswordApiMock} from "./login-pass-auth/api/ChangePasswordApiMock";
+import {AttachmentApi} from "./attachment/AttachmentApi";
+import {AttachmentApiAxios} from "./attachment/api/AttachmentApiAxios";
 
 interface AppApi {
     loginPassAuth: LoginPassAuthApi;
@@ -17,6 +19,7 @@ interface AppApi {
     projectEnvironment: ProjectEnvironmentApi;
     userManagement: UserManagementApi;
     resources: ResourcesApi;
+    attachment: AttachmentApi;
 }
 
 const axiosApi: AppApi = {
@@ -25,6 +28,7 @@ const axiosApi: AppApi = {
     projectEnvironment: new ProjectEnvironmentApiAxios(),
     userManagement: new UserManagementApiAxios(),
     resources: new ResourcesApiAxios(),
+    attachment: new AttachmentApiAxios(),
 }
 
 const mockApi: AppApi = {
@@ -32,10 +36,11 @@ const mockApi: AppApi = {
     changePassword: new ChangePasswordApiMock(),
     projectEnvironment: new ProjectEnvironmentApiAxios(),
     userManagement: new UserManagementApiAxios(),
-    resources: new ResourcesApiMock()
+    resources: new ResourcesApiMock(),
+    attachment: new AttachmentApiAxios(),
 }
 
-const isProd = false;
+const isProd = true;
 
 const api = isProd ? axiosApi : mockApi;
 export {
