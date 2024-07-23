@@ -40,7 +40,8 @@
       "openLink": "Open link",
       "downloadAttachment": "Download attachment",
       "readSecret": "Read secret",
-      "readText": "Read text"
+      "readText": "Read text",
+      "resourcesTableTitle": "Resources"
     }
   }
 }

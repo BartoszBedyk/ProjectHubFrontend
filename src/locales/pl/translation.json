@@ -51,7 +51,8 @@
       "openLink": "Otwórz link ",
       "downloadAttachment": "Pobierz załącznik",
       "readSecret": "Odszyfruj sekret",
-      "readText": "Odczytaj tekst"
+      "readText": "Odczytaj tekst",
+      "resourcesTableTitle": "Zasoby"
     }
   }
 }

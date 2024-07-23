@@ -8,21 +8,23 @@ import {SearchSort} from "../../commons/Search/SearchSort";
 import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
-import {Button, Link} from "@mui/material";
+import {Link} from "@mui/material";
 import {DownloadFileButton} from "./DownloadFileButton";
 import SecretDialog from "./SecretDialog";
 import OpenLinkButton from "./OpenLinkButton";
 import ReadTextButton from "./ReadTextButton";
 import {useTranslation} from "react-i18next";
+import {useParams} from "react-router-dom";
 
-
-interface AllResourcesTableProps {
-    children: string;
+type AllResourcesProps = {
+    searchValue: string,
+    resourceType?: ResourceType
 }
 
-const AllResourcesTable: React.FC<AllResourcesTableProps> = ({children}) => {
+const AllResourcesTable = (props: AllResourcesProps) => {
 
-
+    const {t} = useTranslation("resources");
+    let { type } = useParams();
     const columns: ColumnDefinition[] = [
         //{ id: 'id', label: 'Id', type: 'TEXT', minWidth: 50},
         {id: 'name', label: 'Name', type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
@@ -33,13 +35,29 @@ const AllResourcesTable: React.FC<AllResourcesTableProps> = ({children}) => {
         {id: 'action', label: '', type: 'TEXT', minWidth: 100, sortable: false, filterable: false},
     ];
 
-    const searchFormCriteria: SearchFormCriteria[] = [
-        {
-            fieldName: 'name',
-            value: `%${children}%`,
-            operator: CriteriaOperator.LIKE
-        }
-    ];
+    let searchFormCriteria: SearchFormCriteria[]
+    if (!props.resourceType) {
+        searchFormCriteria = [
+            {
+                fieldName: 'name',
+                value: `%${props.searchValue}%`,
+                operator: CriteriaOperator.LIKE
+            }
+        ];
+    } else {
+        searchFormCriteria = [
+            {
+                fieldName: 'name',
+                value: `%${props.searchValue}%`,
+                operator: CriteriaOperator.LIKE
+            },
+            {
+                fieldName: 'resourceType',
+                value: `${props.resourceType}`,
+                operator: CriteriaOperator.EQUALS
+            }
+        ];
+    }
 
     const searchSort: SearchSort = {
         by: 'name',
@@ -89,13 +107,13 @@ const AllResourcesTable: React.FC<AllResourcesTableProps> = ({children}) => {
                         setRows(prevRows => [...prevRows, newRow]);
                         break;
                     }
-                    case 'LINK':
-                    {
+                    case 'LINK': {
                         const newRow: RowData = {
                             //id: responseValue.id,
                             name: responseValue.name,
                             value:
-                                <Link href={responseValue.value} underline="hover" color="inherit" rel="noreferrer" target="_blank"> {responseValue.value} </Link>,
+                                <Link href={responseValue.value} underline="hover" color="inherit" rel="noreferrer"
+                                      target="_blank"> {responseValue.value} </Link>,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
                             createdBy: responseValue.createdById,
@@ -104,8 +122,7 @@ const AllResourcesTable: React.FC<AllResourcesTableProps> = ({children}) => {
                         setRows(prevRows => [...prevRows, newRow]);
                         break;
                     }
-                    case 'TEXT':
-                    {
+                    case 'TEXT': {
                         const newRow: RowData = {
                             //id: responseValue.id,
                             name: responseValue.name,
@@ -137,11 +154,11 @@ const AllResourcesTable: React.FC<AllResourcesTableProps> = ({children}) => {
 
             })
         })
-    }, []);
+    }, [type]);
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={'Resources'}/>
+            <CustomTable columns={columns} rows={rows} title={t('resourcesTableTitle')}/>
         </div>
     );
 }

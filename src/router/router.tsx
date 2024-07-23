@@ -87,8 +87,9 @@ export const router = createBrowserRouter([
 
     /** RESOURCES **/
     {
-        path: "/project/resources",
+        path: "/project/resources/:type",
         element: <Resources></Resources>,
         errorElement: <Error/>
-    }
+    },
+
 ])

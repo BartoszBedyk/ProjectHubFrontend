@@ -43,27 +43,32 @@ const navLinks: NavLink[] = [
     {
         name: "Resources",
         icon: resourcesIcon,
-        link: "/",
+        link: "/project/resources/any",
         children: [
             {
                 name: "Links",
                 icon: linksIcon,
-                link: "/resources/links",
+                link: "/project/resources/link",
             },
             {
                 name: "Documentation",
                 icon: documentationIcon,
-                link: "/resources/documentation",
+                link: "/project/resources/text",
             },
             {
                 name: "Files",
                 icon: filesIcon,
-                link: "/resources/files",
+                link: "/project/resources/attachment",
+            },
+            {
+                name: "Secret",
+                icon: filesIcon,
+                link: "/project/resources/secret",
             },
             {
                 name: "Members",
                 icon: membersIcon,
-                link: "/resources/members",
+                link: "/project/resources/members",
             },
         ]
     },
