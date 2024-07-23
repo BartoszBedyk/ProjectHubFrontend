@@ -65,7 +65,7 @@ const mockApi: AppApi = {
     technology: new TechnologyApiMock(),
 }
 
-const isProd = false;
+const isProd = true;
 
 const api = isProd ? axiosApi : mockApi;
 export {

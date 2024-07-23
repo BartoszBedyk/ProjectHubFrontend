@@ -12,9 +12,10 @@ import {
     Slider
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CreateProjectForm } from "../api/project/form/CreateProjectForm";
-import { api } from "../api/AppApi";
-import { TechnologyDTO } from "../api/project/technology/response/TechnologyDTO";
+import { CreateProjectForm } from "../../api/project/form/CreateProjectForm";
+import { api } from "../../api/AppApi";
+import { TechnologyDTO } from "../../api/project/technology/response/TechnologyDTO";
+import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 
 const CreateProjectFormComponent: React.FC = () => {
     const [form, setForm] = useState<CreateProjectForm>({
@@ -23,8 +24,7 @@ const CreateProjectFormComponent: React.FC = () => {
         technologyList: []
     });
 
-    const [technology, setTechnology] = useState<TechnologyDTO>({
-        id: '',
+    const [technology, setTechnology] = useState<CreateTechnologyForm>({
         name: '',
         description: ''
     });
@@ -77,12 +77,19 @@ const CreateProjectFormComponent: React.FC = () => {
         setTechnology({ ...technology, [name]: value });
     };
 
-    const addTechnology = () => {
-        setForm({
-            ...form,
-            technologyList: [...form.technologyList, technology.id ]
-        });
-        setTechnology({ id: '', name: '', description: '' });
+    const addTechnology = async () => {
+        try {
+            console.log('Adding technology:', technology);
+            const createdTechnology = await api.technology.create(technology);
+            console.log('Created technology:', createdTechnology);
+            setForm({
+                ...form,
+                technologyList: [...form.technologyList, createdTechnology.id]
+            });
+            setTechnology({ name: '', description: '' });
+        } catch (error) {
+            console.error('Error creating technology:', error);
+        }
     };
 
     const addExistingTechnology = (tech: TechnologyDTO) => {
@@ -190,7 +197,6 @@ const CreateProjectFormComponent: React.FC = () => {
                         {existingTechnologies.map((tech, index) => (
                             <ListItem
                                 key={index}
-                                button
                                 onClick={() => addExistingTechnology(tech)}
                             >
                                 <ListItemText

@@ -5,4 +5,6 @@ export interface ProjectDTO {
     createdOn: Date;
     createdById: string;
     technologies: string[];
+    deletedOn: Date | null;
+    deletedById: string | null;
 }

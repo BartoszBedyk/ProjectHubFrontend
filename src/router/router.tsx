@@ -2,7 +2,7 @@ import {createBrowserRouter} from "react-router-dom";
 import HomePage from "../pages/home/home";
 import Login from "../pages/login/login";
 import Error from "../pages/error/error";
-import CreateProjectFormComponent from "../forms/CreateProjectFormComponent";
+import CreateProject from "../pages/project/CreateProject";
 
 export const router = createBrowserRouter([
     {
@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/project/create",
-        element: <CreateProjectFormComponent/>,
+        element: <CreateProject/>,
         errorElement: <Error/>
     },
     {
