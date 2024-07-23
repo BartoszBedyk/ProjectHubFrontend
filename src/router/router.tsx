@@ -3,6 +3,7 @@ import HomePage from "../pages/home/home";
 import Login from "../pages/login/login";
 import Error from "../pages/error/error";
 import CreateProject from "../pages/project/CreateProject";
+import Resources from "../pages/resources/resources";
 
 export const router = createBrowserRouter([
     {
@@ -84,4 +85,12 @@ export const router = createBrowserRouter([
         element: <div>Edit Project Environment</div>,
         errorElement: <Error/>
     },
+
+    /** RESOURCES **/
+    {
+        path: "/project/resources/:type",
+        element: <Resources></Resources>,
+        errorElement: <Error/>
+    },
+
 ])

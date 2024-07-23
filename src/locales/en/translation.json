@@ -2,6 +2,20 @@
   "buttons": {
     "save": "Save"
   },
+  "sidebar": {
+    "home": "Home",
+    "project": "Project",
+    "addProject": "Create project",
+    "main": "Main",
+    "resources": "Resources",
+    "resourcesLink": "Links",
+    "resourcesDocumentation": "Documentation",
+    "resourcesMembers": "Members",
+    "resourcesFiles": "Files",
+    "userManagement": "User Management",
+    "activities": "Activities",
+    "logout" : "Logout"
+  },
   "pages": {
     "home": {
     },
@@ -16,6 +30,18 @@
       "loginLink2b": "Register",
       "loggingError": "Incorrect email or password",
       "loggingTokenError": "Log in again"
+    },
+    "resources": {
+      "resourcestxt": "project resources.",
+      "secretUnmasked": "Secret is unmasked as: ",
+      "secretDialog": "Unmasked secret",
+      "copyTxt": "Copy text",
+      "closeTxt": "Close",
+      "openLink": "Open link",
+      "downloadAttachment": "Download attachment",
+      "readSecret": "Read secret",
+      "readText": "Read text",
+      "resourcesTableTitle": "Resources"
     }
   }
 }

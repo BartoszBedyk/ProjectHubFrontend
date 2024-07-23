@@ -11,10 +11,10 @@ import {ProjectEnvironmentApiAxios} from "./project/project-environment/api/Proj
 import {UserManagementApiAxios} from "./user-management/api/UserManagementApiAxios";
 import {ChangePasswordApiMock} from "./login-pass-auth/api/ChangePasswordApiMock";
 import {AttachmentApi} from "./attachment/AttachmentApi";
+import {AttachmentApiAxios} from "./attachment/api/AttachmentApiAxios";
 import {ProjectMemberApi} from "./project/project-member/ProjectMemberApi";
 import {ProjectApi} from "./project/ProjectApi";
 import {ActivityApi} from "./activity/ActivityApi";
-import {AttachmentApiAxios} from "./attachment/api/AttachmentApiAxios";
 import {ProjectMemberApiAxios} from "./project/project-member/api/ProjectMemberApiAxios";
 import {ProjectApiAxios} from "./project/api/ProjectApiAxios";
 import {ActivityApiAxios} from "./activity/api/ActivityApiAxios";
