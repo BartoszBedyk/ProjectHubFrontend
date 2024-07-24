@@ -7,6 +7,14 @@ import {ProjectDTO} from "../response/ProjectDTO";
 import {axiosInstance} from "../../../AxiosClient";
 
 export class ProjectApiAxios implements ProjectApi {
+    delete(id: string): Promise<void> {
+        return axiosInstance.delete<ProjectDTO>(`/project/delete/${id}`)
+            .then(() => {})
+            .catch(error => {
+                console.error("Error deleting project", error);
+                throw error;
+            });
+    }
     create(form: CreateProjectForm): Promise<ProjectDTO> {
         return axiosInstance.post<ProjectDTO>('/project/create', form)
             .then(response => response.data)

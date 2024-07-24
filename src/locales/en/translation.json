@@ -42,6 +42,17 @@
       "readSecret": "Read secret",
       "readText": "Read text",
       "resourcesTableTitle": "Resources"
+    },
+    "projects" : {
+      "name" : "Name",
+      "description": "Description",
+      "createdOn": "Created on",
+      "createdBy": "Created by",
+      "unknown" : "Unknown",
+      "projectsTableTitle" : "Projects list",
+      "projectDetails": "Project details",
+      "open" : "Open",
+      "createProject" : "Create new project"
     }
   }
 }

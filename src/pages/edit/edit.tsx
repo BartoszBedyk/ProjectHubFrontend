@@ -71,7 +71,18 @@ function Edit() {
             typeOfElement:{
                 Component: CheckBoxField,
                 props: {
-                    checked: "True",
+                    checked: true,
+
+                }
+            }
+        },
+        {
+            name: 'Checkbox',
+            id: 'checkbox',
+            typeOfElement:{
+                Component: CheckBoxField,
+                props: {
+                    checked: false,
 
                 }
             }

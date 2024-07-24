@@ -53,6 +53,26 @@
       "readSecret": "Odszyfruj sekret",
       "readText": "Odczytaj tekst",
       "resourcesTableTitle": "Zasoby"
+    },
+    "projects" : {
+      "name" : "Nazwa",
+      "description": "Opis",
+      "createdOn": "Data utworzenia",
+      "createdById": "Twórca",
+      "unknown" : "Nieznany",
+      "projectsTableTitle" : "Projekty",
+      "projectDetails": "Szczegłóy projektu",
+      "open" : "Otwórz",
+      "createProject": "Utwórz nowy projekt",
+      "notFound" : "Nie znaleziono projektu",
+      "edit" : "Edytuj projekt",
+      "deleteProject": "Usuń projekt",
+      "created": "Utworzono",
+      "createdBy": "Utworzono przez",
+      "confirmDeletion": "Potwierdź usunięcie",
+      "deletionAlert": "Czy na pewno chcesz usunąć ten projekt? Tej operacji nie można cofnąć.",
+      "cancel": "Anuluj",
+      "delete": "Usuń"
     }
   }
 }
