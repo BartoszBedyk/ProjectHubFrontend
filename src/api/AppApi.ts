@@ -12,6 +12,19 @@ import {UserManagementApiAxios} from "./user-management/api/UserManagementApiAxi
 import {ChangePasswordApiMock} from "./login-pass-auth/api/ChangePasswordApiMock";
 import {AttachmentApi} from "./attachment/AttachmentApi";
 import {AttachmentApiAxios} from "./attachment/api/AttachmentApiAxios";
+import {ProjectMemberApi} from "./project/project-member/ProjectMemberApi";
+import {ProjectApi} from "./project/ProjectApi";
+import {ActivityApi} from "./activity/ActivityApi";
+import {ProjectMemberApiAxios} from "./project/project-member/api/ProjectMemberApiAxios";
+import {ProjectApiAxios} from "./project/api/ProjectApiAxios";
+import {ActivityApiAxios} from "./activity/api/ActivityApiAxios";
+import {AttachmentApiMock} from "./attachment/api/AttachmentApiMock";
+import {ProjectMemberApiMock} from "./project/project-member/api/ProjectMemberApiMock";
+import {ProjectApiMock} from "./project/api/ProjectApiMock";
+import {ActivityApiMock} from "./activity/api/ActivityApiMock";
+import {TechnologyApi} from "./project/technology/TechnologyApi";
+import {TechnologyApiAxios} from "./project/technology/api/TechnologyApiAxios";
+import {TechnologyApiMock} from "./project/technology/api/TechnologyApiMock";
 
 interface AppApi {
     loginPassAuth: LoginPassAuthApi;
@@ -20,6 +33,10 @@ interface AppApi {
     userManagement: UserManagementApi;
     resources: ResourcesApi;
     attachment: AttachmentApi;
+    projectMember: ProjectMemberApi;
+    project: ProjectApi;
+    activity: ActivityApi;
+    technology: TechnologyApi;
 }
 
 const axiosApi: AppApi = {
@@ -29,6 +46,10 @@ const axiosApi: AppApi = {
     userManagement: new UserManagementApiAxios(),
     resources: new ResourcesApiAxios(),
     attachment: new AttachmentApiAxios(),
+    projectMember: new ProjectMemberApiAxios(),
+    project: new ProjectApiAxios(),
+    activity: new ActivityApiAxios(),
+    technology: new TechnologyApiAxios(),
 }
 
 const mockApi: AppApi = {
@@ -37,7 +58,11 @@ const mockApi: AppApi = {
     projectEnvironment: new ProjectEnvironmentApiAxios(),
     userManagement: new UserManagementApiAxios(),
     resources: new ResourcesApiMock(),
-    attachment: new AttachmentApiAxios(),
+    attachment: new AttachmentApiMock(),
+    projectMember: new ProjectMemberApiMock(),
+    project: new ProjectApiMock(),
+    activity: new ActivityApiMock(),
+    technology: new TechnologyApiMock(),
 }
 
 const isProd = true;

@@ -9,4 +9,5 @@ export interface ProjectApi {
     update(form: UpdateProjectForm): Promise<ProjectDTO>
     get(id: string): Promise<ProjectDTO>
     search(form: SearchForm): Promise<SearchResponse<ProjectDTO>>;
+    delete(id: string): Promise<void>;
 }

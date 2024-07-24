@@ -5,6 +5,13 @@ import {axiosInstance} from "../../../../AxiosClient";
 import {ProjectMemberApi} from "../ProjectMemberApi";
 
 export class ProjectMemberApiAxios implements ProjectMemberApi{
+    getByIds(userId: string, projectId: string): Promise<ProjectMemberDto> {
+        return axiosInstance.get<ProjectMemberDto>(`/project-member/get/${userId}/${projectId}`)
+            .then(response => response.data)
+            .catch(error => {
+                console.error('Error fetching project member:', error);
+                throw error;
+            });    }
     create(form: CreateProjectMemberForm): Promise<ProjectMemberDto> {
         return axiosInstance.post<ProjectMemberDto>('/project-member/save', form)
             .then(response => response.data)
@@ -21,11 +28,11 @@ export class ProjectMemberApiAxios implements ProjectMemberApi{
                 throw error;
             });
     }
-    getByProjectId(projectId: string): Promise<ProjectMemberDto>  {
-        return axiosInstance.get<ProjectMemberDto>(`/project-member/find/${projectId}`)
+    getByProjectId(projectId: string): Promise<ProjectMemberDto[]>  {
+        return axiosInstance.get<ProjectMemberDto[]>(`/project-member/find/${projectId}`)
             .then(response => response.data)
             .catch(error => {
-                console.error('Error fetching project member:', error);
+                console.error('Error fetching project members:', error);
                 throw error;
             });
     }
