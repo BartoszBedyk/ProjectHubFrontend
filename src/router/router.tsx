@@ -4,6 +4,9 @@ import Login from "../pages/login/login";
 import Error from "../pages/error/error";
 import CreateProject from "../pages/project/CreateProject";
 import Resources from "../pages/resources/resources";
+import UpdateProject from "../pages/project/UpdateProject";
+import ProjectPageComponent from "../pages/project/Project";
+import Projects from "../pages/project/Projects";
 
 export const router = createBrowserRouter([
     {
@@ -45,8 +48,13 @@ export const router = createBrowserRouter([
 
     /** PROJECT **/
     {
+        path: "/project",
+        element: <Projects/>,
+        errorElement: <Error/>
+    },
+    {
         path: "/project/:projectId",
-        element: <div>Project</div>,
+        element: <ProjectPageComponent/>,
         errorElement: <Error/>
     },
     {
@@ -55,8 +63,8 @@ export const router = createBrowserRouter([
         errorElement: <Error/>
     },
     {
-        path: "/project/edit",
-        element: <div>Edit Project</div>,
+        path: "/project/edit/:projectId",
+        element: <UpdateProject/>,
         errorElement: <Error/>
     },
 

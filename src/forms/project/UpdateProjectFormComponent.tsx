@@ -13,14 +13,15 @@ import {
     ToggleButton,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CreateProjectForm } from "../../api/project/form/CreateProjectForm";
+import { UpdateProjectForm } from "../../api/project/form/UpdateProjectForm";
 import { api } from "../../api/AppApi";
 import { TechnologyDTO } from "../../api/project/technology/response/TechnologyDTO";
 import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 import { useNavigate } from 'react-router-dom';
 
-const CreateProjectFormComponent: React.FC = () => {
-    const [form, setForm] = useState<CreateProjectForm>({
+const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
+    const [form, setForm] = useState<UpdateProjectForm>({
+        id: projectId,
         name: '',
         description: '',
         technologyList: []
@@ -36,7 +37,7 @@ const CreateProjectFormComponent: React.FC = () => {
     const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>([]);
     const [formError, setFormError] = useState<string | null>(null);
     const [technologyError, setTechnologyError] = useState<string | null>(null);
-    const navigate = useNavigate(); // Add useNavigate hook
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTechnologies = async () => {
@@ -49,28 +50,28 @@ const CreateProjectFormComponent: React.FC = () => {
         };
 
         fetchTechnologies();
-    }, []);
 
-    useEffect(() => {
-        const fetchSelectedTechnologies = async () => {
-            const technologies: TechnologyDTO[] = [];
-            for (const techId of form.technologyList) {
-                try {
-                    const response = await api.technology.findById(techId);
-                    technologies.push(response);
-                } catch (error) {
-                    console.error(`Error fetching technology with id ${techId}:`, error);
-                }
+        const fetchProject = async () => {
+            try {
+                const project = await api.project.get(projectId);
+                setForm({
+                    id: project.id,
+                    name: project.name,
+                    description: project.description,
+                    technologyList: project.technologies
+                });
+
+                const selectedTechs = await Promise.all(
+                    project.technologies.map((techId: string) => api.technology.findById(techId))
+                );
+                setSelectedTechnologies(selectedTechs);
+            } catch (error) {
+                console.error('Error fetching project:', error);
             }
-            setSelectedTechnologies(technologies);
         };
 
-        if (form.technologyList.length > 0) {
-            fetchSelectedTechnologies();
-        } else {
-            setSelectedTechnologies([]);
-        }
-    }, [form.technologyList]);
+        fetchProject();
+    }, [projectId]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -90,13 +91,12 @@ const CreateProjectFormComponent: React.FC = () => {
 
         setTechnologyError(null);
         try {
-            console.log('Adding technology:', technology);
             const createdTechnology = await api.technology.create(technology);
-            console.log('Created technology:', createdTechnology);
             setForm({
                 ...form,
                 technologyList: [...form.technologyList, createdTechnology.id]
             });
+            setSelectedTechnologies([...selectedTechnologies, createdTechnology]);
             setTechnology({ name: '', description: '' });
         } catch (error) {
             console.error('Error creating technology:', error);
@@ -104,15 +104,21 @@ const CreateProjectFormComponent: React.FC = () => {
     };
 
     const addExistingTechnology = (tech: TechnologyDTO) => {
-        setForm({
-            ...form,
-            technologyList: [...form.technologyList, tech.id]
-        });
+        if (!form.technologyList.includes(tech.id)) {
+            setForm({
+                ...form,
+                technologyList: [...form.technologyList, tech.id]
+            });
+            setSelectedTechnologies([...selectedTechnologies, tech]);
+        }
     };
 
     const removeTechnology = (index: number) => {
         const newTechnologyList = form.technologyList.filter((_, i) => i !== index);
         setForm({ ...form, technologyList: newTechnologyList });
+
+        const newSelectedTechnologies = selectedTechnologies.filter((_, i) => i !== index);
+        setSelectedTechnologies(newSelectedTechnologies);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -125,16 +131,10 @@ const CreateProjectFormComponent: React.FC = () => {
 
         setFormError(null);
         try {
-            const response = await api.project.create(form);
-            console.log('Project created:', response);
-            setForm({
-                name: '',
-                description: '',
-                technologyList: []
-            });
+            const response = await api.project.update(form);
             navigate(`/project/${response.id}`);
         } catch (error) {
-            console.error('Error creating project:', error);
+            console.error('Error updating project:', error);
         }
     };
 
@@ -149,7 +149,7 @@ const CreateProjectFormComponent: React.FC = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
                 <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
                 <Typography variant="h5" component="div">
-                    Nowy projekt
+                    Edytuj projekt
                 </Typography>
             </Box>
             <Box
@@ -231,11 +231,11 @@ const CreateProjectFormComponent: React.FC = () => {
                     </>
                 ) : (
                     <List>
-                        {existingTechnologies.map((tech, index) => (
+                        {existingTechnologies.map((tech) => (
                             <ListItem
-                                key={index}
+                                key={tech.id}
                                 onClick={() => addExistingTechnology(tech)}
-                                sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd', cursor: 'pointer' } }}
+                                sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd'}}}
                             >
                                 <ListItemText
                                     primary={tech.name}
@@ -251,7 +251,7 @@ const CreateProjectFormComponent: React.FC = () => {
                 <List>
                     {selectedTechnologies.map((tech, index) => (
                         <ListItem
-                            key={index}
+                            key={tech.id}
                             secondaryAction={
                                 <IconButton edge="end" aria-label="delete" onClick={() => removeTechnology(index)}>
                                     <DeleteIcon />
@@ -267,11 +267,12 @@ const CreateProjectFormComponent: React.FC = () => {
                     ))}
                 </List>
                 <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    Utwórz projekt
+                    Zaktualizuj projekt
                 </Button>
             </Box>
         </Paper>
     );
 };
 
-export default CreateProjectFormComponent;
+export default UpdateProjectFormComponent;
+
