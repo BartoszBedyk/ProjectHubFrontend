@@ -40,7 +40,7 @@ const mockApi: AppApi = {
     attachment: new AttachmentApiAxios(),
 }
 
-const isProd = true;
+const isProd = false;
 
 const api = isProd ? axiosApi : mockApi;
 export {

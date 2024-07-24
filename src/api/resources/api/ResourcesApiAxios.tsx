@@ -3,6 +3,7 @@ import { ResourcesApi } from '../ResourcesApi';
 import { axiosInstance } from '../../../AxiosClient';
 import {SearchForm} from "../../../commons/Search/SearchForm";
 import {SearchResponse} from "../../../commons/Search/SearchResponse";
+import {UpdateResourceForm} from "../form/UpdateResourceForm";
 
 
 export class ResourcesApiAxios implements ResourcesApi {
@@ -34,6 +35,15 @@ export class ResourcesApiAxios implements ResourcesApi {
             console.error('Error reading secret:', error);
             throw error;
         }
+    }
+
+    updateResource(form : UpdateResourceForm): Promise<SearchResponse<ResourceDto>> {
+         return axiosInstance.put(`/resource/update`, form)
+             .then(response => response.data)
+             .catch(error => {
+                 console.error('Update resource error: ', error);
+                 throw error;
+             })
     }
 
 

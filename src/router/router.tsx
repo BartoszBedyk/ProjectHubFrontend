@@ -3,6 +3,7 @@ import HomePage from "../pages/home/home";
 import Login from "../pages/login/login";
 import Error from "../pages/error/error";
 import Resources from "../pages/resources/resources";
+import Edit from "../pages/edit/edit";
 
 export const router = createBrowserRouter([
     {
@@ -91,5 +92,12 @@ export const router = createBrowserRouter([
         element: <Resources></Resources>,
         errorElement: <Error/>
     },
+
+    /**  UPDATE FORMS  **/
+    {
+        path: "/update",
+        element: <Edit></Edit>,
+        errorElement: <Error/>
+    }
 
 ])
