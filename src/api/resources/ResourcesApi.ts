@@ -8,4 +8,5 @@ export interface ResourcesApi {
     searchByPath(form: SearchForm): Promise<SearchResponse<ResourceDto>>
     readSecret(id: string): Promise<string>
     updateResource(form : UpdateResourceForm): Promise<SearchResponse<ResourceDto>>
+    get(id: string): Promise<ResourceDto>
 }

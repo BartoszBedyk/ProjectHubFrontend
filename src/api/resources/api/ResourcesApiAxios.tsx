@@ -46,6 +46,15 @@ export class ResourcesApiAxios implements ResourcesApi {
              })
     }
 
+    get(id: string): Promise<ResourceDto> {
+         return axiosInstance.get(`/resource/${id}`)
+             .then(response => response.data)
+             .catch(error => {
+                 console.error('Update resource error: ', error);
+                 throw error;
+             })
+    }
+
 
 
 

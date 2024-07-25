@@ -113,5 +113,20 @@ export class ResourcesApiMock implements ResourcesApi {
         }));
     }
 
+    get(id: string): Promise<ResourceDto>{
+        return mockTimeout(5000).then(() => ({
+                    id: "111223",
+                    name: 'Zasoby wlasne',
+                    description: 'Opis zasobu',
+                    value: 'Wartosc zasobu',
+                    resourceType: ResourceType.attachment,
+                    environmentId: '1',
+                    projectId: '1',
+                    createdById: 'Admin',
+                    createdOn: "28-09-2023",
+                    lastModifiedOn: "28-09-2023",
+        }));
+    }
+
 
 }

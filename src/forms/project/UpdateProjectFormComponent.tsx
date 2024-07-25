@@ -18,6 +18,7 @@ import { api } from "../../api/AppApi";
 import { TechnologyDTO } from "../../api/project/technology/response/TechnologyDTO";
 import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 import { useNavigate } from 'react-router-dom';
+import {useTranslation} from "react-i18next";
 
 const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
     const [form, setForm] = useState<UpdateProjectForm>({
@@ -38,6 +39,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
     const [formError, setFormError] = useState<string | null>(null);
     const [technologyError, setTechnologyError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const {t} = useTranslation('projects');
 
     useEffect(() => {
         const fetchTechnologies = async () => {
@@ -85,7 +87,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
 
     const addTechnology = async () => {
         if (technology.name === '' || technology.description === '') {
-            setTechnologyError('Wszystkie pola technologii muszą być wypełnione');
+            setTechnologyError(t('technologyError'));
             return;
         }
 
@@ -125,7 +127,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
         e.preventDefault();
 
         if (form.name === '' || form.description === '' || form.technologyList.length === 0) {
-            setFormError('Wszystkie pola projektu muszą być wypełnione');
+            setFormError(t('emptyFieldError'));
             return;
         }
 
@@ -149,7 +151,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
                 <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
                 <Typography variant="h5" component="div">
-                    Edytuj projekt
+                    {t('edit')}
                 </Typography>
             </Box>
             <Box
@@ -163,7 +165,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     required
                     id="name"
                     name="name"
-                    label="Nazwa projektu"
+                    label={t('name')}
                     value={form.name}
                     onChange={handleInputChange}
                     error={!!formError}
@@ -172,7 +174,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     required
                     id="description"
                     name="description"
-                    label="Opis projektu"
+                    label={t('description')}
                     multiline
                     rows={4}
                     value={form.description}
@@ -185,7 +187,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     </Typography>
                 )}
                 <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
-                    Dodaj technologie
+                    {t('addTechnology')}
                 </Typography>
                 <ToggleButtonGroup
                     value={showExisting}
@@ -196,10 +198,10 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     size="small"
                 >
                     <ToggleButton value="new" aria-label="new technology" sx={{ '&.Mui-selected': { backgroundColor: '#1976d2', color: '#fff' } }}>
-                        Nowe
+                        {t('new')}
                     </ToggleButton>
                     <ToggleButton value="existing" aria-label="existing technology" sx={{ '&.Mui-selected': { backgroundColor: '#1976d2', color: '#fff' } }}>
-                        Istniejące
+                        {t('exists')}
                     </ToggleButton>
                 </ToggleButtonGroup>
                 {showExisting === 'new' ? (
@@ -207,7 +209,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                         <TextField
                             id="tech-name"
                             name="name"
-                            label="Nazwa technologii"
+                            label={t('technologyName')}
                             value={technology.name}
                             onChange={handleTechnologyChange}
                             error={!!technologyError}
@@ -215,7 +217,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                         <TextField
                             id="tech-description"
                             name="description"
-                            label="Opis technologii"
+                            label={t('technologyDescription')}
                             value={technology.description}
                             onChange={handleTechnologyChange}
                             error={!!technologyError}
@@ -226,7 +228,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                             </Typography>
                         )}
                         <Button variant="contained" color="primary" onClick={addTechnology} sx={{ mt: 2 }}>
-                            Dodaj technologię
+                            {t('addTechnology')}
                         </Button>
                     </>
                 ) : (
@@ -246,7 +248,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     </List>
                 )}
                 <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
-                    Wybrane technologie
+                    {t('selectedTechnologies')}
                 </Typography>
                 <List>
                     {selectedTechnologies.map((tech, index) => (
@@ -267,7 +269,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     ))}
                 </List>
                 <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    Zaktualizuj projekt
+                    {t('updateProject')}
                 </Button>
             </Box>
         </Paper>

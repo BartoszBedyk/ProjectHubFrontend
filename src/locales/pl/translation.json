@@ -72,7 +72,19 @@
       "confirmDeletion": "Potwierdź usunięcie",
       "deletionAlert": "Czy na pewno chcesz usunąć ten projekt? Tej operacji nie można cofnąć.",
       "cancel": "Anuluj",
-      "delete": "Usuń"
+      "delete": "Usuń",
+      "technologyError" : "Wszystkie pola technologii muszą być wypełnione",
+      "emptyFieldError" : "Wszystkie pola projektu muszą być wypełnione",
+      "addTechnology": "Dodaj technologie",
+      "new": "Nowe",
+      "exists": "Istniejące",
+      "technologyName" : "Nazwa technologii",
+      "technologyDescription" : "Opis technologii",
+      "selectedTechnologies" : "Wybrane technologie",
+      "updateProject" : "Zaktualizuj projekt"
+
+
+
     }
   }
 }

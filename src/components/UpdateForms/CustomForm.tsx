@@ -1,5 +1,6 @@
 import React from "react";
 import {Box, Typography, Paper, FormControl, Button, Checkbox} from "@mui/material";
+import {api} from "../../api/AppApi";
 
 const textAreaStyle: React.CSSProperties = {
     padding: '12px 16px',
@@ -50,6 +51,7 @@ const button: React.CSSProperties = {
 
 const checkboxStyle: React.CSSProperties = {}
 
+
 export const TextArea: React.FC<{ name?: string, id?: string, defaultValue?: string }> =
     ({name, id, defaultValue}) =>
         (
@@ -65,7 +67,7 @@ export const TextField: React.FC<{ type?: string; name?: string; id?: string, de
 export const LabelTextArea: React.FC<{ name?: string; htmlFor?: string, defaultValue?: string }> =
     ({name, htmlFor, defaultValue}) =>
         (
-            <label htmlFor={htmlFor} style={labelStyle}> {defaultValue||name} </label>
+            <label htmlFor={htmlFor} style={labelStyle}> {defaultValue || name} </label>
         );
 
 export const CheckBoxField: React.FC<{ name?: string, id?: string, checked?: boolean }> =
@@ -94,12 +96,48 @@ export interface FormElement {
 
 export interface UpdateFormProps {
     formElements: FormElement[];
-    url: string;
     buttonName: string;
+    handleSubmit: (formData: Record<string, any>) => void;
+    id: string;
+
 }
 
-const CustomForm: React.FC<UpdateFormProps> = ({formElements, url, buttonName}) => {
+
+const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName, handleSubmit, id}) => {
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+
+        const formData: Record<string, any> = {};
+        const elements = event.currentTarget.elements as HTMLCollectionOf<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
+
+        formData['id'] = id;
+
+
+        const formElementsArray = Array.from(elements).filter(
+            (element): element is HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement =>
+                element instanceof HTMLInputElement ||
+                element instanceof HTMLSelectElement ||
+                element instanceof HTMLTextAreaElement
+        );
+
+
+        if (formElementsArray.length > 0) {
+            formElementsArray.forEach(element => {
+                if (element.name) {
+                    formData[element.name] = element.value;
+                }
+            });
+        } else {
+            console.error('No form elements found.');
+        }
+
+
+        handleSubmit(formData);
+    };
+
     return (
+
 
         <Paper sx={{width: 'auto', mb: 2, margin: 3}}>
             <Box sx={{display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2}}>
@@ -111,7 +149,7 @@ const CustomForm: React.FC<UpdateFormProps> = ({formElements, url, buttonName}) 
 
             </Box>
             <FormControl sx={{padding: 2, width: '100%'}}>
-                <form action={url} method="post">
+                <form onSubmit={onSubmit}>
                     {formElements.map(({
                                            name,
                                            id,
@@ -121,13 +159,19 @@ const CustomForm: React.FC<UpdateFormProps> = ({formElements, url, buttonName}) 
                                        }, index) => (
                         <div key={index}>
                             {label && <label htmlFor={id}>{label}</label>}
-                            <Component {...props} name={name} id={id} defaultValue={defaultValue}/>
+                            <Component
+                                {...props}
+                                name={name}
+                                id={id}
+                                defaultValue={defaultValue}
+                            />
                         </div>
                     ))}
 
                     <Button
-                        sx={button}
-                        variant="contained">
+                        sx={{marginTop: 2}}
+                        variant="contained"
+                        type="submit">
                         {buttonName}
                     </Button>
                 </form>
