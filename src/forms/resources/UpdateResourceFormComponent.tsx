@@ -1,19 +1,29 @@
 import {UpdateResourceForm} from "../../api/resources/form/UpdateResourceForm";
-import CustomForm, {FormElement, LabelTextArea, TextArea, TextField} from "../../components/UpdateForms/CustomForm";
+import CustomForm, {
+    FormElement,
+    CustomLabelText,
+    CustomTextArea,
+    CustomTextField
+} from "../../components/UpdateForms/CustomForm";
 import React, {useEffect, useState} from "react";
 import {api} from "../../api/AppApi";
+import {UpdateDialog} from "../../components/dialogs/UpdateDialog";
+import {useNavigate} from "react-router-dom";
+
 
 interface updateProps {
     id: string
 }
 
 export function UpdateResourceFormComponent(props: updateProps) {
+    const[open, setOpen] = useState(false)
     const [form, setForm] = useState<UpdateResourceForm>({
         id: props.id,
         name: '',
         description: '',
         value: ''
     });
+
     useEffect(() => {
         const fetchElements = async () => {
             try {
@@ -33,11 +43,11 @@ export function UpdateResourceFormComponent(props: updateProps) {
         fetchElements();
     }, [props.id]);
 
+    const linkToPage = "/project/resources/any"
+    const navigate = useNavigate();
 
 
-    // deklarujecie elenety formularza  przed textArea, textField musicie deklarować oddzielnie Label jako LabelTextArea
-    //jeżeli macie checkboxy to one mają wbudowany Label którego treść podajecie w name
-    //każdy element musi mieć typeOfElement bez tego się nie wygenereuje, i każdy musi mieć name bez tego nie przypisze danych
+
 
     const formElements: FormElement[] = [
         {
@@ -45,7 +55,7 @@ export function UpdateResourceFormComponent(props: updateProps) {
             id: "nameLabel",
             defaultValue: "Name: ",
             typeOfElement: {
-                Component: LabelTextArea,
+                Component: CustomLabelText,
                 props: {}
             }
         },
@@ -54,7 +64,7 @@ export function UpdateResourceFormComponent(props: updateProps) {
             id: 'name',
             defaultValue: form.name,
             typeOfElement: {
-                Component: TextField,
+                Component: CustomTextField,
                 props: {}
             }
         },
@@ -63,7 +73,7 @@ export function UpdateResourceFormComponent(props: updateProps) {
             id: "valueLabel",
             defaultValue: "Value: ",
             typeOfElement: {
-                Component: LabelTextArea,
+                Component: CustomLabelText,
                 props: {}
             }
         },
@@ -72,7 +82,7 @@ export function UpdateResourceFormComponent(props: updateProps) {
             id: 'value',
             defaultValue: form.value,
             typeOfElement: {
-                Component: TextField,
+                Component: CustomTextField,
                 props: {}
             }
         },
@@ -81,7 +91,7 @@ export function UpdateResourceFormComponent(props: updateProps) {
             id: "descriptionLabel",
             defaultValue: "Description: ",
             typeOfElement: {
-                Component: LabelTextArea,
+                Component: CustomLabelText,
                 props: {}
             }
         },
@@ -90,27 +100,43 @@ export function UpdateResourceFormComponent(props: updateProps) {
             id: 'description',
             defaultValue: form.description,
             typeOfElement: {
-                Component: TextArea,
+                Component: CustomTextArea,
                 props: {}
             }
         }
     ]
-    //tutaj jedynie zmieniacie api na swoje
     const handleSubmit = (formData: Record<string, any>) => {
         console.log(formData);
 
         api.resources.updateResource(formData as UpdateResourceForm).then(
             response => {
-                console.log("Edited values:", response)
+                console.log("Updated to:", response)
+                setOpen(true);
+                const timer = setTimeout(() => {
+                    navigate(linkToPage);
+                }, 1000);
+
             }
+
         )
             .catch(error => console.log("Update values error: ", error))
+
+
     }
+
+    useEffect(() => {
+        if (open) {
+            console.log("Dialog should be open now:", open);
+        }
+    }, [open]);
 
 
     return (
-        <CustomForm formElements={formElements} buttonName='Update' handleSubmit={handleSubmit}
-                    id={props.id}></CustomForm>
+        <div>
+            <CustomForm formElements={formElements} buttonName='Update' handleSubmit={handleSubmit}
+                        id={props.id}></CustomForm>
+            <UpdateDialog openProps={open}></UpdateDialog>
+        </div>
     )
 
 }

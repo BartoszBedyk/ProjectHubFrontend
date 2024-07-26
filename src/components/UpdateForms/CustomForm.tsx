@@ -1,6 +1,6 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import {Box, Typography, Paper, FormControl, Button, Checkbox} from "@mui/material";
-import {api} from "../../api/AppApi";
+
 
 const textAreaStyle: React.CSSProperties = {
     padding: '12px 16px',
@@ -52,25 +52,25 @@ const button: React.CSSProperties = {
 const checkboxStyle: React.CSSProperties = {}
 
 
-export const TextArea: React.FC<{ name?: string, id?: string, defaultValue?: string }> =
+export const CustomTextArea: React.FC<{ name?: string, id?: string, defaultValue?: string }> =
     ({name, id, defaultValue}) =>
         (
             <textarea name={name} id={id} defaultValue={defaultValue} style={textAreaStyle}/>
         );
 
-export const TextField: React.FC<{ type?: string; name?: string; id?: string, defaultValue?: string }> =
+export const CustomTextField: React.FC<{ type?: string; name?: string; id?: string, defaultValue?: string}> =
     ({type = "text", name, id, defaultValue}) =>
         (
-            <input type={type} name={name} id={id} defaultValue={defaultValue} style={textFieldStyle}/>
+            <input type={type} name={name} id={id} defaultValue={defaultValue}  style={textFieldStyle}/>
         );
 
-export const LabelTextArea: React.FC<{ name?: string; htmlFor?: string, defaultValue?: string }> =
+export const CustomLabelText: React.FC<{ name?: string; htmlFor?: string, defaultValue?: string }> =
     ({name, htmlFor, defaultValue}) =>
         (
             <label htmlFor={htmlFor} style={labelStyle}> {defaultValue || name} </label>
         );
 
-export const CheckBoxField: React.FC<{ name?: string, id?: string, checked?: boolean }> =
+export const CustomCheckBox: React.FC<{ name?: string, id?: string, checked?: boolean }> =
     ({name, id, checked}) =>
         (
             <div>
@@ -87,7 +87,7 @@ type ComponentType = {
 };
 
 export interface FormElement {
-    name?: string;
+    name: string;
     id?: string;
     label?: string;
     defaultValue?: string;
