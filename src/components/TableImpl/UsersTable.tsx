@@ -108,11 +108,7 @@ const UsersTable = (props: UsersTableProps) => {
                         action1: (
                             <Tooltip title={user.blocked ? t('unblockUser') : t('blockUser')}>
                                 <IconButton onClick={async () => {
-                                    if (user.blocked) {
-                                        await api.userManagement.unblock(user.id);
-                                } else {
-                                        await api.userManagement.block(user.id);
-                                    }
+                                    await handleBlockUnblock(user.id, user.blocked);
                                     fetchUsers();
                                 }}>
                                     <BlockIcon sx={{color: '#1876D2'}} />
@@ -122,7 +118,7 @@ const UsersTable = (props: UsersTableProps) => {
                         action2: (
                             <Tooltip title={t('deleteUser')} >
                                 <IconButton onClick={async () => {
-                                    await api.userManagement.delete(user.id);
+                                    await handleDelete(user.id);
                                     fetchUsers();
                                 }}>
                                     <DeleteIcon sx={{color: '#1876D2'}}/>
