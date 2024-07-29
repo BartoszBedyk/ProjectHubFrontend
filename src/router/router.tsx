@@ -3,7 +3,6 @@ import HomePage from "../pages/home/home";
 import Login from "../pages/login/login";
 import Error from "../pages/error/error";
 import Resources from "../pages/resources/resources";
-import Projects from "../pages/project/Projects";
 import Edit from "../pages/edit/edit";
 import CreateProject from "../pages/project/CreateProject";
 import UpdateProject from "../pages/project/UpdateProject";
