@@ -12,11 +12,11 @@ export class UserManagementApiAxios implements UserManagementApi {
             .then(response => response.data);
     }
     save(form: CreateUserForm): Promise<UserDto> {
-        return axiosInstance.post<UserDto>('/user-management/save', form)
+        return axiosInstance.post<UserDto>(`/user-management/save`, form)
             .then(response => response.data);
     }
     update(form: EditUserForm): Promise<UserDto> {
-        return axiosInstance.put<UserDto>('/user-management/update', form)
+        return axiosInstance.put<UserDto>(`/user-management/update`, form)
             .then(response => response.data);
     }
     block(id: string): Promise<UserDto> {
@@ -32,7 +32,7 @@ export class UserManagementApiAxios implements UserManagementApi {
             .then(() => {});
     }
     search(form: SearchForm): Promise<SearchResponse<UserDto>> {
-        return axiosInstance.post<SearchResponse<UserDto>>('/user-management/search', form)
+        return axiosInstance.post<SearchResponse<UserDto>>(`/user-management/search`, form)
             .then(response => response.data);
     }
 }
