@@ -8,22 +8,17 @@ import { SearchSort } from "../../commons/Search/SearchSort";
 import { SearchSortOrder } from "../../commons/Search/SearchSortOrder";
 import { SearchForm } from "../../commons/Search/SearchForm";
 import { SearchResponse } from "../../commons/Search/SearchResponse";
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 type ProjectsTableProps = {
     searchValue: string
 }
 
 const ProjectsTable = (props: ProjectsTableProps) => {
-    const navigate = useNavigate();
-
     const columns: ColumnDefinition[] = [
         { id: 'name', label: 'Nazwa', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'description', label: 'Opis', type: 'TEXT', minWidth: 250, sortable: true, filterable: true },
         { id: 'createdOn', label: 'Data stworzenia', type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
         { id: 'createdBy', label: 'Stworzony przez', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
-        { id: 'action', label: '', type: 'TEXT', minWidth: 150, sortable: false, filterable: false },
     ];
 
     const searchFormCriteria: SearchFormCriteria[] = [
@@ -61,19 +56,11 @@ const ProjectsTable = (props: ProjectsTableProps) => {
                         console.error('Error fetching creator details:', error);
                     }
                     const newRow: RowData = {
+                        id: project.id,
                         name: project.name,
                         description: project.description,
                         createdOn: project.createdOn,
                         createdBy,
-                        action: (
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => navigate(`/project/${project.id}`)}
-                            >
-                                Szczegóły projektu
-                            </Button>
-                        )
                     };
                     return newRow;
                 }));
@@ -84,11 +71,11 @@ const ProjectsTable = (props: ProjectsTableProps) => {
         };
 
         fetchProjects();
-    }, [props.searchValue, navigate]);
+    }, [props.searchValue]);
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={'Lista projektów'} />
+            <CustomTable columns={columns} rows={rows} title={'Lista projektów'} navigateTo={'/project'} />
         </div>
     );
 }
