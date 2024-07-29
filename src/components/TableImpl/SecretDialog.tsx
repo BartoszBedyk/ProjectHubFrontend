@@ -20,7 +20,7 @@ interface SecretProps {
 
 const SecretDialog: React.FC<SecretProps> = ({ children }) => {
 
-    const {t} = useTranslation("resources");
+    const {t} = useTranslation("buttons");
 
 
     const [open, setOpen] = React.useState(false);

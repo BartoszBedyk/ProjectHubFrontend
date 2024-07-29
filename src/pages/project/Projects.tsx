@@ -2,13 +2,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
-    Button,
+    Button, Icon,
 } from '@mui/material';
 import CustomLayout from "../../components/Layout/Layout";
 import ProjectsTable from "../../components/TableImpl/ProjectsTable";
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import {useTranslation} from "react-i18next";
 
 const Projects: React.FC = () => {
     const navigate = useNavigate();
+    const {t} = useTranslation('projects');
 
     const handleCreateProject = () => {
         navigate('/project/create');
@@ -21,8 +24,13 @@ const Projects: React.FC = () => {
                         variant="contained"
                         color="primary"
                         onClick={handleCreateProject}
+                        title={t('createProject')}
                     >
-                        Nowy projekt
+                        <Icon
+                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                            <NoteAddIcon></NoteAddIcon>
+                        </Icon>
                     </Button>
                 </Box>
                 <ProjectsTable searchValue="" />

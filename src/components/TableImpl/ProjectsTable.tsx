@@ -10,6 +10,7 @@ import { SearchForm } from "../../commons/Search/SearchForm";
 import { SearchResponse } from "../../commons/Search/SearchResponse";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 type ProjectsTableProps = {
     searchValue: string
@@ -17,12 +18,13 @@ type ProjectsTableProps = {
 
 const ProjectsTable = (props: ProjectsTableProps) => {
     const navigate = useNavigate();
+    const {t} = useTranslation("projects")
 
     const columns: ColumnDefinition[] = [
-        { id: 'name', label: 'Nazwa', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
-        { id: 'description', label: 'Opis', type: 'TEXT', minWidth: 250, sortable: true, filterable: true },
-        { id: 'createdOn', label: 'Data stworzenia', type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
-        { id: 'createdBy', label: 'Stworzony przez', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
+        { id: 'name', label: t('name'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
+        { id: 'description', label: t('description'), type: 'TEXT', minWidth: 250, sortable: true, filterable: true },
+        { id: 'createdOn', label: t('createdOn'), type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
+        { id: 'createdBy', label: t('createdById'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'action', label: '', type: 'TEXT', minWidth: 150, sortable: false, filterable: false },
     ];
 
@@ -53,7 +55,7 @@ const ProjectsTable = (props: ProjectsTableProps) => {
             try {
                 const response: SearchResponse<ProjectDTO> = await api.project.search(searchForm);
                 const projectRows: RowData[] = await Promise.all(response.items.map(async (project) => {
-                    let createdBy = 'Unknown';
+                    let createdBy = t('unknown');
                     try {
                         const creator = await api.projectMember.getByIds(project.createdById, project.id);
                         createdBy = `${creator.firstName} ${creator.lastName}`;
@@ -61,6 +63,7 @@ const ProjectsTable = (props: ProjectsTableProps) => {
                         console.error('Error fetching creator details:', error);
                     }
                     const newRow: RowData = {
+                        id: project.id,
                         name: project.name,
                         description: project.description,
                         createdOn: project.createdOn,
@@ -70,8 +73,9 @@ const ProjectsTable = (props: ProjectsTableProps) => {
                                 variant="contained"
                                 color="primary"
                                 onClick={() => navigate(`/project/${project.id}`)}
+                                title={t('open')}
                             >
-                                Szczegóły projektu
+                                {t('projectDetails')}
                             </Button>
                         )
                     };
@@ -88,7 +92,7 @@ const ProjectsTable = (props: ProjectsTableProps) => {
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={'Lista projektów'} />
+            <CustomTable columns={columns} rows={rows} title={t('projectsTableTitle')} navigateTo={'/project'} />
         </div>
     );
 }

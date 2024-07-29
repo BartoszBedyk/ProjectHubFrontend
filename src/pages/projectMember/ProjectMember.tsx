@@ -19,53 +19,48 @@ import { TechnologyDTO } from '../../api/project/technology/response/TechnologyD
 import CustomLayout from "../../components/Layout/Layout";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
 import {ProjectDTO} from "../../api/project/response/ProjectDTO";
-import {useTranslation} from "react-i18next";
 
-const ProjectPageComponent: React.FC = () => {
+const ProjectMemberPage: React.FC = () => {
     const { projectId } = useParams<{ projectId: string }>();
-    const [project, setProject] = useState<ProjectDTO | null>(null);
-    const [technologies, setTechnologies] = useState<TechnologyDTO[]>([]);
+    const { userId } = useParams<{ userId: string }>();
+
+    const [projectMember, setProjectMember] = useState<ProjectMemberDto | null>(null);
     const [loading, setLoading] = useState(true);
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const navigate = useNavigate();
-    const {t} = useTranslation('projects')
 
     useEffect(() => {
-        const fetchProjectDetails = async () => {
+        const fetchProjectMemberDetails = async () => {
             try {
-                const projectResponse = await api.project.get(projectId!);
-                setProject(projectResponse);
+                const response = await api.projectMember.getByIds(userId! ,projectId!);
+                setProjectMember(response);
 
-                const technologyResponses = await Promise.all(
-                    projectResponse.technologies.map((techId: string) => api.technology.findById(techId))
-                );
-                setTechnologies(technologyResponses);
 
-                if (projectResponse.createdById) {
-                    const creatorResponse = await api.projectMember.getByIds(projectResponse.createdById, projectId!);
+                if (response.createdById) {
+                    const creatorResponse = await api.projectMember.getByIds(response.createdById, projectId!);
                     setCreator(creatorResponse);
                 }
             } catch (error) {
-                console.error('Error fetching project details:', error);
+                console.error('Error fetching project member details:', error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchProjectDetails();
+        fetchProjectMemberDetails();
     }, [projectId]);
 
     const handleEdit = () => {
-        navigate(`/project/edit/${projectId}`);
+        navigate(`/project-member/edit/${projectId}/${userId}`);
     };
 
     const handleDelete = async () => {
         try {
-            await api.project.delete(projectId!);
+            await api.projectMember.delete(projectId!, userId!);
             navigate('/project');
         } catch (error) {
-            console.error('Error deleting project:', error);
+            console.error('Error deleting project member:', error);
         }
     };
 
@@ -89,12 +84,12 @@ const ProjectPageComponent: React.FC = () => {
         );
     }
 
-    if (!project) {
+    if (!projectMember) {
         return (
             <CustomLayout>
                 <Container>
                     <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-                        {t('notFound')}
+                        Project member not found
                     </Typography>
                 </Container>
             </CustomLayout>
@@ -107,51 +102,43 @@ const ProjectPageComponent: React.FC = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
                     <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
                     <Typography variant="h5" component="div">
-                        {project.name}
+                        {projectMember.firstName} {projectMember.lastName}
                     </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, marginBottom: 2, marginLeft: 3, marginTop: 1 }}>
-                    {technologies.map((tech, index) => (
-                        <Chip key={index} label={tech.name} sx={{ backgroundColor: '#1976d2', color: '#fff' }} />
-                    ))}
                 </Box>
                 <Box sx={{ padding: 3 }}>
-                    <Typography variant="body1" gutterBottom>
-                        {project.description}
-                    </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2 }}>
                         <Button variant="contained" color="primary" onClick={handleEdit}>
-                            {t('edit')}
+                            Edytuj uczestnika
                         </Button>
                         <Button variant="contained" color="error" onClick={openDeleteDialog}>
-                            {t('deleteProject')}
+                            Usuń uczestnika
                         </Button>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
                         <Typography variant="body2" color="textSecondary">
-                            {`${t('created')}: ${new Date(project.createdOn).toLocaleDateString()}`}
+                            {`Utworzono: ${new Date(projectMember.createdOn).toLocaleDateString()}`}
                         </Typography>
                         {creator && (
                             <Typography variant="body2" color="textSecondary">
-                                {`${t('createdBy')}: ${creator.firstName} ${creator.lastName}`}
+                                {`Utworzony przez: ${creator.firstName} ${creator.lastName}`}
                             </Typography>
                         )}
                     </Box>
                 </Box>
             </Paper>
             <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
-                <DialogTitle>{t('confirmDeletion')}</DialogTitle>
+                <DialogTitle>Potwierdź usunięcie</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {t('deletionAlert')}
+                        Czy na pewno chcesz usunąć tego uczestnika? Tej operacji nie można cofnąć.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeDeleteDialog} color="primary">
-                        {t('cancel')}
+                        Anuluj
                     </Button>
                     <Button onClick={handleDelete} color="error">
-                        {t('delete')}
+                        Usuń
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -159,4 +146,4 @@ const ProjectPageComponent: React.FC = () => {
     );
 };
 
-export default ProjectPageComponent;
+export default ProjectMemberPage;
