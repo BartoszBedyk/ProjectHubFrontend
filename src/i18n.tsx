@@ -9,14 +9,20 @@ export const languageResources ={
     en: {
         login: translationEnglish.pages.login,
         resources: translationEnglish.pages.resources,
-        buttons: translationEnglish.buttons,
-        sideBar: translationEnglish.sidebar
+        sideBar: translationEnglish.sidebar,
+        projects: translationEnglish.pages.projects,
+        overall: translationEnglish.pages,
+        table: translationEnglish.table,
+        buttons: translationEnglish.pages.buttons
     },
     pl: {
         login: translationPolish.pages.login,
         resources: translationPolish.pages.resources,
-        buttons: translationPolish.buttons,
-        sideBar: translationPolish.sidebar
+        sideBar: translationPolish.sidebar,
+        projects: translationPolish.pages.projects,
+        overall: translationPolish.pages,
+        table: translationPolish.table,
+        buttons: translationPolish.pages.buttons
     }
 }
 const options = {

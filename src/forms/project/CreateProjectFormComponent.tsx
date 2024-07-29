@@ -18,6 +18,7 @@ import { api } from "../../api/AppApi";
 import { TechnologyDTO } from "../../api/project/technology/response/TechnologyDTO";
 import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 import { useNavigate } from 'react-router-dom';
+import {useTranslation} from "react-i18next";
 
 const CreateProjectFormComponent: React.FC = () => {
     const [form, setForm] = useState<CreateProjectForm>({
@@ -36,7 +37,8 @@ const CreateProjectFormComponent: React.FC = () => {
     const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>([]);
     const [formError, setFormError] = useState<string | null>(null);
     const [technologyError, setTechnologyError] = useState<string | null>(null);
-    const navigate = useNavigate(); // Add useNavigate hook
+    const navigate = useNavigate();
+    const {t} = useTranslation('projects');
 
     useEffect(() => {
         const fetchTechnologies = async () => {
@@ -84,7 +86,7 @@ const CreateProjectFormComponent: React.FC = () => {
 
     const addTechnology = async () => {
         if (technology.name === '' || technology.description === '') {
-            setTechnologyError('Wszystkie pola technologii muszą być wypełnione');
+            setTechnologyError(t('technologyError'));
             return;
         }
 
@@ -119,7 +121,7 @@ const CreateProjectFormComponent: React.FC = () => {
         e.preventDefault();
 
         if (form.name === '' || form.description === '' || form.technologyList.length === 0) {
-            setFormError('Wszystkie pola projektu muszą być wypełnione');
+            setFormError(t('emptyFieldError'));
             return;
         }
 
@@ -172,7 +174,7 @@ const CreateProjectFormComponent: React.FC = () => {
                     required
                     id="description"
                     name="description"
-                    label="Opis projektu"
+                    label={t('description')}
                     multiline
                     rows={4}
                     value={form.description}
@@ -185,7 +187,7 @@ const CreateProjectFormComponent: React.FC = () => {
                     </Typography>
                 )}
                 <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
-                    Dodaj technologie
+                    {t('addTechnology')}
                 </Typography>
                 <ToggleButtonGroup
                     value={showExisting}
@@ -196,10 +198,10 @@ const CreateProjectFormComponent: React.FC = () => {
                     size="small"
                 >
                     <ToggleButton value="new" aria-label="new technology" sx={{ '&.Mui-selected': { backgroundColor: '#1976d2', color: '#fff' } }}>
-                        Nowe
+                        {t('new')}
                     </ToggleButton>
                     <ToggleButton value="existing" aria-label="existing technology" sx={{ '&.Mui-selected': { backgroundColor: '#1976d2', color: '#fff' } }}>
-                        Istniejące
+                        {t('exists')}
                     </ToggleButton>
                 </ToggleButtonGroup>
                 {showExisting === 'new' ? (
@@ -207,7 +209,7 @@ const CreateProjectFormComponent: React.FC = () => {
                         <TextField
                             id="tech-name"
                             name="name"
-                            label="Nazwa technologii"
+                            label={t('technologyName')}
                             value={technology.name}
                             onChange={handleTechnologyChange}
                             error={!!technologyError}
@@ -215,7 +217,7 @@ const CreateProjectFormComponent: React.FC = () => {
                         <TextField
                             id="tech-description"
                             name="description"
-                            label="Opis technologii"
+                            label={t('technologyDescription')}
                             value={technology.description}
                             onChange={handleTechnologyChange}
                             error={!!technologyError}
@@ -226,7 +228,7 @@ const CreateProjectFormComponent: React.FC = () => {
                             </Typography>
                         )}
                         <Button variant="contained" color="primary" onClick={addTechnology} sx={{ mt: 2 }}>
-                            Dodaj technologię
+                            {t('addTechnology')}
                         </Button>
                     </>
                 ) : (
@@ -246,7 +248,7 @@ const CreateProjectFormComponent: React.FC = () => {
                     </List>
                 )}
                 <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
-                    Wybrane technologie
+                    {t('selectedTechnologies')}
                 </Typography>
                 <List>
                     {selectedTechnologies.map((tech, index) => (
@@ -267,7 +269,7 @@ const CreateProjectFormComponent: React.FC = () => {
                     ))}
                 </List>
                 <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    Utwórz projekt
+                    {t('createProject')}
                 </Button>
             </Box>
         </Paper>

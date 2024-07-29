@@ -1,10 +1,4 @@
 {
-  "buttons": {
-    "save": "Zapisz",
-    "secretDialog" : "Zdemaskowany sekret",
-    "copyTxt": "Skopiuj tekst",
-    "closeTxt": "Zamknij"
-  },
   "sidebar": {
     "home": "Strona startowa",
     "project": "Projekt",
@@ -20,14 +14,19 @@
     "logout": "Wyloguj się"
   },
   "table": {
-  "previous": "Przejdź do poprzedniej strony",
-  "next": "Przejdź do następnej strony",
-  "last": "Przejdź do ostatniej strony",
-  "first": "Przejdź do pierwszej strony",
-  "labelDisplayedRows1": "z",
-  "labelDisplayedRows2": "więcej niż",
-  "labelRowsPerPage": "Wiersze na stronę"
-},
+    "previous": "Przejdź do poprzedniej strony",
+    "next": "Przejdź do następnej strony",
+    "last": "Przejdź do ostatniej strony",
+    "first": "Przejdź do pierwszej strony",
+    "labelDisplayedRows1": "z",
+    "labelDisplayedRows2": "więcej niż",
+    "labelRowsPerPage": "Wiersze na stronę",
+    "filters": "Filtry",
+    "clear": "Wyczyść",
+    "apply": "Zastosuj",
+    "from": "od",
+    "to": "to"
+  },
   "pages": {
     "home": {
     },
@@ -43,16 +42,67 @@
       "loggingError": "Niepoprawny adres email lub hasło",
       "loggingTokenError": "Zaloguj się ponownie"
     },
-    "resources" : {
-      "resourcestxt" : " - zasoby projektu.",
-      "secretUnmasked" : "Odszyfrowany sekret to: ",
+    "resources": {
+      "resourcestxt": " - zasoby projektu.",
+      "secretUnmasked": "Odszyfrowany sekret to: ",
       "copyTxt": "Skopiuj tekst",
       "closeTxt": "Zamknij",
+      "resourcesTableTitle": "Zasoby",
+      "createResource": "Utwórz nowy zasób",
+      "notFound": "Nie znaleziono zasobu"
+    },
+    "projects": {
+      "name": "Nazwa",
+      "description": "Opis",
+      "createdOn": "Data utworzenia",
+      "createdById": "Twórca",
+      "unknown": "Nieznany",
+      "projectsTableTitle": "Projekty",
+      "projectDetails": "Szczegłóy projektu",
+      "open": "Otwórz",
+      "createProject": "Utwórz nowy projekt",
+      "notFound": "Nie znaleziono projektu",
+      "edit": "Edytuj projekt",
+      "deleteProject": "Usuń projekt",
+      "created": "Utworzono",
+      "createdBy": "Utworzono przez",
+      "confirmDeletion": "Potwierdź usunięcie",
+      "deletionAlert": "Czy na pewno chcesz usunąć ten projekt? Tej operacji nie można cofnąć.",
+      "cancel": "Anuluj",
+      "delete": "Usuń",
+      "technologyError": "Wszystkie pola technologii muszą być wypełnione",
+      "emptyFieldError": "Wszystkie pola projektu muszą być wypełnione",
+      "addTechnology": "Dodaj technologie",
+      "new": "Nowe",
+      "exists": "Istniejące",
+      "technologyName": "Nazwa technologii",
+      "technologyDescription": "Opis technologii",
+      "selectedTechnologies": "Wybrane technologie",
+      "updateProject": "Zaktualizuj projekt"
+    },
+    "forms": {
+      "new": "Nowe",
+      "add": "Dodaj",
+      "edit": "Edytuj",
+      "delete": "Usuń",
+      "name": "Nazwa",
+      "createdBy": "Utworzone przez",
+      "description": "Opis",
+      "creationDate": "Utworzono",
+      "nameM": "Imię",
+      "surnameM": "Nazwisko",
+      "role": "Rola",
+      "type": "Typ",
+      "value": "Wartość",
+      "validationError": "Prosze umieść prawidłową wartość. ",
+      "modifyDate": "Ostatnia edycja"
+    },
+    "buttons": {
       "openLink": "Otwórz link ",
       "downloadAttachment": "Pobierz załącznik",
       "readSecret": "Odszyfruj sekret",
       "readText": "Odczytaj tekst",
-      "resourcesTableTitle": "Zasoby"
+      "details": "Pokaż szczegóły"
     }
   }
 }

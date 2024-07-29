@@ -10,7 +10,7 @@ interface DownloadFileButtonProps {
 }
 
 export const DownloadFileButton = ({ children }: DownloadFileButtonProps) => {
-    const {t} = useTranslation("resources");
+    const {t} = useTranslation("buttons");
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 

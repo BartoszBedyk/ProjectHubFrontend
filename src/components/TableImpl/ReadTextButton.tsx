@@ -9,7 +9,7 @@ interface OpenLinkButtonProps {
 }
 
 const OpenLinkButton = ({ children }: OpenLinkButtonProps) => {
-    const {t} = useTranslation("resources");
+    const {t} = useTranslation("buttons");
     return(
         //TODO
         //otwieranie okienka z teksterm lub otwieranie

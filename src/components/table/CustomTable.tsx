@@ -16,6 +16,7 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import FilterContainer from './FilterContainer';
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 export type ColumnType = 'DATE' | 'DATE_TIME' | 'TEXT' | 'NUMBER' | 'ENUM';
 
@@ -51,6 +52,7 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
     const [fadeKey, setFadeKey] = useState(0);
     const navigate = useNavigate();
 
+    const{t} =useTranslation('table')
     const handleRequestSort = (property: string) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -251,9 +253,9 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                labelRowsPerPage="Wiersze na stronę:"
+                labelRowsPerPage={t('labelRowsPerPage')}
                 labelDisplayedRows={({ from, to, count }) =>
-                    `${from}-${to} z ${count !== -1 ? count : `więcej niż ${to}`}`
+                    `${from}-${to} ${t('labelDisplayedRows1')} ${count !== -1 ? count : `${t('labelDisplayedRows2')} ${to}`}`
                 }
                 getItemAriaLabel={(type) => {
                     if (type === 'previous') {

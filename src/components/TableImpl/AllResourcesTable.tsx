@@ -23,15 +23,15 @@ type AllResourcesProps = {
 
 const AllResourcesTable = (props: AllResourcesProps) => {
 
-    const {t} = useTranslation("resources");
-    let { type } = useParams();
+    const {t} = useTranslation("overall");
+    let {type} = useParams();
     const columns: ColumnDefinition[] = [
         //{ id: 'id', label: 'Id', type: 'TEXT', minWidth: 50},
-        {id: 'name', label: 'Name', type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
-        {id: 'value', label: 'Value', type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
-        {id: 'date', label: 'Date', type: 'DATE', minWidth: 50, sortable: true, filterable: true},
-        {id: 'type', label: 'Type', type: 'TEXT', minWidth: 50, sortable: true, filterable: true},
-        {id: 'createdBy', label: 'Created By', type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
+        {id: 'name', label: t('forms.name'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
+        {id: 'value', label: t('forms.value'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
+        {id: 'date', label: t('forms.creationDate'), type: 'DATE', minWidth: 50, sortable: true, filterable: true},
+        {id: 'type', label: t('forms.type'), type: 'TEXT', minWidth: 50, sortable: true, filterable: true},
+        {id: 'createdBy', label: t('forms.createdBy'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
         {id: 'action', label: '', type: 'TEXT', minWidth: 100, sortable: false, filterable: false},
     ];
 
@@ -82,7 +82,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                 switch (responseValue.resourceType) {
                     case  'ATTACHMENT': {
                         const newRow: RowData = {
-                            //id: responseValue.id,
+                            id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
                             type: responseValue.resourceType,
@@ -96,7 +96,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                     }
                     case 'SECRET': {
                         const newRow: RowData = {
-                            //id: responseValue.id,
+                            id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
                             type: responseValue.resourceType,
@@ -124,7 +124,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                     }
                     case 'TEXT': {
                         const newRow: RowData = {
-                            //id: responseValue.id,
+                            id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
                             type: responseValue.resourceType,
@@ -137,7 +137,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                     }
                     default: {
                         const newRow: RowData = {
-                            //id: responseValue.id,
+                            id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
                             type: responseValue.resourceType,

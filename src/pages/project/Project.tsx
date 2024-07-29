@@ -19,6 +19,7 @@ import { TechnologyDTO } from '../../api/project/technology/response/TechnologyD
 import CustomLayout from "../../components/Layout/Layout";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
 import {ProjectDTO} from "../../api/project/response/ProjectDTO";
+import {useTranslation} from "react-i18next";
 
 const ProjectPageComponent: React.FC = () => {
     const { projectId } = useParams<{ projectId: string }>();
@@ -28,6 +29,7 @@ const ProjectPageComponent: React.FC = () => {
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const navigate = useNavigate();
+    const {t} = useTranslation('projects')
 
     useEffect(() => {
         const fetchProjectDetails = async () => {
@@ -92,7 +94,7 @@ const ProjectPageComponent: React.FC = () => {
             <CustomLayout>
                 <Container>
                     <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-                        Project not found
+                        {t('notFound')}
                     </Typography>
                 </Container>
             </CustomLayout>
@@ -119,37 +121,37 @@ const ProjectPageComponent: React.FC = () => {
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2 }}>
                         <Button variant="contained" color="primary" onClick={handleEdit}>
-                            Edytuj projekt
+                            {t('edit')}
                         </Button>
                         <Button variant="contained" color="error" onClick={openDeleteDialog}>
-                            Usuń projekt
+                            {t('deleteProject')}
                         </Button>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
                         <Typography variant="body2" color="textSecondary">
-                            {`Utworzono: ${new Date(project.createdOn).toLocaleDateString()}`}
+                            {`${t('created')}: ${new Date(project.createdOn).toLocaleDateString()}`}
                         </Typography>
                         {creator && (
                             <Typography variant="body2" color="textSecondary">
-                                {`Utworzony przez: ${creator.firstName} ${creator.lastName}`}
+                                {`${t('createdBy')}: ${creator.firstName} ${creator.lastName}`}
                             </Typography>
                         )}
                     </Box>
                 </Box>
             </Paper>
             <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
-                <DialogTitle>Potwierdź usunięcie</DialogTitle>
+                <DialogTitle>{t('confirmDeletion')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Czy na pewno chcesz usunąć ten projekt? Tej operacji nie można cofnąć.
+                        {t('deletionAlert')}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeDeleteDialog} color="primary">
-                        Anuluj
+                        {t('cancel')}
                     </Button>
                     <Button onClick={handleDelete} color="error">
-                        Usuń
+                        {t('delete')}
                     </Button>
                 </DialogActions>
             </Dialog>

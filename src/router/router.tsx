@@ -2,13 +2,15 @@ import {createBrowserRouter} from "react-router-dom";
 import HomePage from "../pages/home/home";
 import Login from "../pages/login/login";
 import Error from "../pages/error/error";
-import CreateProject from "../pages/project/CreateProject";
 import Resources from "../pages/resources/resources";
+import Edit from "../pages/edit/edit";
+import CreateProject from "../pages/project/CreateProject";
 import UpdateProject from "../pages/project/UpdateProject";
 import ProjectPageComponent from "../pages/project/Project";
 import Projects from "../pages/project/Projects";
 import ProjectMembers from "../pages/projectMember/ProjectMembers";
 import ProjectMemberPage from "../pages/projectMember/ProjectMember";
+import Resource from "../pages/resources/resource";
 
 export const router = createBrowserRouter([
     {
@@ -112,5 +114,14 @@ export const router = createBrowserRouter([
         element: <Resources></Resources>,
         errorElement: <Error/>
     },
+    {
+        path:"/project/resources/edit/:id",
+        element:<Edit></Edit>,
+        errorElement: <Error/>
+    },{
+        path:"/project/resources/details/:id",
+        element:<Resource></Resource>,
+        errorElement: <Error/>
+    }
 
 ])
