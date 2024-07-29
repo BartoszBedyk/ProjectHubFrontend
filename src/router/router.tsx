@@ -1,10 +1,13 @@
 import {createBrowserRouter} from "react-router-dom";
-import HomePage from "../pages/home/home";
 import Login from "../pages/login/login";
 import Error from "../pages/error/error";
 import Resources from "../pages/resources/resources";
 import Projects from "../pages/project/Projects";
 import Edit from "../pages/edit/edit";
+import CreateProject from "../pages/project/CreateProject";
+import UpdateProject from "../pages/project/UpdateProject";
+import ProjectPageComponent from "../pages/project/Project";
+import Resource from "../pages/resources/resource";
 
 export const router = createBrowserRouter([
     {
@@ -46,18 +49,23 @@ export const router = createBrowserRouter([
 
     /** PROJECT **/
     {
+        path: "/project",
+        element: <Projects/>,
+        errorElement: <Error/>
+    },
+    {
         path: "/project/:projectId",
-        element: <div>Project</div>,
+        element: <ProjectPageComponent/>,
         errorElement: <Error/>
     },
     {
         path: "/project/create",
-        element: <div>Create Project</div>,
+        element: <CreateProject/>,
         errorElement: <Error/>
     },
     {
-        path: "/project/edit",
-        element: <div>Edit Project</div>,
+        path: "/project/edit/:projectId",
+        element: <UpdateProject/>,
         errorElement: <Error/>
     },
 
@@ -94,8 +102,12 @@ export const router = createBrowserRouter([
         errorElement: <Error/>
     },
     {
-        path:"/project/resources/update",
+        path:"/project/resources/edit/:id",
         element:<Edit></Edit>,
+        errorElement: <Error/>
+    },{
+        path:"/project/resources/details/:id",
+        element:<Resource></Resource>,
         errorElement: <Error/>
     }
 

@@ -10,6 +10,7 @@ import {
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ClearIcon from '@mui/icons-material/Clear';
 import { ColumnDefinition, ColumnType } from './CustomTable';
+import {useTranslation} from "react-i18next";
 
 interface FilterContainerProps {
     columns: ColumnDefinition[];
@@ -25,6 +26,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
     const [filters, setFilters] = useState<Record<string, { operator: string; value: string }>>({});
     const [dateRangeFilters, setDateRangeFilters] = useState<Record<string, { start: string; end: string }>>({});
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const {t} = useTranslation('table')
 
     const handleFilterIconClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -88,7 +90,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
             return (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <TextField
-                        label={`${column.label} od `}
+                        label={`${column.label} ${t('from')} `}
                         type="date"
                         variant="outlined"
                         size="small"
@@ -102,7 +104,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                         }
                     />
                     <TextField
-                        label={`${column.label} do`}
+                        label={`${column.label} ${t('to')}`}
                         type="date"
                         variant="outlined"
                         size="small"
@@ -168,7 +170,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                 sx={{ '& .MuiPaper-root': { borderRadius: 2, p: 2, minWidth: 350 } }}
             >
                 <Box sx={{ p: 2 }}>
-                    <Typography variant="h6" sx={{ mb: 2 }}>Filtry</Typography>
+                    <Typography variant="h6" sx={{ mb: 2 }}>{t('filters')}</Typography>
                     {columns.map((column) => (
                         <Box key={column.id} sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 2 }}>
                             {renderInputField(column)}
@@ -181,7 +183,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                             onClick={handleApply}
                             sx={{width: '40%'}}
                         >
-                            Zastosuj
+                            {t('apply')}
                         </Button>
                         <Button
                             variant="outlined"
@@ -190,7 +192,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                             startIcon={<ClearIcon />}
                             sx={{width: '40%'}}
                         >
-                            Wyczyść
+                            {t('clear')}
                         </Button>
                     </Box>
                 </Box>

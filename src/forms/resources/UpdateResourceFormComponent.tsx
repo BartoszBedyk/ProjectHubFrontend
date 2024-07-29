@@ -9,6 +9,7 @@ import React, {useEffect, useState} from "react";
 import {api} from "../../api/AppApi";
 import {UpdateDialog} from "../../components/dialogs/UpdateDialog";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
 interface updateProps {
@@ -16,7 +17,7 @@ interface updateProps {
 }
 
 export function UpdateResourceFormComponent(props: updateProps) {
-    const[open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false)
     const [form, setForm] = useState<UpdateResourceForm>({
         id: props.id,
         name: '',
@@ -28,14 +29,13 @@ export function UpdateResourceFormComponent(props: updateProps) {
         const fetchElements = async () => {
             try {
                 const elements = await api.resources.get(props.id)
-                        setForm({
-                            id: elements.id,
-                            name: elements.name,
-                            description: elements.description,
-                            value: elements.value,
-                        })
-                    }
-             catch (error) {
+                setForm({
+                    id: elements.id,
+                    name: elements.name,
+                    description: elements.description,
+                    value: elements.value,
+                })
+            } catch (error) {
                 console.error('Error fetching elements data:', error);
             }
         }
@@ -45,15 +45,14 @@ export function UpdateResourceFormComponent(props: updateProps) {
 
     const linkToPage = "/project/resources/any"
     const navigate = useNavigate();
-
-
+    const {t} = useTranslation("overall")
 
 
     const formElements: FormElement[] = [
         {
             name: 'nameLabel',
             id: "nameLabel",
-            defaultValue: "Name: ",
+            defaultValue: t('forms.name'),
             typeOfElement: {
                 Component: CustomLabelText,
                 props: {}
@@ -71,7 +70,7 @@ export function UpdateResourceFormComponent(props: updateProps) {
         {
             name: 'valueLabel',
             id: "valueLabel",
-            defaultValue: "Value: ",
+            defaultValue: t('forms.value'),
             typeOfElement: {
                 Component: CustomLabelText,
                 props: {}
@@ -89,7 +88,7 @@ export function UpdateResourceFormComponent(props: updateProps) {
         {
             name: 'descriptionLabel',
             id: "descriptionLabel",
-            defaultValue: "Description: ",
+            defaultValue: t('forms.description'),
             typeOfElement: {
                 Component: CustomLabelText,
                 props: {}
@@ -112,12 +111,11 @@ export function UpdateResourceFormComponent(props: updateProps) {
             response => {
                 console.log("Updated to:", response)
                 setOpen(true);
-                const timer = setTimeout(() => {
+                setTimeout(() => {
                     navigate(linkToPage);
                 }, 1000);
 
             }
-
         )
             .catch(error => console.log("Update values error: ", error))
 

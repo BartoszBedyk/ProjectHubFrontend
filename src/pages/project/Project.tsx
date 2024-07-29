@@ -29,7 +29,7 @@ const ProjectPageComponent: React.FC = () => {
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const navigate = useNavigate();
-    const {t} = useTranslation('Projects')
+    const {t} = useTranslation('projects')
 
     useEffect(() => {
         const fetchProjectDetails = async () => {

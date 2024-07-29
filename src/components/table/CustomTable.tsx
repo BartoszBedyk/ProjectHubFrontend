@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import FilterContainer from './FilterContainer';
+import {useTranslation} from "react-i18next";
 
 export type ColumnType = 'DATE' | 'DATE_TIME' | 'TEXT' | 'NUMBER' | 'ENUM';
 
@@ -47,7 +48,7 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [filters, setFilters] = useState<Record<string, { operator: string; value: string }>>({});
     const [fadeKey, setFadeKey] = useState(0);
-
+    const{t} =useTranslation('table')
     const handleRequestSort = (property: string) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -163,6 +164,10 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
         }
     };
 
+    const handleClick = (id:string) => {
+        console.log("to ejst ID", id)
+    }
+
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
@@ -215,8 +220,9 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                         {columns.map((column) => (
-                                            <TableCell key={column.id} align={column.align}>
+                                            <TableCell key={column.id} align={column.align} onClick={() => {handleClick(row.id)}}>
                                                 {renderCellValue(column, row[column.id])}
+
                                             </TableCell>
                                         ))}
                                     </TableRow>
@@ -239,21 +245,21 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                labelRowsPerPage="Wiersze na stronę:"
+                labelRowsPerPage={t('labelRowsPerPage')}
                 labelDisplayedRows={({ from, to, count }) =>
-                    `${from}-${to} z ${count !== -1 ? count : `więcej niż ${to}`}`
+                    `${from}-${to} ${t('labelDisplayedRows1')} ${count !== -1 ? count : `${t('labelDisplayedRows2')} ${to}`}`
                 }
                 getItemAriaLabel={(type) => {
                     if (type === 'previous') {
-                        return 'Przejdź do poprzedniej strony';
+                        return t('previous');
                     }
                     if (type === 'next') {
-                        return 'Przejdź do następnej strony';
+                        return t('next');
                     }
                     if (type === 'last') {
-                        return 'Przejdź do ostatniej strony';
+                        return t('last');
                     }
-                    return 'Przejdź do pierwszej strony';
+                    return t('first');
                 }}
                 sx={{
                     '.MuiTablePagination-actions': {

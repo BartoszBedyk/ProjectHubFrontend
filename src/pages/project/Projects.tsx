@@ -11,7 +11,7 @@ import {useTranslation} from "react-i18next";
 
 const Projects: React.FC = () => {
     const navigate = useNavigate();
-    const {t} = useTranslation('Projects');
+    const {t} = useTranslation('projects');
 
     const handleCreateProject = () => {
         navigate('/project/create');

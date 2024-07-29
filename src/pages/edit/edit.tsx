@@ -1,17 +1,19 @@
 import React from 'react';
 import CustomLayout from "../../components/Layout/Layout";
-
 import {UpdateResourceFormComponent} from "../../forms/resources/UpdateResourceFormComponent";
+import {useParams} from "react-router-dom";
+
+
 
 
 function Edit() {
+    let { id } = useParams();
+    if(id==undefined){
+        id='empty'
+    }
     return (
         <CustomLayout>
-            <h1>Edit</h1>
-            <h2>Edit form</h2>
-            <h3>lorem ipsum</h3>
-
-            <UpdateResourceFormComponent id="404be238-5687-473c-b035-ff73a8aa858d" ></UpdateResourceFormComponent>
+            <UpdateResourceFormComponent id={id} ></UpdateResourceFormComponent>
         </CustomLayout>
     );
 }
