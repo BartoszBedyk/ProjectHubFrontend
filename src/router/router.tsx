@@ -7,6 +7,8 @@ import Resources from "../pages/resources/resources";
 import UpdateProject from "../pages/project/UpdateProject";
 import ProjectPageComponent from "../pages/project/Project";
 import Projects from "../pages/project/Projects";
+import ProjectMembers from "../pages/projectMember/ProjectMembers";
+import ProjectMemberPage from "../pages/projectMember/ProjectMember";
 
 export const router = createBrowserRouter([
     {
@@ -71,12 +73,22 @@ export const router = createBrowserRouter([
     /** PROJECT MEMBER **/
 
     {
-        path: "/project-member/create",
+        path: "/project-member/create/:projectId",
         element: <div>Create Project Member</div>,
         errorElement: <Error/>
     },
     {
-        path: "/project-member/edit",
+        path: "/project-member/:projectId",
+        element: <ProjectMembers/>,
+        errorElement: <Error/>
+    },
+    {
+        path: "/project-member/:projectId/:userId",
+        element: <ProjectMemberPage/>,
+        errorElement: <Error/>
+    },
+    {
+        path: "/project-member/edit/:projectId/:userId",
         element: <div>Edit Project Member</div>,
         errorElement: <Error/>
     },
