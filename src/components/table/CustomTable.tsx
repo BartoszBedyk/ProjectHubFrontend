@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import FilterContainer from './FilterContainer';
+import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 
 export type ColumnType = 'DATE' | 'DATE_TIME' | 'TEXT' | 'NUMBER' | 'ENUM';
@@ -39,15 +40,18 @@ interface CustomTableProps {
     columns: ColumnDefinition[];
     rows: RowData[];
     title: string;
+    navigateTo?: string;
 }
 
-function CustomTable({ columns, rows, title }: CustomTableProps) {
+function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [orderBy, setOrderBy] = useState<string>(columns[0]?.id || '');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [filters, setFilters] = useState<Record<string, { operator: string; value: string }>>({});
     const [fadeKey, setFadeKey] = useState(0);
+    const navigate = useNavigate();
+
     const{t} =useTranslation('table')
     const handleRequestSort = (property: string) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -164,9 +168,11 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
         }
     };
 
-    const handleClick = (id:string) => {
-        console.log("to ejst ID", id)
-    }
+    const handleNavigate = (id: string) => {
+        if (navigateTo) {
+            navigate(`${navigateTo}/${id}`);
+        }
+    };
 
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
@@ -216,18 +222,20 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {sortedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                        {columns.map((column) => (
-                                            <TableCell key={column.id} align={column.align} onClick={() => {handleClick(row.id)}}>
-                                                {renderCellValue(column, row[column.id])}
-
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                );
-                            })}
+                            {sortedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                                <TableRow
+                                    hover
+                                    role="checkbox"
+                                    tabIndex={-1}
+                                    key={row.id}
+                                >
+                                    {columns.map((column) => (
+                                        <TableCell key={column.id} align={column.align} onClick={() => handleNavigate(row.id)}>
+                                            {renderCellValue(column, row[column.id])}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: 53 * emptyRows }}>
                                     <TableCell colSpan={columns.length} />
@@ -251,15 +259,15 @@ function CustomTable({ columns, rows, title }: CustomTableProps) {
                 }
                 getItemAriaLabel={(type) => {
                     if (type === 'previous') {
-                        return t('previous');
+                        return 'Przejdź do poprzedniej strony';
                     }
                     if (type === 'next') {
-                        return t('next');
+                        return 'Przejdź do następnej strony';
                     }
                     if (type === 'last') {
-                        return t('last');
+                        return 'Przejdź do ostatniej strony';
                     }
-                    return t('first');
+                    return 'Przejdź do pierwszej strony';
                 }}
                 sx={{
                     '.MuiTablePagination-actions': {

@@ -6,6 +6,7 @@ import {
     IconButton,
     Popover,
     Typography,
+    MenuItem,
 } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -120,6 +121,28 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                 </Box>
             );
         }
+        if (column.type === 'ENUM') {
+            return (
+                <TextField
+                    label={`${column.label}`}
+                    select
+                    variant="outlined"
+                    size="small"
+                    value={filterValue}  // Ustaw wartość na stan filterValue
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    sx={{ minWidth: 120 }}
+                    onChange={(e) => handleChange(column.id, operator, e.target.value)}
+                >
+                    {column.enumValues?.map((option) => (
+                        <MenuItem key={option} value={option}>
+                            {option}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            );
+        }
 
         return (
             <TextField
@@ -202,5 +225,4 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
 };
 
 export default FilterContainer;
-
 

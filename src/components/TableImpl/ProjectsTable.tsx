@@ -63,6 +63,7 @@ const ProjectsTable = (props: ProjectsTableProps) => {
                         console.error('Error fetching creator details:', error);
                     }
                     const newRow: RowData = {
+                        id: project.id,
                         name: project.name,
                         description: project.description,
                         createdOn: project.createdOn,
@@ -91,7 +92,7 @@ const ProjectsTable = (props: ProjectsTableProps) => {
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={t('projectsTableTitle')} />
+            <CustomTable columns={columns} rows={rows} title={t('projectsTableTitle')} navigateTo={'/project'} />
         </div>
     );
 }
