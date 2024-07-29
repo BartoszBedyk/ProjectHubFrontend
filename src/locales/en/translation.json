@@ -42,6 +42,24 @@
       "readSecret": "Read secret",
       "readText": "Read text",
       "resourcesTableTitle": "Resources"
+    },
+    "userManagement" : {
+      "createUser" : "Create user",
+      "editUser" : "Edit user",
+      "blockUser": "Block user",
+      "unblockUser": "Unblock user",
+      "deleteUser": "Delete user",
+      "formError" : "All user data fields must be filled in",
+      "firstName" : "First name",
+      "lastName" : "Last name",
+      "email" : "Email address",
+      "password": "Password",
+      "userList": "User list",
+      "create": "Create",
+      "edit": "Edit",
+      "createdOn": "Creation date",
+      "createdBy": "Created by",
+      "isBlocked": "Blocked"
     }
   }
 }

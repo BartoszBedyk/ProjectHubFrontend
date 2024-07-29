@@ -7,5 +7,5 @@ export interface UserDto {
     createdById: string;
     deletedOn: Date | null;
     deletedById: string | null;
-    isBlocked: boolean;
+    blocked: boolean;
 }

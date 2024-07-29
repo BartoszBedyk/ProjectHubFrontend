@@ -53,6 +53,24 @@
       "readSecret": "Odszyfruj sekret",
       "readText": "Odczytaj tekst",
       "resourcesTableTitle": "Zasoby"
+    },
+    "userManagement" : {
+      "createUser" : "Stwórz użytkownika",
+      "editUser" : "Edytuj użytkownika",
+      "blockUser": "Zablokuj użytkownika",
+      "unblockUser": "Odblokuj użytkownika",
+      "deleteUser": "Usuń użytkownika",
+      "formError" : "Wszystkie pola danych użytkownika muszą być uzupełnione",
+      "firstName" : "Imię",
+      "lastName" : "Nazwisko",
+      "email" : "Adres email",
+      "password": "Hasło",
+      "userList": "Lista użytkowników",
+      "create": "Stwórz",
+      "edit": "Edytuj",
+      "createdOn": "Data utworzenia",
+      "createdBy": "Utworzony przez",
+      "isBlocked": "Zablokowany"
     }
   }
 }

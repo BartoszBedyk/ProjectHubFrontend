@@ -10,13 +10,15 @@ export const languageResources ={
         login: translationEnglish.pages.login,
         resources: translationEnglish.pages.resources,
         buttons: translationEnglish.buttons,
-        sideBar: translationEnglish.sidebar
+        sideBar: translationEnglish.sidebar,
+        userManagement: translationEnglish.pages.userManagement,
     },
     pl: {
         login: translationPolish.pages.login,
         resources: translationPolish.pages.resources,
         buttons: translationPolish.buttons,
-        sideBar: translationPolish.sidebar
+        sideBar: translationPolish.sidebar,
+        userManagement: translationEnglish.pages.userManagement,
     }
 }
 const options = {

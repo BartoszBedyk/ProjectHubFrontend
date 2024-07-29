@@ -7,6 +7,9 @@ import Resources from "../pages/resources/resources";
 import UpdateProject from "../pages/project/UpdateProject";
 import ProjectPageComponent from "../pages/project/Project";
 import Projects from "../pages/project/Projects";
+import CreateUser from "../pages/user-management/CreateUser";
+import UpdateUser from "../pages/user-management/UpdateUser";
+import UserManagement from "../pages/user-management/UserManagement";
 
 export const router = createBrowserRouter([
     {
@@ -41,8 +44,18 @@ export const router = createBrowserRouter([
         errorElement: <Error/>
     },
     {
-        path: "/user/edit",
-        element: <div>Edit user</div>,
+        path: "/user",
+        element: <UserManagement />,
+        errorElement: <Error/>
+    },
+    {
+        path: "/user/create",
+        element: <CreateUser />,
+        errorElement: <Error/>
+    },
+    {
+        path: "/user/edit/:userId",
+        element: <UpdateUser />,
         errorElement: <Error/>
     },
 
