@@ -24,8 +24,7 @@ export class LoginPassAuthApiAxios implements LoginPassAuthApi {
             .then(() => {});
     }
 
-    logout(){
-        return axiosInstance.post('/logout')
-            .then(response => response.data);
+    async logout() {
+        const response = await axiosInstance.post('/auth/logout');
     };
 }

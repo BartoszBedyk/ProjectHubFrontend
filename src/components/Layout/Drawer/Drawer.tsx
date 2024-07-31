@@ -17,6 +17,7 @@ import React from "react";
 import {useDrawer} from "./DrawerContext";
 import {Drawer, DrawerHeader} from "./drawerUtils";
 import Items from "./Items";
+import logout from "../../Login/LogoutButton";
 
 const CustomDrawer = () => {
 
@@ -73,7 +74,7 @@ const CustomDrawer = () => {
                             >
                                 <ExitToAppIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Logout" sx={{ opacity: open ? 1 : 0 }} />
+                            <ListItemText primary="Logout" sx={{ opacity: open ? 1 : 0 }} onClick={logout} />
                         </ListItemButton>
                     </ListItem>
                 </List>

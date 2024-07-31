@@ -3,6 +3,7 @@ import SecretDialog from "./SecretDialog";
 import OpenLinkButton from "./OpenLinkButton";
 import React from "react";
 import {ResourceType} from "../../api/resources/response/ResourceDto";
+import ReadTextButton from "./ReadTextButton";
 
 type ButtonByResourceTypeProps = {
     resourceType: ResourceType,
@@ -22,7 +23,7 @@ function ButtonByResourceType(props: ButtonByResourceTypeProps) {
             return (<OpenLinkButton>{props.value}</OpenLinkButton>)
         }
         case 'TEXT': {
-            return (<p>''</p>)
+            return (<ReadTextButton>{props.id}</ReadTextButton>)
         }
         default: {
             return (<p>''</p>)
