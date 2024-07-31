@@ -110,7 +110,7 @@
       "secret": "Secret",
       "attachment": "Załącznik",
       "chooseType" : "Wybierz typ",
-      "resourceType" : "Typ zasobu",
+      "resourceType" : "Typ zasobu"
 
     },
     "buttons": {

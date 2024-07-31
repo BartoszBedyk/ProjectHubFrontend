@@ -39,16 +39,16 @@ export const LogInCard = () => {
 
     useEffect(() => {
         if (!secureLocalStorage) return;
-        //secureLocalStorage.clear();
         const expirationDate = secureLocalStorage.getItem("expirationDate")
         if (expirationDate === null) return;
 
 
         const brake = expirationDate as number + 604800000;
         if (brake < new Date().getTime()) {
-            secureLocalStorage.clear();
             console.log(secureLocalStorage.getItem("expirationDate"));
             setErrorMessage(t("loggingTokenError"))
+            api.loginPassAuth.logout()
+            navigate("/auth/login")
             return;
         }
         const tokenFromStorage = secureLocalStorage.getItem("token") as string;

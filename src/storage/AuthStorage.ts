@@ -1,5 +1,6 @@
 import {jwtDecode} from "jwt-decode";
 
+
 const AUTH_TOKEN_STORAGE_KEY = "authorization";
 
 export function getToken(): string | null {
