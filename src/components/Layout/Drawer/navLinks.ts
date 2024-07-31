@@ -46,7 +46,6 @@ const navLinks: NavLink[] = [
     {
         name: "Resources",
         icon: resourcesIcon,
-        link: "/project/resources/any",
         children: [
             {
                 name: "Links",
