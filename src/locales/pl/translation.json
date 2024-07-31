@@ -84,7 +84,8 @@
       "technologyName": "Nazwa technologii",
       "technologyDescription": "Opis technologii",
       "selectedTechnologies": "Wybrane technologie",
-      "updateProject": "Zaktualizuj projekt"
+      "updateProject": "Zaktualizuj projekt",
+      "noAccess": "Brak dostępu."
     },
     "forms": {
       "new": "Nowe",
@@ -102,14 +103,15 @@
       "value": "Wartość",
       "validationError": "Prosze umieść prawidłową wartość. ",
       "modifyDate": "Ostatnia edycja",
-      "create": "Create",
+      "create": "Utwórz",
       "linkValue" : "https://www.sensilabs.pl/",
       "link" : "Link",
       "text" : "Tekst",
       "secret": "Secret",
       "attachment": "Załącznik",
       "chooseType" : "Wybierz typ",
-      "resourceType" : "Typ zasobu"
+      "resourceType" : "Typ zasobu",
+
     },
     "buttons": {
       "openLink": "Otwórz link ",
@@ -135,7 +137,38 @@
       "edit": "Edytuj",
       "createdOn": "Data utworzenia",
       "createdBy": "Utworzony przez",
-      "isBlocked": "Zablokowany"
+      "isBlocked": "Zablokowany",
+      "details": "Pokaż szczegóły"
+    },
+    "members": {
+      "selectUser": "Wybierz użytkownika",
+      "newMember": "Nowy uczestnik",
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
+      "selectRole": "Wybierz rolę",
+      "owner": "OWNER",
+      "maintainer": "MAINTAINER",
+      "visitor": "VISITOR",
+      "selectEnvironments": "Wybierz środowiska",
+      "selectedEnvironments": "Wybrane środowiska",
+      "createProjectMember": "Utwórz uczestnika projektu",
+      "emptyFieldError": "To pole nie może być puste",
+      "editProjectMember": "Edytuj uczestnika projektu",
+      "projectMemberName": "Nazwa uczestnika projektu",
+      "updateProjectMember": "Zaktualizuj uczestnika projektu",
+      "addMember": "Dodaj uczestnika",
+      "editMember": "Edytuj uczestnika",
+      "deleteMember": "Usuń uczestnika",
+      "confirmDelete": "Czy na pewno chcesz usunąć tego uczestnika? Tej operacji nie można cofnąć.",
+      "cancel": "Anuluj",
+      "delete": "Usuń",
+      "memberNotFound": "Nie znaleziono uczestnika projektu",
+      "createdOn": "Utworzono",
+      "createdBy": "Utworzony przez",
+      "membersList": "Lista uczestników projektu",
+      "role": "Rola",
+      "noPermission": "Brak dostępu",
+      "environments": "Środowiska"
     }
   }
 }

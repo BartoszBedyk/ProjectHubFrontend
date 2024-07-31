@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import CustomTable, { ColumnDefinition, RowData } from "../../components/table/CustomTable";
 import { api } from "../../api/AppApi";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
+import {useTranslation} from "react-i18next";
 
 type ProjectMembersTableProps = {
     projectId: string;
 };
 
 const ProjectMembersTable = ({ projectId }: ProjectMembersTableProps) => {
+    const {t} = useTranslation('members');
     const columns: ColumnDefinition[] = [
         { id: 'firstName', label: 'Imię', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'lastName', label: 'Nazwisko', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
@@ -48,7 +50,7 @@ const ProjectMembersTable = ({ projectId }: ProjectMembersTableProps) => {
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={'Lista uczestników projektu'} navigateTo={`/project-member/${projectId}`}/>
+            <CustomTable columns={columns} rows={rows} title={t('membersList')} navigateTo={`/project-member/${projectId}`}/>
         </div>
     );
 };

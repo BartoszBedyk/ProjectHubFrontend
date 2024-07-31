@@ -1,18 +1,32 @@
-const AUTH_TOKEN_STORAGE_KEY = "authorization";
-const USER_DATA = "user";
-export function getToken() {
+import {jwtDecode} from "jwt-decode";
 
+const AUTH_TOKEN_STORAGE_KEY = "authorization";
+
+export function getToken(): string | null {
     return localStorage.getItem(AUTH_TOKEN_STORAGE_KEY);
 }
 
-export function setToken(token: string) {
-    return localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token);
+export function setToken(token: string): void {
+    localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token);
 }
 
-export function setUser(id: string){
-    return localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, id);
+interface DecodedToken {
+    sub: string;
+    exp: number;
 }
 
-export function getUser(){
-    return localStorage.getItem(USER_DATA);
+export function getUserId(): string | null {
+    const token = getToken();
+    if (token) {
+        try {
+            const decoded = jwtDecode<DecodedToken>(token);
+            return decoded.sub;
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return null;
+        }
+    } else {
+        console.error('Token not found');
+        return null;
+    }
 }

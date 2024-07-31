@@ -8,7 +8,6 @@ import { SearchSort } from "../../commons/Search/SearchSort";
 import { SearchSortOrder } from "../../commons/Search/SearchSortOrder";
 import { SearchForm } from "../../commons/Search/SearchForm";
 import { SearchResponse } from "../../commons/Search/SearchResponse";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {useTranslation} from "react-i18next";
 
@@ -25,7 +24,6 @@ const ProjectsTable = (props: ProjectsTableProps) => {
         { id: 'description', label: t('description'), type: 'TEXT', minWidth: 250, sortable: true, filterable: true },
         { id: 'createdOn', label: t('createdOn'), type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
         { id: 'createdBy', label: t('createdById'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
-        { id: 'action', label: '', type: 'TEXT', minWidth: 150, sortable: false, filterable: false },
     ];
 
     const searchFormCriteria: SearchFormCriteria[] = [
@@ -68,16 +66,6 @@ const ProjectsTable = (props: ProjectsTableProps) => {
                         description: project.description,
                         createdOn: project.createdOn,
                         createdBy,
-                        action: (
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => navigate(`/project/${project.id}`)}
-                                title={t('open')}
-                            >
-                                {t('projectDetails')}
-                            </Button>
-                        )
                     };
                     return newRow;
                 }));
