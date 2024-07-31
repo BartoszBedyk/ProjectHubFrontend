@@ -18,7 +18,7 @@ export class UserManagementApiMock implements UserManagementApi {
             createdById: "111",
             deletedOn: null,
             deletedById: null,
-            isBlocked: false
+            blocked: false
         }))
     }
     save(form: CreateUserForm): Promise<UserDto> {
@@ -31,7 +31,7 @@ export class UserManagementApiMock implements UserManagementApi {
             createdById: "111",
             deletedOn: null,
             deletedById: null,
-            isBlocked: false
+            blocked: false
         }))
     }
     update(from: EditUserForm): Promise<UserDto> {
@@ -44,7 +44,7 @@ export class UserManagementApiMock implements UserManagementApi {
             createdById: "111",
             deletedOn: null,
             deletedById: null,
-            isBlocked: false
+            blocked: false
         }))
     }
     block(id: string): Promise<UserDto> {
@@ -57,7 +57,7 @@ export class UserManagementApiMock implements UserManagementApi {
             createdById: "111",
             deletedOn: null,
             deletedById: null,
-            isBlocked: false
+            blocked: false
         }))
     }
     unblock(id: string): Promise<UserDto> {
@@ -70,7 +70,7 @@ export class UserManagementApiMock implements UserManagementApi {
             createdById: "111",
             deletedOn: null,
             deletedById: null,
-            isBlocked: false
+            blocked: false
         }))
     }
     delete(id: string): Promise<void> {
@@ -89,7 +89,7 @@ export class UserManagementApiMock implements UserManagementApi {
                 createdById: "111",
                 deletedOn: null,
                 deletedById: null,
-                isBlocked: false
+                blocked: false
             },
             {
                 id: "12313",
@@ -100,7 +100,7 @@ export class UserManagementApiMock implements UserManagementApi {
                 createdById: "112",
                 deletedOn: null,
                 deletedById: null,
-                isBlocked: false
+                blocked: false
             },
             {
                 id: "12314",
@@ -111,7 +111,7 @@ export class UserManagementApiMock implements UserManagementApi {
                 createdById: "113",
                 deletedOn: null,
                 deletedById: null,
-                isBlocked: false
+                blocked: false
             },
         ]
 

@@ -14,6 +14,7 @@ export const languageResources ={
         overall: translationEnglish.pages,
         table: translationEnglish.table,
         buttons: translationEnglish.pages.buttons,
+        userManagement: translationEnglish.pages.userManagement,
         forms: translationEnglish.pages.forms
     },
     pl: {
@@ -23,6 +24,7 @@ export const languageResources ={
         projects: translationPolish.pages.projects,
         overall: translationPolish.pages,
         table: translationPolish.table,
+        userManagement: translationEnglish.pages.userManagement,
         buttons: translationPolish.pages.buttons,
         forms: translationPolish.pages.forms
     }
