@@ -5,6 +5,10 @@ import {ProjectEnvironmentDto} from "../response/ProjectEnvironmentDto";
 import {axiosInstance} from "../../../../AxiosClient";
 
 export class ProjectEnvironmentApiAxios implements ProjectEnvironmentApi {
+    findById(id: string): Promise<ProjectEnvironmentDto> {
+        return axiosInstance.get<ProjectEnvironmentDto>(`/project-environment/get/${id}`)
+            .then(response => response.data)
+    }
     create(form: CreateProjectEnvironmentForm): Promise<void> {
         return axiosInstance.post('/project-environment/save', form)
             .then(() => {});
