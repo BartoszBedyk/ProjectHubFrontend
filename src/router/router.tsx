@@ -11,6 +11,8 @@ import Projects from "../pages/project/Projects";
 import ProjectMembers from "../pages/projectMember/ProjectMembers";
 import ProjectMemberPage from "../pages/projectMember/ProjectMember";
 import Resource from "../pages/resources/resource";
+import CreateProjectMember from "../pages/projectMember/CreateProjectMember";
+import UpdateProjectMember from "../pages/projectMember/UpdateProjectMember";
 
 export const router = createBrowserRouter([
     {
@@ -76,7 +78,7 @@ export const router = createBrowserRouter([
 
     {
         path: "/project-member/create/:projectId",
-        element: <div>Create Project Member</div>,
+        element: <CreateProjectMember/>,
         errorElement: <Error/>
     },
     {
@@ -91,7 +93,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/project-member/edit/:projectId/:userId",
-        element: <div>Edit Project Member</div>,
+        element: <UpdateProjectMember/>,
         errorElement: <Error/>
     },
 

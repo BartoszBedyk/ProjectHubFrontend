@@ -7,39 +7,57 @@ import {
     Button,
     Container,
     CircularProgress,
-    Chip,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle
+    DialogTitle,
+    List,
+    ListItem,
+    ListItemText
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { api } from '../../api/AppApi';
-import { TechnologyDTO } from '../../api/project/technology/response/TechnologyDTO';
 import CustomLayout from "../../components/Layout/Layout";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
-import {ProjectDTO} from "../../api/project/response/ProjectDTO";
+import { Role } from '../../api/project/project-member/response/Role';
+import { ProjectEnvironmentDto } from "../../api/project/project-environment/response/ProjectEnvironmentDto";
+import { getUserId } from "../../storage/AuthStorage";
 
 const ProjectMemberPage: React.FC = () => {
-    const { projectId } = useParams<{ projectId: string }>();
-    const { userId } = useParams<{ userId: string }>();
-
+    const { projectId, userId } = useParams<{ projectId: string; userId: string }>();
     const [projectMember, setProjectMember] = useState<ProjectMemberDto | null>(null);
+    const [environments, setEnvironments] = useState<ProjectEnvironmentDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
+    const { t } = useTranslation('members');
 
     useEffect(() => {
         const fetchProjectMemberDetails = async () => {
             try {
-                const response = await api.projectMember.getByIds(userId! ,projectId!);
+                const response = await api.projectMember.getByIds(userId!, projectId!);
                 setProjectMember(response);
-
 
                 if (response.createdById) {
                     const creatorResponse = await api.projectMember.getByIds(response.createdById, projectId!);
                     setCreator(creatorResponse);
+                }
+
+                if (response.environmentIds && response.environmentIds.length > 0) {
+                    const environmentPromises = response.environmentIds.map((envId) =>
+                        api.projectEnvironment.findById(envId)
+                    );
+                    const envResponses = await Promise.all(environmentPromises);
+                    setEnvironments(envResponses);
+                }
+
+                const currentUserId = getUserId();
+                if (currentUserId) {
+                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId!);
+                    setCurrentUserRole(currentUserResponse.role);
                 }
             } catch (error) {
                 console.error('Error fetching project member details:', error);
@@ -49,7 +67,7 @@ const ProjectMemberPage: React.FC = () => {
         };
 
         fetchProjectMemberDetails();
-    }, [projectId]);
+    }, [projectId, userId]);
 
     const handleEdit = () => {
         navigate(`/project-member/edit/${projectId}/${userId}`);
@@ -58,7 +76,7 @@ const ProjectMemberPage: React.FC = () => {
     const handleDelete = async () => {
         try {
             await api.projectMember.delete(projectId!, userId!);
-            navigate('/project');
+            navigate(`/project-member/${projectId}`);
         } catch (error) {
             console.error('Error deleting project member:', error);
         }
@@ -71,6 +89,8 @@ const ProjectMemberPage: React.FC = () => {
     const closeDeleteDialog = () => {
         setDeleteDialogOpen(false);
     };
+
+    const isOwner = currentUserRole === Role.OWNER;
 
     if (loading) {
         return (
@@ -89,7 +109,7 @@ const ProjectMemberPage: React.FC = () => {
             <CustomLayout>
                 <Container>
                     <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-                        Project member not found
+                        {t('memberNotFound')}
                     </Typography>
                 </Container>
             </CustomLayout>
@@ -106,39 +126,65 @@ const ProjectMemberPage: React.FC = () => {
                     </Typography>
                 </Box>
                 <Box sx={{ padding: 3 }}>
+                    <Typography variant="h6" color="textPrimary" gutterBottom>
+                        {t('role')}
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                        {projectMember.role}
+                    </Typography>
+
+                    {environments.length > 0 && (
+                        <Box sx={{ marginTop: 3 }}>
+                            <Typography variant="h6" color="textPrimary" gutterBottom>
+                                {t('environments')}
+                            </Typography>
+                            <List>
+                                {environments.map((env, index) => (
+                                    <ListItem key={index}>
+                                        <ListItemText primary={env.name} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Box>
+                    )}
+
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2 }}>
-                        <Button variant="contained" color="primary" onClick={handleEdit}>
-                            Edytuj uczestnika
-                        </Button>
-                        <Button variant="contained" color="error" onClick={openDeleteDialog}>
-                            Usuń uczestnika
-                        </Button>
+                        {isOwner && (
+                            <>
+                                <Button variant="contained" color="primary" onClick={handleEdit}>
+                                    {t('editMember')}
+                                </Button>
+                                <Button variant="contained" color="error" onClick={openDeleteDialog}>
+                                    {t('deleteMember')}
+                                </Button>
+                            </>
+                        )}
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
                         <Typography variant="body2" color="textSecondary">
-                            {`Utworzono: ${new Date(projectMember.createdOn).toLocaleDateString()}`}
+                            {`${t('createdOn')}: ${new Date(projectMember.createdOn).toLocaleDateString()}`}
                         </Typography>
                         {creator && (
                             <Typography variant="body2" color="textSecondary">
-                                {`Utworzony przez: ${creator.firstName} ${creator.lastName}`}
+                                {`${t('createdBy')}: ${creator.firstName} ${creator.lastName}`}
                             </Typography>
                         )}
                     </Box>
                 </Box>
             </Paper>
             <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
-                <DialogTitle>Potwierdź usunięcie</DialogTitle>
+                <DialogTitle>{t('confirmDelete')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Czy na pewno chcesz usunąć tego uczestnika? Tej operacji nie można cofnąć.
+                        {t('confirmDelete')}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeDeleteDialog} color="primary">
-                        Anuluj
+                        {t('cancel')}
                     </Button>
                     <Button onClick={handleDelete} color="error">
-                        Usuń
+                        {t('delete')}
                     </Button>
                 </DialogActions>
             </Dialog>

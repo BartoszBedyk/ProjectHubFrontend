@@ -18,8 +18,10 @@ import { api } from '../../api/AppApi';
 import { TechnologyDTO } from '../../api/project/technology/response/TechnologyDTO';
 import CustomLayout from "../../components/Layout/Layout";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
-import {ProjectDTO} from "../../api/project/response/ProjectDTO";
-import {useTranslation} from "react-i18next";
+import { ProjectDTO } from "../../api/project/response/ProjectDTO";
+import { useTranslation } from "react-i18next";
+import { Role } from '../../api/project/project-member/response/Role';
+import { getUserId } from "../../storage/AuthStorage";
 
 const ProjectPageComponent: React.FC = () => {
     const { projectId } = useParams<{ projectId: string }>();
@@ -28,8 +30,9 @@ const ProjectPageComponent: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
-    const {t} = useTranslation('projects')
+    const { t } = useTranslation('projects');
 
     useEffect(() => {
         const fetchProjectDetails = async () => {
@@ -45,6 +48,12 @@ const ProjectPageComponent: React.FC = () => {
                 if (projectResponse.createdById) {
                     const creatorResponse = await api.projectMember.getByIds(projectResponse.createdById, projectId!);
                     setCreator(creatorResponse);
+                }
+
+                const currentUserId = getUserId();
+                if (currentUserId) {
+                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId!);
+                    setCurrentUserRole(currentUserResponse.role);
                 }
             } catch (error) {
                 console.error('Error fetching project details:', error);
@@ -76,6 +85,8 @@ const ProjectPageComponent: React.FC = () => {
     const closeDeleteDialog = () => {
         setDeleteDialogOpen(false);
     };
+
+    const isOwner = currentUserRole === Role.OWNER;
 
     if (loading) {
         return (
@@ -120,12 +131,16 @@ const ProjectPageComponent: React.FC = () => {
                         {project.description}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2 }}>
-                        <Button variant="contained" color="primary" onClick={handleEdit}>
-                            {t('edit')}
-                        </Button>
-                        <Button variant="contained" color="error" onClick={openDeleteDialog}>
-                            {t('deleteProject')}
-                        </Button>
+                        {isOwner && (
+                            <>
+                                <Button variant="contained" color="primary" onClick={handleEdit}>
+                                    {t('edit')}
+                                </Button>
+                                <Button variant="contained" color="error" onClick={openDeleteDialog}>
+                                    {t('deleteProject')}
+                                </Button>
+                            </>
+                        )}
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
                         <Typography variant="body2" color="textSecondary">

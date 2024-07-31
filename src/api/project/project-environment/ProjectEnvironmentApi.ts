@@ -7,4 +7,5 @@ export interface ProjectEnvironmentApi {
     update(form: UpdateProjectEnvironmentForm): Promise<void>;
     delete(id: string): Promise<void>;
     findAll(projectId: string): Promise<ProjectEnvironmentDto[]>;
+    findById(id: string): Promise<ProjectEnvironmentDto>;
 }

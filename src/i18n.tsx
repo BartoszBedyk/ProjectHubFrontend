@@ -13,7 +13,8 @@ export const languageResources ={
         projects: translationEnglish.pages.projects,
         overall: translationEnglish.pages,
         table: translationEnglish.table,
-        buttons: translationEnglish.pages.buttons
+        buttons: translationEnglish.pages.buttons,
+        members: translationEnglish.pages.members
     },
     pl: {
         login: translationPolish.pages.login,
@@ -22,7 +23,8 @@ export const languageResources ={
         projects: translationPolish.pages.projects,
         overall: translationPolish.pages,
         table: translationPolish.table,
-        buttons: translationPolish.pages.buttons
+        buttons: translationPolish.pages.buttons,
+        members: translationPolish.pages.members
     }
 }
 const options = {
