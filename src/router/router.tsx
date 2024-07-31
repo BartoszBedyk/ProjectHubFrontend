@@ -2,12 +2,15 @@ import {createBrowserRouter} from "react-router-dom";
 import HomePage from "../pages/home/home";
 import Login from "../pages/login/login";
 import Error from "../pages/error/error";
+import CreateProject from "../pages/project/CreateProject";
 import Resources from "../pages/resources/resources";
 import Edit from "../pages/edit/edit";
-import CreateProject from "../pages/project/CreateProject";
 import UpdateProject from "../pages/project/UpdateProject";
 import ProjectPageComponent from "../pages/project/Project";
 import Projects from "../pages/project/Projects";
+import CreateUser from "../pages/user-management/CreateUser";
+import UpdateUser from "../pages/user-management/UpdateUser";
+import UserManagement from "../pages/user-management/UserManagement";
 import ProjectMembers from "../pages/projectMember/ProjectMembers";
 import ProjectMemberPage from "../pages/projectMember/ProjectMember";
 import Resource from "../pages/resources/resource";
@@ -47,8 +50,18 @@ export const router = createBrowserRouter([
         errorElement: <Error/>
     },
     {
-        path: "/user/edit",
-        element: <div>Edit user</div>,
+        path: "/user",
+        element: <UserManagement />,
+        errorElement: <Error/>
+    },
+    {
+        path: "/user/create",
+        element: <CreateUser />,
+        errorElement: <Error/>
+    },
+    {
+        path: "/user/edit/:userId",
+        element: <UpdateUser />,
         errorElement: <Error/>
     },
 

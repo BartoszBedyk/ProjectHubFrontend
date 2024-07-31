@@ -75,7 +75,7 @@ const navLinks: NavLink[] = [
     {
         name: "User management",
         icon: userManagementIcon,
-        link: "/"
+        link: "/user"
     },
     {
         name: "Activities",
