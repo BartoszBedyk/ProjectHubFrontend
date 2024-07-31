@@ -24,7 +24,7 @@ type AllResourcesProps = {
 const AllResourcesTable = (props: AllResourcesProps) => {
 
     const {t} = useTranslation("overall");
-    let {type} = useParams();
+    let {type} = useParams<{type: string}>();
     const columns: ColumnDefinition[] = [
         //{ id: 'id', label: 'Id', type: 'TEXT', minWidth: 50},
         {id: 'name', label: t('forms.name'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
@@ -39,7 +39,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     if (!props.resourceType) {
         searchFormCriteria = [
             {
-                fieldName: 'name',
+                fieldName: 'id',
                 value: `%${props.searchValue}%`,
                 operator: CriteriaOperator.LIKE
             }
@@ -158,7 +158,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={t('resourcesTableTitle')}/>
+            <CustomTable columns={columns} rows={rows} title={t('resourcesTableTitle')} navigateTo="/project/resources/details"/>
         </div>
     );
 }

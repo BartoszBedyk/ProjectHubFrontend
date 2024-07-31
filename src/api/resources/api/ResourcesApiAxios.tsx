@@ -4,6 +4,7 @@ import { axiosInstance } from '../../../AxiosClient';
 import {SearchForm} from "../../../commons/Search/SearchForm";
 import {SearchResponse} from "../../../commons/Search/SearchResponse";
 import {UpdateResourceForm} from "../form/UpdateResourceForm";
+import {CreateResourceForm} from "../form/CreateResourceForm";
 
 
 export class ResourcesApiAxios implements ResourcesApi {
@@ -48,6 +49,15 @@ export class ResourcesApiAxios implements ResourcesApi {
 
     get(id: string): Promise<ResourceDto> {
          return axiosInstance.get(`/resource/${id}`)
+             .then(response => response.data)
+             .catch(error => {
+                 console.error('Update resource error: ', error);
+                 throw error;
+             })
+    }
+
+    create(form: CreateResourceForm, type : string): Promise<ResourceDto> {
+         return axiosInstance.post(`/resource/${type}`, form)
              .then(response => response.data)
              .catch(error => {
                  console.error('Update resource error: ', error);

@@ -95,7 +95,15 @@
       "type": "Type",
       "value": "Value",
       "validationError": "Please enter a valid value.",
-      "modifyDate": "Last modified on"
+      "modifyDate": "Last modified on",
+      "create": "Create",
+      "linkValue" : "https://www.sensilabs.pl/",
+      "link" : "Link",
+      "text" : "Text",
+      "secret": "Secret",
+      "attachment": "Attachment",
+      "chooseType" : "Select type",
+      "resourceType" : "Resource type"
     },
     "buttons": {
       "openLink": "Open link",

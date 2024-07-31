@@ -95,7 +95,15 @@
       "type": "Typ",
       "value": "Wartość",
       "validationError": "Prosze umieść prawidłową wartość. ",
-      "modifyDate": "Ostatnia edycja"
+      "modifyDate": "Ostatnia edycja",
+      "create": "Create",
+      "linkValue" : "https://www.sensilabs.pl/",
+      "link" : "Link",
+      "text" : "Tekst",
+      "secret": "Secret",
+      "attachment": "Załącznik",
+      "chooseType" : "Wybierz typ",
+      "resourceType" : "Typ zasobu"
     },
     "buttons": {
       "openLink": "Otwórz link ",

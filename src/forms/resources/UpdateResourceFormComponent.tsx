@@ -3,7 +3,7 @@ import CustomForm, {
     FormElement,
     CustomLabelText,
     CustomTextArea,
-    CustomTextField
+    CustomTextField, CustomDropZone
 } from "../../components/UpdateForms/CustomForm";
 import React, {useEffect, useState} from "react";
 import {api} from "../../api/AppApi";
