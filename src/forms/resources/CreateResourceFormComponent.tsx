@@ -63,6 +63,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
          ]
     )
     const [buttonState, setButtonState] = useState<boolean>(true)
+    const [typeSetter, setTypeSetter] = useState<string>("")
 
 
     function formTypeDeclaration(typeFromDropdown: ResourceType) {
@@ -339,17 +340,14 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
             projectId: projectId,
         }
         setForm(form as CreateResourceForm);
-
-        const validType: string = decide(typeFromDropdown);
-
-        api.resources.create(form, validType)
+        api.resources.create(form, typeSetter)
     }
 
     const handleSubmit2 = (formData: Record<string, any>) => {
         const typeFromDropdown: ResourceType = formData['dropdown'];
         setButtonState(false)
         formTypeDeclaration(typeFromDropdown);
-
+        setTypeSetter(decide(typeFromDropdown))
     }
 
 
