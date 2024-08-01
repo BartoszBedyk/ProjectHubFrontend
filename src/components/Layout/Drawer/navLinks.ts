@@ -12,7 +12,7 @@ import activitiesIcon from "../../../assets/Drawer/icon-nav-activities.png";
 interface NavLink {
     name: string;
     icon: string;
-    link: string;
+    link?: string;
     children?: NavLink[];
 }
 
@@ -25,8 +25,12 @@ const navLinks: NavLink[] = [
     {
         name: "Project",
         icon: projectsIcon,
-        link: "/",
         children: [
+            {
+                name: "Project list",
+                icon: projectsIcon,
+                link: "/project",
+            },
             {
                 name: "Create project",
                 icon: newProjectIcon,
