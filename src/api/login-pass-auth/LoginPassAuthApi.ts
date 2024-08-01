@@ -9,4 +9,5 @@ export interface LoginPassAuthApi {
     register(form: CreateUserWithPasswordForm): Promise<void>;
     resetPasswordRequest(form: ResetPasswordForm): Promise<void>;
     resetPassword(form: ResetPasswordConfirmForm): Promise<void>;
+    logout(): Promise<void>;
 }
