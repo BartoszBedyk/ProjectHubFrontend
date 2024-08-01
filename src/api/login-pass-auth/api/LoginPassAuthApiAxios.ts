@@ -23,4 +23,8 @@ export class LoginPassAuthApiAxios implements LoginPassAuthApi {
         return axiosInstance.put('/auth/reset-password', form)
             .then(() => {});
     }
+
+    async logout() {
+        const response = await axiosInstance.post('/auth/logout');
+    };
 }

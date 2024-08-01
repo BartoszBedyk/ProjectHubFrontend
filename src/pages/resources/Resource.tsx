@@ -1,19 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, useNavigate} from 'react-router-dom';
-import {
-    Box,
-    Typography,
-    Paper,
-    Button,
-    Container,
-    CircularProgress,
-    Icon
-} from '@mui/material';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Box, Button, CircularProgress, Container, Icon, Paper, Typography} from '@mui/material';
 import {api} from '../../api/AppApi';
 import CustomLayout from "../../components/Layout/Layout";
 import {ProjectMemberDto} from "../../api/project/project-member/response/ProjectMemberDto";
 import {useTranslation} from "react-i18next";
-import {ResourceDto} from "../../api/resources/response/ResourceDto";
+import {ResourceDto, ResourceType} from "../../api/resources/response/ResourceDto";
 import EditIcon from '@mui/icons-material/Edit';
 import ButtonByResourceType from "../../components/TableImpl/ButtonByResourceType";
 
@@ -89,14 +81,15 @@ const ProjectPageComponent: React.FC = () => {
                 </Box>
                 <Box sx={{padding: 3}}>
                     <Typography variant="body1" gutterBottom>
-                        {resource.value}
+                        {t('forms.value')} {resource.value}
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                        {resource.description}
+                        {t('forms.description')} {resource.description}
                     </Typography>
                     <Box sx={{display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2}}>
-                        <ButtonByResourceType id={resource.id} resourceType={resource.resourceType}
-                                              value={resource.value}></ButtonByResourceType>
+                        {resource.resourceType !== ResourceType.text && (
+                            <ButtonByResourceType id={resource.id} resourceType={resource.resourceType}
+                                                  value={resource.value}/>)}
                         <Button variant="contained" color="primary" onClick={handleEdit} title={t('forms.edit')}>
                             <Icon
                                 style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>

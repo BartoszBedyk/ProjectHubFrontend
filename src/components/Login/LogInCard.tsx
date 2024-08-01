@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Button,
@@ -10,91 +10,91 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import LockSensilabsColor from '../../assets/Login/SensilabsLock.png';
-import {api} from "../../api/AppApi";
-import {LoginForm} from "../../api/login-pass-auth/form/LoginForm";
-import {getToken, setToken} from "../../storage/AuthStorage";
+import { api } from "../../api/AppApi";
+import { LoginForm } from "../../api/login-pass-auth/form/LoginForm";
+import { getToken, setToken } from "../../storage/AuthStorage";
 import secureLocalStorage from "react-secure-storage";
-import {useNavigate} from "react-router-dom";
-import {stylesLogin} from "./styles/LoginStyles";
+import { useNavigate } from "react-router-dom";
+import { stylesLogin } from "./styles/LoginStyles";
 
 export const LogInCard = () => {
-    const {t} = useTranslation("login");
-
-    const linkToHomePage = "/"
+    const { t } = useTranslation("login");
+    const linkToHomePage = "/";
     const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [saveCredentials, setSaveCredentials] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        setSubmitted(true);
+        setLoading(true);
     };
 
     useEffect(() => {
-        if (!secureLocalStorage) return;
-        //secureLocalStorage.clear();
-        const expirationDate = secureLocalStorage.getItem("expirationDate")
-        if (expirationDate === null) return;
+        if (loading) {
+            const expirationDateStr = secureLocalStorage.getItem("expirationDate");
+            if (expirationDateStr) {
+                const expirationDateNumber = Number(expirationDateStr);
+                if (!isNaN(expirationDateNumber)) {
+                    const brake = expirationDateNumber + 604800000;
+                    const now = new Date().getTime();
+
+                    if (brake < now) {
+                        setErrorMessage(t("loggingTokenError"));
+                        api.loginPassAuth.logout();
+                        secureLocalStorage.removeItem("token");
+                        secureLocalStorage.removeItem("expirationDate");
+                        navigate("/auth/login");
+                        setLoading(false);
+                        return;
+                    }
+                }
+            }
+
+            const tokenFromStorage = secureLocalStorage.getItem("token");
+            if (tokenFromStorage) {
+                setToken(tokenFromStorage as string);
+                navigate(linkToHomePage);
+                setLoading(false);
+                return;
+            }
 
 
-        const brake = expirationDate as number + 604800000;
-        if (brake < new Date().getTime()) {
-            secureLocalStorage.clear();
-            console.log(secureLocalStorage.getItem("expirationDate"));
-            setErrorMessage(t("loggingTokenError"))
-            return;
+            const form: LoginForm = { email: username, password: password };
+            api.loginPassAuth.login(form)
+                .then(data => {
+                    setToken(data.token);
+                    secureLocalStorage.setItem("token", data.token);
+                    secureLocalStorage.setItem("allowedCredentials", saveCredentials.toString());
+                    secureLocalStorage.setItem("expirationDate", new Date().toString());
+                    setErrorMessage("");
+                    navigate(linkToHomePage);
+                })
+                .catch(() => {
+                    setErrorMessage(t("loggingError"));
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
-        const tokenFromStorage = secureLocalStorage.getItem("token") as string;
-        if (tokenFromStorage) {
-            setToken(tokenFromStorage);
-            navigate(linkToHomePage);
-        }
-
-    }, []);
-
-    useEffect(() => {
-        if (!submitted) return;
-
-        let form: LoginForm = {
-            email: username,
-            password: password,
-        };
-        setSaveCredentials(saveCredentials);
-        api.loginPassAuth.login(form).then(data => {
-            setToken(data.token);
-            setErrorMessage("");
-            navigate(linkToHomePage);
-        }).catch(() => {
-            setErrorMessage(t("loggingError"));
-        });
-        setSubmitted(false);
-    }, [submitted, username, password, saveCredentials, t]);
-
-    useEffect(() => {
-        if (!saveCredentials && !getToken()) return;
-        secureLocalStorage.setItem("token", getToken() as string);
-        secureLocalStorage.setItem("allowedCredentials", saveCredentials);
-        secureLocalStorage.setItem("expirationDate", new Date())
-    }, [submitted, saveCredentials]);
+    }, [loading]);
 
     return (
-        <Card variant={"outlined"} sx={{"--Card-radius": "0px"}}>
+        <Card variant={"outlined"} sx={{ "--Card-radius": "0px" }}>
             <CardContent
-                sx={{display: "flex", flexDirection: "column", alignItems: "center", padding: "30px 25px"}}>
+                sx={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "30px 25px" }}>
                 <Box
                     component="img"
                     sx={stylesLogin.lockIconProps}
                     src={LockSensilabsColor}
                 />
 
-                <Typography variant="h4" component="p">{t("login")} </Typography>
+                <Typography variant="h4" component="p">{t("login")}</Typography>
                 <span style={stylesLogin.errorProps}>{errorMessage}</span>
                 <form onSubmit={handleSubmit} autoComplete="on">
                     <FormControl style={stylesLogin.formContainer}>
@@ -122,7 +122,7 @@ export const LogInCard = () => {
                         <FormControlLabel
                             id="credentialsAllowance"
                             control={<Checkbox checked={saveCredentials}
-                                               onChange={(e) => setSaveCredentials(e.target.checked)}/>}
+                                               onChange={(e) => setSaveCredentials(e.target.checked)} />}
                             label={t("loginCred")}
                             sx={stylesLogin.formContainer}
                         />

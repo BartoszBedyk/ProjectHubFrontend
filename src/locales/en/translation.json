@@ -81,7 +81,8 @@
       "technologyName": "Technology name",
       "technologyDescription": "Technology description",
       "selectedTechnologies": "Selected technologies",
-      "updateProject": "Update project"
+      "updateProject": "Update project",
+      "noAccess": "No permission."
     },
     "forms": {
       "new": "New",
@@ -98,7 +99,15 @@
       "type": "Type",
       "value": "Value",
       "validationError": "Please enter a valid value.",
-      "modifyDate": "Last modified on"
+      "modifyDate": "Last modified on",
+      "create": "Create",
+      "linkValue" : "https://www.sensilabs.pl/",
+      "link" : "Link",
+      "text" : "Text",
+      "secret": "Secret",
+      "attachment": "Attachment",
+      "chooseType" : "Select type",
+      "resourceType" : "Resource type"
     },
     "buttons": {
       "openLink": "Open link",
@@ -124,7 +133,38 @@
       "edit": "Edit",
       "createdOn": "Creation date",
       "createdBy": "Created by",
-      "isBlocked": "Blocked"
+      "isBlocked": "Blocked",
+      "details": "Show details"
+    },
+    "members": {
+      "selectUser": "Select user",
+      "newMember": "New member",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "selectRole": "Select role",
+      "owner": "OWNER",
+      "maintainer": "MAINTAINER",
+      "visitor": "VISITOR",
+      "selectEnvironments": "Select environments",
+      "selectedEnvironments": "Selected environments",
+      "createProjectMember": "Create project member",
+      "emptyFieldError": "This field cannot be empty",
+      "editProjectMember": "Edit project member",
+      "projectMemberName": "Project member name",
+      "updateProjectMember": "Update project member",
+      "addMember": "Add member",
+      "editMember": "Edit Member",
+      "deleteMember": "Delete Member",
+      "confirmDelete": "Are you sure you want to delete this member? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "memberNotFound": "Project member not found",
+      "createdOn": "Created on",
+      "createdBy": "Created by",
+      "membersList": "Project members list",
+      "role": "Role",
+      "noPermission": "No permission.",
+      "environments": "Environments"
     }
   }
 }

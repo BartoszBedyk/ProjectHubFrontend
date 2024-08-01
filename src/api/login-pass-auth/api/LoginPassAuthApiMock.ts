@@ -28,4 +28,8 @@ export class LoginPassAuthApiMock implements LoginPassAuthApi {
             console.log("Password reset successfully", form);
         });
     }
+
+    logout(): Promise<void> {
+        return mockTimeout(2000).then(() => {})
+    }
 }

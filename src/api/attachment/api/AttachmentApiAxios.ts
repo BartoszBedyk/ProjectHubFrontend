@@ -4,7 +4,14 @@ import {axiosInstance} from "../../../AxiosClient";
 
 export class AttachmentApiAxios implements AttachmentApi {
     upload(file: File): Promise<AttachmentDto> {
-        return axiosInstance.post<AttachmentDto>('/attachment/upload', file)
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return axiosInstance.post<AttachmentDto>('/attachment/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(response => response.data)
             .catch(error => {
                 console.error('Error uploading file:', error);

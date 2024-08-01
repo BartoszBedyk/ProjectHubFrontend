@@ -1,6 +1,19 @@
-import React, {CSSProperties, useState} from "react";
-import {Box, Typography, Paper, FormControl, Button, Checkbox} from "@mui/material";
+import React, {useState} from "react";
+import {
+    Box,
+    Typography,
+    Paper,
+    FormControl,
+    Button,
+    Checkbox,
+    Select,
+    MenuItem,
+    SelectChangeEvent
+} from "@mui/material";
 import {useTranslation} from "react-i18next";
+import {ResourceType} from "../../api/resources/response/ResourceDto";
+import UploadFileZone from "./UploadFile";
+import {api} from "../../api/AppApi";
 
 const textAreaStyle: React.CSSProperties = {
     padding: '12px 16px',
@@ -73,15 +86,21 @@ export interface FormElement {
     id?: string;
     label?: string;
     defaultValue?: string;
-    error?: string
+    error?: string;
     typeOfElement: ComponentType;
+    menuItems?: MenuItem[];
+}
+
+export interface MenuItem {
+    value: string | number | undefined;
 }
 
 export interface UpdateFormProps {
     formElements: FormElement[];
     buttonName: string;
-    handleSubmit: (formData: Record<string, any>) => void;
-    id: string;
+    handleSubmit: (formData: Record<string, any>, additionalValue: string) => void;
+    id?: string;
+    buttonDisable? :boolean
 }
 
 export const CustomTextArea: React.FC<{ name?: string, id?: string, defaultValue?: string, error?: string }> =
@@ -120,9 +139,44 @@ export const CustomCheckBox: React.FC<{ name?: string, id?: string, checked?: bo
         </div>
     )
 
-export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName, handleSubmit, id}) => {
+export const CustomDropdown: React.FC<{
+    name?: string,
+    id?: string,
+    error?: string,
+    menuItems: MenuItem[],
+    value: string,
+    onChange: (event: SelectChangeEvent<string>, child: React.ReactNode) => void
+}> =
+    ({name, id, error, menuItems, value, onChange}) => (
+        <div>
+            <label>{name}:</label>
+            <Select id={id} value={value} onChange={onChange} defaultValue={ResourceType.link} name="dropdown">
+                {menuItems.map((item) => (
+                    <MenuItem key={item.value} value={item.value}>
+                        {item.value}
+                    </MenuItem>
+                ))}
+            </Select>
+            {error && <p style={{color: 'red'}}>{error}</p>}
+        </div>
+    )
+
+export const CustomDropZone: React.FC<{
+    error?: string,
+    onFileUpload?: (file: File) => void
+}> =
+    ({error, onFileUpload}) => (
+        <div>
+            <UploadFileZone name="file" onFileUpload={onFileUpload}></UploadFileZone>
+            {error && <p style={{color: 'red'}}>{error}</p>}
+        </div>
+    )
+
+export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName, handleSubmit , id, buttonDisable}) => {
     const [errors, setErrors] = useState<errorHandler[]>([]);
     const {t} = useTranslation('overall');
+    const [dropdownValue, setDropdownValue] = useState<string>("");
+    const [file, setFile] = useState<File | null>(null);
 
     const isError = (message: string, id: string) => {
         if (message.length === 0) {
@@ -132,13 +186,14 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
         return null;
     };
 
+
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const formData: Record<string, any> = {};
         const elements = event.currentTarget.elements as HTMLCollectionOf<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
 
-        formData['id'] = id;
+        if (id) formData['id'] = id;
 
         const formElementsArray = Array.from(elements).filter(
             (element): element is HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement =>
@@ -159,15 +214,31 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
                     }
                 }
             });
+            if (file) {
+                formData['file'] = file;
+            }
         } else {
             console.error('No form elements found.');
         }
 
         setErrors(newErrors);
 
-        if (newErrors.length === 0) {
-            handleSubmit(formData);
+        if (errors.length === 0) {
+            if (file) {
+                api.attachment.upload(file).then(r => {
+                    console.log("File is uploaded", r)
+                })
+            }
+            handleSubmit(formData, dropdownValue)
         }
+    };
+
+    const handleDropdownChange = (event: SelectChangeEvent<string>, child: React.ReactNode) => {
+        setDropdownValue(event.target.value);
+    };
+
+    const handleFileUpload = (uploadedFile: File) => {
+        setFile(uploadedFile);
     };
 
     return (
@@ -175,7 +246,7 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
             <Box sx={{display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2}}>
                 <Box sx={{width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2}}/>
                 <Typography variant="h5" component="div">
-                    Update:
+                    {buttonName}
                 </Typography>
             </Box>
             <FormControl sx={{padding: 2, width: '100%'}}>
@@ -197,11 +268,13 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
                                     id={id}
                                     defaultValue={defaultValue}
                                     error={error}
+                                    onChange={name === "dropdown" ? handleDropdownChange : undefined}
+                                    onFileUpload={name === "file" ? handleFileUpload : undefined}
                                 />
                             </div>
                         );
                     })}
-                    <Button sx={{marginTop: 2}} variant="contained" type="submit">
+                    <Button sx={{marginTop: 2}} variant="contained" type="submit" disabled={buttonDisable}>
                         {buttonName}
                     </Button>
                 </form>

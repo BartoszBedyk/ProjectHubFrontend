@@ -5,6 +5,7 @@ import {SearchForm} from "../../../commons/Search/SearchForm";
 import {SearchResponse} from "../../../commons/Search/SearchResponse";
 import {UpdateResourceForm} from "../form/UpdateResourceForm";
 import {axiosInstance} from "../../../AxiosClient";
+import {CreateResourceForm} from "../form/CreateResourceForm";
 
 
 export class ResourcesApiMock implements ResourcesApi {
@@ -115,16 +116,31 @@ export class ResourcesApiMock implements ResourcesApi {
 
     get(id: string): Promise<ResourceDto>{
         return mockTimeout(5000).then(() => ({
-                    id: "111223",
-                    name: 'Zasoby wlasne',
-                    description: 'Opis zasobu',
-                    value: 'Wartosc zasobu',
-                    resourceType: ResourceType.attachment,
-                    environmentId: '1',
-                    projectId: '1',
-                    createdById: 'Admin',
-                    createdOn: "28-09-2023",
-                    lastModifiedOn: "28-09-2023",
+            id: "111223",
+            name: 'Nazwa zasobu',
+            description: 'Opis zasobu',
+            value: 'Tekst zasobu może być naprawdę długi',
+            resourceType: ResourceType.text,
+            environmentId: '1',
+            projectId: '1',
+            createdById: 'Admin',
+            createdOn: "28-09-2023",
+            lastModifiedOn: "28-09-2023",
+        }));
+    }
+
+    create(form: CreateResourceForm, type : string): Promise<ResourceDto> {
+        return mockTimeout(5000).then(() => ({
+            id: "111223",
+            name: 'Nazwa zasobu',
+            description: 'Opis zasobu',
+            value: 'Tekst zasobu może być naprawdę długi',
+            resourceType: ResourceType.text,
+            environmentId: '1',
+            projectId: '1',
+            createdById: 'Admin',
+            createdOn: "28-09-2023",
+            lastModifiedOn: "28-09-2023",
         }));
     }
 

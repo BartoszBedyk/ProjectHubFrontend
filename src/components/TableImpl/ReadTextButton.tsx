@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Icon} from "@mui/material";
 import {ChromeReaderModeOutlined} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
+import {Navigate} from "react-router-dom";
 
 
 interface OpenLinkButtonProps {
@@ -10,11 +11,14 @@ interface OpenLinkButtonProps {
 
 const OpenLinkButton = ({ children }: OpenLinkButtonProps) => {
     const {t} = useTranslation("buttons");
+
+    function handleClick(){
+        return <Navigate to={`/project/:projectId/resources/details/${children}`}></Navigate>
+    }
+
     return(
-        //TODO
-        //otwieranie okienka z teksterm lub otwieranie
         <React.Fragment>
-            <Button
+            <Button onClick={handleClick}
 
                 variant="contained"
                 size="medium"

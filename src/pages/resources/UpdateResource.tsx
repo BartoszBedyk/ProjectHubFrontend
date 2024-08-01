@@ -6,16 +6,13 @@ import {useParams} from "react-router-dom";
 
 
 
-function Edit() {
+function UpdateResource() {
     let { id } = useParams();
-    if(id==undefined){
-        id='empty'
-    }
     return (
         <CustomLayout>
-            <UpdateResourceFormComponent id={id} ></UpdateResourceFormComponent>
+            <UpdateResourceFormComponent id={id!} ></UpdateResourceFormComponent>
         </CustomLayout>
     );
 }
 
-export default Edit;
+export default UpdateResource;
