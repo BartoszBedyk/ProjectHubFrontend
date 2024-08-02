@@ -52,7 +52,10 @@
       "closeTxt": "Close",
       "resourcesTableTitle": "Resources",
       "createResource": "Create a new resource",
-      "notFound": "Resource not found"
+      "notFound": "Resource not found",
+      "dialogUpdate": "The resource has been updated.",
+      "dialogUpdateTitle": "Resource update",
+      "update" : "Update"
     },
     "projects": {
       "name": "Name",

@@ -29,6 +29,7 @@ function Resources() {
             default:
                 type = "";
         }
+        console.log(projectId, type);
     return (
         <div><CustomLayout>
             <h1>ProjectName {t('resourcestxt')}</h1>

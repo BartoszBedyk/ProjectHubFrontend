@@ -39,21 +39,21 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     if (!props.resourceType) {
         searchFormCriteria = [
             {
-                fieldName: 'id',
-                value: `%${props.searchValue}%`,
-                operator: CriteriaOperator.LIKE
+                fieldName: 'projectId',
+                value: props.searchValue,
+                operator: CriteriaOperator.EQUALS
             }
         ];
     } else {
         searchFormCriteria = [
             {
-                fieldName: 'name',
-                value: `%${props.searchValue}%`,
-                operator: CriteriaOperator.LIKE
+                fieldName: 'projectId',
+                value: props.searchValue,
+                operator: CriteriaOperator.EQUALS
             },
             {
                 fieldName: 'resourceType',
-                value: `${props.resourceType}`,
+                value: props.resourceType,
                 operator: CriteriaOperator.EQUALS
             }
         ];

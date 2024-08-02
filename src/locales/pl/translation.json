@@ -55,7 +55,10 @@
       "closeTxt": "Zamknij",
       "resourcesTableTitle": "Zasoby",
       "createResource": "Utwórz nowy zasób",
-      "notFound": "Nie znaleziono zasobu"
+      "notFound": "Nie znaleziono zasobu",
+      "dialogUpdate" : "Zasób został zaktualizowany.",
+      "dialogUpdateTitle": "Aktualizacja zasobu",
+      "update" : "Zaktualizuj"
     },
     "projects": {
       "name": "Nazwa",

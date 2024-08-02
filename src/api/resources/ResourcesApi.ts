@@ -6,7 +6,7 @@ import {CreateResourceForm} from "./form/CreateResourceForm";
 
 export interface ResourcesApi {
     search(form: SearchForm): Promise<SearchResponse<ResourceDto>>
-    searchByPath(form: SearchForm): Promise<SearchResponse<ResourceDto>>
+    searchByPath(form: SearchForm, envId: string, projectID: string): Promise<SearchResponse<ResourceDto>>
     readSecret(id: string): Promise<string>
     updateResource(form : UpdateResourceForm): Promise<SearchResponse<ResourceDto>>
     get(id: string): Promise<ResourceDto>

@@ -43,7 +43,7 @@ export class ResourcesApiMock implements ResourcesApi {
         }));
 
 }
-    async searchByPath(form: SearchForm | null): Promise<SearchResponse<ResourceDto>> {
+    async searchByPath(form: SearchForm, envId: string, projectID: string): Promise<SearchResponse<ResourceDto>> {
         return mockTimeout(5000).then(() => ({
             items: [
                 {

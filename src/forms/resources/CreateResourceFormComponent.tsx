@@ -47,7 +47,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
         description: '',
         value: '',
         environmentId: environmentId = "testEnvironmentId",
-        projectId: projectId = "testProjectID"
+        projectId: projectId
     });
     const [formForType, setFormForType] = useState<FormElement[]>(
      [
@@ -330,8 +330,6 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
 
 
     const handleSubmit = (formData: Record<string, any>) => {
-        const typeFromDropdown: ResourceType = formData['dropdown'];
-
         let form = {
             name: formData.name,
             description: formData.description,
@@ -340,7 +338,9 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
             projectId: projectId,
         }
         setForm(form as CreateResourceForm);
-        api.resources.create(form, typeSetter)
+        api.resources.create(form, typeSetter).then(
+            response => {console.log("Response value",response.value)}
+        )
     }
 
     const handleSubmit2 = (formData: Record<string, any>) => {

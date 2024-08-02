@@ -109,7 +109,6 @@ export function UpdateResourceFormComponent(props: updateProps) {
 
         api.resources.updateResource(formData as UpdateResourceForm).then(
             response => {
-                console.log("Updated to:", response)
                 setOpen(true);
                 setTimeout(() => {
                     navigate(linkToPage);
@@ -131,9 +130,9 @@ export function UpdateResourceFormComponent(props: updateProps) {
 
     return (
         <div>
-            <CustomForm formElements={formElements} buttonName='Update' handleSubmit={handleSubmit}
+            <CustomForm formElements={formElements} buttonName={t('resources.update')} handleSubmit={handleSubmit}
                         id={props.id}></CustomForm>
-            <UpdateDialog openProps={open}></UpdateDialog>
+            <UpdateDialog openProps={open} title={t('resources.dialogUpdateTitle')} message={t('resources.dialogUpdate')}></UpdateDialog>
         </div>
     )
 
