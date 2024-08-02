@@ -23,12 +23,17 @@ interface ThemeProviderComponentProps {
 }
 
 const ThemeProviderComponent: React.FC<ThemeProviderComponentProps> = ({ children }) => {
-    const [mode, setMode] = useState<'light' | 'dark'>('light');
+    let savedMode = localStorage.getItem("theme")
+    const [mode, setMode] = useState(savedMode);
+    localStorage.setItem("theme", mode as string);
 
     const theme = useMemo<Theme>(() => (mode === 'light' ? lightTheme : darkTheme), [mode]);
 
     const toggleTheme = () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+
+
+        setMode((savedMode) => (savedMode === 'light' ? 'dark' : 'light'));
+
     };
 
     return (
