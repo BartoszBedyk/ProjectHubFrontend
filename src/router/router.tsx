@@ -20,6 +20,8 @@ import React from "react";
 import {Edit} from "@mui/icons-material";
 import Resource from "../pages/resources/Resource";
 import PrivateRoute from "../components/Login/PrivateRoute";
+import UserProfile from "../pages/user-profile/UserProfile";
+import Settings from "../pages/settings/Settings";
 
 
 export const router = createBrowserRouter([
@@ -58,6 +60,11 @@ export const router = createBrowserRouter([
     {
         path: "/user",
         element:(<PrivateRoute> <UserManagement/> </PrivateRoute>),
+        errorElement: <Error/>
+    },
+    {
+        path: "/user/:userId",
+        element:(<PrivateRoute> <UserProfile/> </PrivateRoute>),
         errorElement: <Error/>
     },
     {
@@ -165,7 +172,13 @@ export const router = createBrowserRouter([
                 <CreateResource/>
             </PrivateRoute>
         ),
-    }
+    },
+
+    {
+        path: "/settings",
+        element:(<PrivateRoute> <Settings/> </PrivateRoute>),
+        errorElement: <Error/>
+    },
 
 ])
 

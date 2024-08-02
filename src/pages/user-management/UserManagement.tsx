@@ -3,10 +3,12 @@ import UsersTable from "../../components/TableImpl/UsersTable";
 import CustomLayout from "../../components/Layout/Layout";
 import {Box, Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const UserManagement = () => {
 
     const navigate = useNavigate();
+    const {t} = useTranslation("userManagement");
 
     const handleOnClick = () => {
         navigate("/user/create");
@@ -17,7 +19,7 @@ const UserManagement = () => {
             <UsersTable searchValue='' />
             <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
                 <Button onClick={handleOnClick} type="submit" variant="contained" color="primary" sx={{ mr: 3 }}>
-                    Create User
+                    {t('createUser')}
                 </Button>
             </Box>
         </CustomLayout>
