@@ -13,13 +13,14 @@ import {useTranslation} from "react-i18next";
 
 
 interface updateProps {
-    id: string
+    resourceId: string
+    projectId: string
 }
 
-export function UpdateResourceFormComponent(props: updateProps) {
+export function UpdateResourceFormComponent({resourceId, projectId}: updateProps) {
     const [open, setOpen] = useState(false)
     const [form, setForm] = useState<UpdateResourceForm>({
-        id: props.id,
+        id: resourceId,
         name: '',
         description: '',
         value: ''
@@ -28,7 +29,9 @@ export function UpdateResourceFormComponent(props: updateProps) {
     useEffect(() => {
         const fetchElements = async () => {
             try {
-                const elements = await api.resources.get(props.id)
+                console.log(resourceId)
+                const elements = await api.resources.get(resourceId)
+                console.log("elements", elements)
                 setForm({
                     id: elements.id,
                     name: elements.name,
@@ -41,13 +44,14 @@ export function UpdateResourceFormComponent(props: updateProps) {
         }
 
         fetchElements();
-    }, [props.id]);
+    }, [resourceId, projectId]);
 
-    const linkToPage = "/project/resources/any"
+
+    const linkToPage = `/project/${projectId}/resources/details/${resourceId}`
     const navigate = useNavigate();
     const {t} = useTranslation("overall")
 
-
+    console.log(form)
     const formElements: FormElement[] = [
         {
             name: 'nameLabel',
@@ -131,7 +135,7 @@ export function UpdateResourceFormComponent(props: updateProps) {
     return (
         <div>
             <CustomForm formElements={formElements} buttonName={t('resources.update')} handleSubmit={handleSubmit}
-                        id={props.id}></CustomForm>
+                        id={resourceId}></CustomForm>
             <UpdateDialog openProps={open} title={t('resources.dialogUpdateTitle')} message={t('resources.dialogUpdate')}></UpdateDialog>
         </div>
     )

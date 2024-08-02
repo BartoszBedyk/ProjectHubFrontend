@@ -74,6 +74,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     const [rows, setRows] = useState<RowData[]>([
         {id: 'id', value: '1', name: 'nazwa byczku'},
     ]);
+    const link : string = `/project/${props.searchValue}/resources/details`;
 
     useEffect(() => {
         api.resources.search(searchForm).then((response: SearchResponse<ResourceDto>) => {
@@ -109,7 +110,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                     }
                     case 'LINK': {
                         const newRow: RowData = {
-                            //id: responseValue.id,
+                            id: responseValue.id,
                             name: responseValue.name,
                             value:
                                 <Link href={responseValue.value} underline="hover" color="inherit" rel="noreferrer"
@@ -158,7 +159,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={t('resourcesTableTitle')} navigateTo="/project/resources/details"/>
+            <CustomTable columns={columns} rows={rows} title={t('resourcesTableTitle')} navigateTo={link}/>
         </div>
     );
 }

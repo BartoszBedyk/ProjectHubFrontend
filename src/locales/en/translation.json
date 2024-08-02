@@ -55,7 +55,10 @@
       "notFound": "Resource not found",
       "dialogUpdate": "The resource has been updated.",
       "dialogUpdateTitle": "Resource update",
-      "update" : "Update"
+      "update" : "Update",
+      "dialogCreateTitle": "Resource created",
+      "dialogCreate": "The resource has been created."
+
     },
     "projects": {
       "name": "Name",

@@ -11,7 +11,7 @@ import ButtonByResourceType from "../../components/TableImpl/ButtonByResourceTyp
 
 
 const ProjectPageComponent: React.FC = () => {
-    const {id} = useParams<{ id: string }>();
+    const {resourceId, projectId} = useParams<{ resourceId: string, projectId: string }>();
     const [resource, setResource] = useState<ResourceDto | null>(null);
 
     const [loading, setLoading] = useState(true);
@@ -22,11 +22,11 @@ const ProjectPageComponent: React.FC = () => {
     useEffect(() => {
         const fetchDetails = async () => {
             try {
-                const response = await api.resources.get(id!);
+                const response = await api.resources.get(resourceId!);
                 setResource(response);
 
                 if (response.createdById) {
-                    const creatorResponse = await api.projectMember.getByIds(response.createdById, id!);
+                    const creatorResponse = await api.projectMember.getByIds(response.createdById, resourceId!);
                     setCreator(creatorResponse);
                 }
             } catch (error) {
@@ -37,10 +37,10 @@ const ProjectPageComponent: React.FC = () => {
         };
 
         fetchDetails();
-    }, [id]);
+    }, [resourceId]);
 
     const handleEdit = () => {
-        navigate(`/project/resources/edit/${id}`);
+        navigate(`/project/${projectId}/resources/edit/${resourceId}`);
     };
 
 
