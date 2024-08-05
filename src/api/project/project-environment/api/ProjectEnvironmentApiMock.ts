@@ -9,7 +9,7 @@ export class ProjectEnvironmentApiMock implements ProjectEnvironmentApi {
         return mockTimeout(2000).then(() => ({
                 id: "1232",
                 name: "DEV",
-                isEncrypted: false,
+                encrypted: false,
                 projectId: "123",
                 createdOn: new Date(),
                 updatedOn: null,
@@ -17,16 +17,30 @@ export class ProjectEnvironmentApiMock implements ProjectEnvironmentApi {
                 deletedById: null,
                 createdById: "12323232323",
             }))};
-    create(form: CreateProjectEnvironmentForm): Promise<void> {
-        return mockTimeout(2000).then(() => {
-            console.log("Project environment created successfully", form);
-        });
-    }
-    update(form: UpdateProjectEnvironmentForm): Promise<void> {
-        return mockTimeout(2000).then(() => {
-            console.log("Project Environment updated successfully", form);
-        });
-    }
+    create(form: CreateProjectEnvironmentForm): Promise<ProjectEnvironmentDto> {
+        return mockTimeout(2000).then(() => ({
+            id: "1232",
+            name: "DEV",
+            encrypted: false,
+            projectId: "123",
+            createdOn: new Date(),
+            updatedOn: null,
+            deletedOn: null,
+            deletedById: null,
+            createdById: "12323232323",
+        }))};
+    update(form: UpdateProjectEnvironmentForm): Promise<ProjectEnvironmentDto> {
+        return mockTimeout(2000).then(() => ({
+            id: "1232",
+            name: "DEV",
+            encrypted: false,
+            projectId: "123",
+            createdOn: new Date(),
+            updatedOn: null,
+            deletedOn: null,
+            deletedById: null,
+            createdById: "12323232323",
+        }))};
     delete(id: string): Promise<void> {
         return mockTimeout(2000).then(() => {
             console.log("Project Environment deleted successfully", id);
@@ -37,7 +51,7 @@ export class ProjectEnvironmentApiMock implements ProjectEnvironmentApi {
             {
                 id: "1232",
                 name: "DEV",
-                isEncrypted: false,
+                encrypted: false,
                 projectId: "123",
                 createdOn: new Date(),
                 updatedOn: null,
@@ -48,7 +62,7 @@ export class ProjectEnvironmentApiMock implements ProjectEnvironmentApi {
             {
                 id: "12323",
                 name: "PROD",
-                isEncrypted: true,
+                encrypted: true,
                 projectId: "123",
                 createdOn: new Date(),
                 updatedOn: null,

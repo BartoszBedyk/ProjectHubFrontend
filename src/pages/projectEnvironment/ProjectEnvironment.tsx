@@ -7,7 +7,6 @@ import {
     Button,
     Container,
     CircularProgress,
-    Chip,
     Dialog,
     DialogActions,
     DialogContent,
@@ -15,67 +14,55 @@ import {
     DialogTitle
 } from '@mui/material';
 import { api } from '../../api/AppApi';
-import { TechnologyDTO } from '../../api/project/technology/response/TechnologyDTO';
 import CustomLayout from "../../components/Layout/Layout";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
-import { ProjectDTO } from "../../api/project/response/ProjectDTO";
 import { useTranslation } from "react-i18next";
 import { Role } from '../../api/project/project-member/response/Role';
 import { getUserId } from "../../storage/AuthStorage";
-import ProjectEnvironmentsTable from "../../components/TableImpl/ProjectEnvironmentTable";
+import {ProjectEnvironmentDto} from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 
-const ProjectPageComponent: React.FC = () => {
-    const { projectId } = useParams<{ projectId: string }>();
-    const [project, setProject] = useState<ProjectDTO | null>(null);
-    const [technologies, setTechnologies] = useState<TechnologyDTO[]>([]);
+const ProjectEnvironmentPageComponent: React.FC = () => {
+    const { environmentId } = useParams<{ environmentId: string }>();
+    const [environment, setEnvironment] = useState<ProjectEnvironmentDto | null>(null);
     const [loading, setLoading] = useState(true);
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
-    const { t } = useTranslation('projects');
+    const { t } = useTranslation('environments');
 
     useEffect(() => {
-        const fetchProjectDetails = async () => {
+        const fetchEnvironmentDetails = async () => {
             try {
-                const projectResponse = await api.project.get(projectId!);
-                setProject(projectResponse);
-
-                const technologyResponses = await Promise.all(
-                    projectResponse.technologies.map((techId: string) => api.technology.findById(techId))
-                );
-                setTechnologies(technologyResponses);
-
-                if (projectResponse.createdById) {
-                    const creatorResponse = await api.projectMember.getByIds(projectResponse.createdById, projectId!);
-                    setCreator(creatorResponse);
-                }
+                const environmentResponse = await api.projectEnvironment.findById(environmentId!);
+                setEnvironment(environmentResponse);
 
                 const currentUserId = getUserId();
                 if (currentUserId) {
-                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId!);
+                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, environmentResponse.projectId!);
                     setCurrentUserRole(currentUserResponse.role);
                 }
             } catch (error) {
-                console.error('Error fetching project details:', error);
+                console.error('Error fetching environment details:', error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchProjectDetails();
-    }, [projectId]);
+        fetchEnvironmentDetails();
+    }, [environmentId]);
 
     const handleEdit = () => {
-        navigate(`/project/edit/${projectId}`);
+        navigate(`/project-environment/edit/${environmentId}`);
     };
 
     const handleDelete = async () => {
         try {
-            await api.project.delete(projectId!);
-            navigate('/project');
+            const environmentResponse = await api.projectEnvironment.findById(environmentId!);
+            await api.projectEnvironment.delete(environmentId!);
+            navigate(`/project/${environmentResponse.projectId}`);
         } catch (error) {
-            console.error('Error deleting project:', error);
+            console.error('Error deleting environment:', error);
         }
     };
 
@@ -89,10 +76,6 @@ const ProjectPageComponent: React.FC = () => {
 
     const isOwner = currentUserRole === Role.OWNER;
 
-    const handleCreateEnvironment = () => {
-        navigate(`/project-environment/create/${projectId}`);
-    };
-
     if (loading) {
         return (
             <CustomLayout>
@@ -105,7 +88,7 @@ const ProjectPageComponent: React.FC = () => {
         );
     }
 
-    if (!project) {
+    if (!environment) {
         return (
             <CustomLayout>
                 <Container>
@@ -123,17 +106,12 @@ const ProjectPageComponent: React.FC = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
                     <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
                     <Typography variant="h5" component="div">
-                        {project.name}
+                        {environment.name}
                     </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, marginBottom: 2, marginLeft: 3, marginTop: 1 }}>
-                    {technologies.map((tech, index) => (
-                        <Chip key={index} label={tech.name} sx={{ backgroundColor: '#1976d2', color: '#fff' }} />
-                    ))}
                 </Box>
                 <Box sx={{ padding: 3 }}>
                     <Typography variant="body1" gutterBottom>
-                        {project.description}
+                        {`${t('isEncrypted')}: ${environment.encrypted ? t('yes') : t('no')}`}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2 }}>
                         {isOwner && (
@@ -142,14 +120,14 @@ const ProjectPageComponent: React.FC = () => {
                                     {t('edit')}
                                 </Button>
                                 <Button variant="contained" color="error" onClick={openDeleteDialog}>
-                                    {t('deleteProject')}
+                                    {t('deleteEnvironment')}
                                 </Button>
                             </>
                         )}
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
                         <Typography variant="body2" color="textSecondary">
-                            {`${t('created')}: ${new Date(project.createdOn).toLocaleDateString()}`}
+                            {`${t('created')}: ${new Date(environment.createdOn).toLocaleDateString()}`}
                         </Typography>
                         {creator && (
                             <Typography variant="body2" color="textSecondary">
@@ -159,21 +137,6 @@ const ProjectPageComponent: React.FC = () => {
                     </Box>
                 </Box>
             </Paper>
-            <ProjectEnvironmentsTable projectId={projectId!}/>
-                {isOwner && (
-                    <>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, marginRight: 3 }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleCreateEnvironment}
-                                title={t('createProject')}
-                            >
-                                {t('createEnvironment')}
-                            </Button>
-                        </Box>
-                    </>
-                )}
             <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
                 <DialogTitle>{t('confirmDeletion')}</DialogTitle>
                 <DialogContent>
@@ -194,4 +157,4 @@ const ProjectPageComponent: React.FC = () => {
     );
 };
 
-export default ProjectPageComponent;
+export default ProjectEnvironmentPageComponent;

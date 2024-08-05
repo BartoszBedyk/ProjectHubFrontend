@@ -85,7 +85,8 @@
       "technologyDescription": "Opis technologii",
       "selectedTechnologies": "Wybrane technologie",
       "updateProject": "Zaktualizuj projekt",
-      "noAccess": "Brak dostępu."
+      "noAccess": "Brak dostępu.",
+      "createEnvironment": "Nowe środowisko"
     },
     "forms": {
       "new": "Nowe",
@@ -168,7 +169,36 @@
       "membersList": "Lista uczestników projektu",
       "role": "Rola",
       "noPermission": "Brak dostępu",
-      "environments": "Środowiska"
+      "environments": "Środowiska",
+      "error": "Błąd",
+      "cannotDeleteSelf": "Nie można usunąć samego siebie.",
+      "ok": "Ok"
+    },
+    "environments": {
+      "name": "Nazwa",
+      "isEncrypted": "Zaszyfrowane",
+      "createdOn": "Data stworzenia",
+      "createdBy": "Stworzony przez",
+      "updatedOn": "Data aktualizacji",
+      "editEnvironment": "Edytuj środowisko",
+      "environmentName": "Nazwa środowiska",
+      "encrypted": "Zaszyfrowane",
+      "updateEnvironment": "Zaktualizuj środowisko",
+      "newEnvironment": "Nowe środowisko",
+      "createEnvironment": "Utwórz środowisko",
+      "notFound": "Środowisko nie znalezione",
+      "noAccess": "Nie masz dostępu do tego środowiska",
+      "yes": "Tak",
+      "no": "Nie",
+      "edit": "Edytuj",
+      "deleteEnvironment": "Usuń środowisko",
+      "created": "Utworzono",
+      "confirmDeletion": "Potwierdź usunięcie",
+      "deletionAlert": "Czy na pewno chcesz usunąć to środowisko?",
+      "cancel": "Anuluj",
+      "delete": "Usuń",
+      "emptyFieldError": "To pole nie może być puste",
+      "environmentsList": "Lista środowisk"
     }
   }
 }

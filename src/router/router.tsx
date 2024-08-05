@@ -17,9 +17,11 @@ import {CreateResource} from "../pages/resources/CreateResource";
 import UpdateResource from "../pages/resources/UpdateResource";
 import Resources from "../pages/resources/Resources";
 import React from "react";
-import {Edit} from "@mui/icons-material";
 import Resource from "../pages/resources/Resource";
 import PrivateRoute from "../components/Login/PrivateRoute";
+import CreateProjectEnvironment from "../pages/projectEnvironment/CreateProjectEnvironment";
+import UpdateProjectEnvironment from "../pages/projectEnvironment/UpdateProjectEnvironment";
+import ProjectEnvironment from "../pages/projectEnvironment/ProjectEnvironment";
 
 
 export const router = createBrowserRouter([
@@ -119,13 +121,18 @@ export const router = createBrowserRouter([
     /** PROJECT ENVIRONMENT **/
 
     {
-        path: "/project-environment/create",
-        element: <div>Create Project Environment</div>,
+        path: "/project-environment/create/:projectId",
+        element: (<PrivateRoute><CreateProjectEnvironment/></PrivateRoute>),
         errorElement: <Error/>
     },
     {
-        path: "/project-environment/edit",
-        element: <div>Edit Project Environment</div>,
+        path: "/project-environment/edit/:environmentId",
+        element: (<PrivateRoute><UpdateProjectEnvironment/></PrivateRoute>),
+        errorElement: <Error/>
+    },
+    {
+        path: "/project-environment/:environmentId",
+        element: (<PrivateRoute><ProjectEnvironment/></PrivateRoute>),
         errorElement: <Error/>
     },
 

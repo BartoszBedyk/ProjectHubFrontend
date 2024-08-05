@@ -9,13 +9,13 @@ export class ProjectEnvironmentApiAxios implements ProjectEnvironmentApi {
         return axiosInstance.get<ProjectEnvironmentDto>(`/project-environment/get/${id}`)
             .then(response => response.data)
     }
-    create(form: CreateProjectEnvironmentForm): Promise<void> {
+    create(form: CreateProjectEnvironmentForm): Promise<ProjectEnvironmentDto> {
         return axiosInstance.post('/project-environment/save', form)
-            .then(() => {});
+            .then(response => response.data);
     }
-    update(form: UpdateProjectEnvironmentForm): Promise<void> {
+    update(form: UpdateProjectEnvironmentForm): Promise<ProjectEnvironmentDto> {
         return axiosInstance.put('/project-environment/update', form)
-            .then(() => {});
+            .then(response => response.data)
     }
     delete(id: string): Promise<void> {
         return axiosInstance.delete(`/project-environment/delete/${id}`)

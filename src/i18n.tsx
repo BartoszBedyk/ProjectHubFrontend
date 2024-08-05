@@ -15,7 +15,8 @@ export const languageResources ={
         table: translationEnglish.table,
         buttons: translationEnglish.pages.buttons,
         members: translationEnglish.pages.members,
-        forms: translationEnglish.pages.forms
+        forms: translationEnglish.pages.forms,
+        environments: translationEnglish.pages.environments
     },
     pl: {
         login: translationPolish.pages.login,
@@ -26,7 +27,8 @@ export const languageResources ={
         table: translationPolish.table,
         buttons: translationPolish.pages.buttons,
         members: translationPolish.pages.members,
-        forms: translationPolish.pages.forms
+        forms: translationPolish.pages.forms,
+        environments: translationPolish.pages.environments
     }
 }
 const options = {
