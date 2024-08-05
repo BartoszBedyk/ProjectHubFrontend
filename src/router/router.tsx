@@ -147,7 +147,7 @@ export const router = createBrowserRouter([
         errorElement: <Error/>
     },
     {
-        path: "/project/:projectId/resources/edit/:id",
+        path: "/project/:projectId/resources/edit/:resourceId",
         element: (<PrivateRoute>
                     <UpdateResource></UpdateResource>
                  </PrivateRoute>
@@ -155,7 +155,7 @@ export const router = createBrowserRouter([
 
         errorElement: <Error/>
     }, {
-        path: "/project/:projectId/resources/details/:id",
+        path: "/project/:projectId/resources/details/:resourceId",
         element:
             (
                 <PrivateRoute>

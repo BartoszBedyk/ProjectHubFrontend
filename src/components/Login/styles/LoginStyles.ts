@@ -20,8 +20,9 @@ export const stylesLogin = {
     textFields: {
         fontSize: "40px",
         height: "auto",
-        width: "100%",
+        width: "auto",
         margin: "16px",
+        padding: "0px",
         backgroundColor: grey[100]
     },
 

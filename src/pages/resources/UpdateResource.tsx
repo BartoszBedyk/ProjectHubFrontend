@@ -7,10 +7,12 @@ import {useParams} from "react-router-dom";
 
 
 function UpdateResource() {
-    let { id } = useParams();
+
+    let { projectId, resourceId } = useParams<{ projectId: string; resourceId: string }>();
+
     return (
         <CustomLayout>
-            <UpdateResourceFormComponent id={id!} ></UpdateResourceFormComponent>
+            <UpdateResourceFormComponent resourceId={resourceId!} projectId={projectId!} ></UpdateResourceFormComponent>
         </CustomLayout>
     );
 }

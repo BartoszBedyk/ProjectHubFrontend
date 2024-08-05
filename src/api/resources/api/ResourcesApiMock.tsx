@@ -24,6 +24,8 @@ export class ResourcesApiMock implements ResourcesApi {
                     createdById: 'Admin',
                     createdOn: "28-09-2023",
                     lastModifiedOn: "28-09-2023",
+                    deletedById: "adminek",
+                    deletedOn: "11.09.2001"
                 },
                 {
                     id: "1www23",
@@ -36,6 +38,8 @@ export class ResourcesApiMock implements ResourcesApi {
                     createdById: 'Admin',
                     createdOn: "28-09-2023",
                     lastModifiedOn: "28-09-2023",
+                    deletedById: "adminek",
+                    deletedOn: "11.09.2001"
                 }
 
             ],
@@ -43,7 +47,7 @@ export class ResourcesApiMock implements ResourcesApi {
         }));
 
 }
-    async searchByPath(form: SearchForm | null): Promise<SearchResponse<ResourceDto>> {
+    async searchByPath(form: SearchForm, envId: string, projectID: string): Promise<SearchResponse<ResourceDto>> {
         return mockTimeout(5000).then(() => ({
             items: [
                 {
@@ -57,6 +61,8 @@ export class ResourcesApiMock implements ResourcesApi {
                     createdById: 'Admin',
                     createdOn: "28-09-2023",
                     lastModifiedOn: "28-09-2023",
+                    deletedById: "adminek",
+                    deletedOn: "11.09.2001"
                 },
                 {
                     id: "1www23",
@@ -69,6 +75,8 @@ export class ResourcesApiMock implements ResourcesApi {
                     createdById: 'Admin',
                     createdOn: "28-09-2023",
                     lastModifiedOn: "28-09-2023",
+                    deletedById: "adminek",
+                    deletedOn: "11.09.2001"
                 }
 
             ],
@@ -95,6 +103,8 @@ export class ResourcesApiMock implements ResourcesApi {
                     createdById: 'Admin',
                     createdOn: "28-09-2023",
                     lastModifiedOn: "28-09-2023",
+                    deletedById: "adminek",
+                    deletedOn: "11.09.2001"
                 },
                 {
                     id: "1www23",
@@ -107,6 +117,8 @@ export class ResourcesApiMock implements ResourcesApi {
                     createdById: 'Admin',
                     createdOn: "28-09-2023",
                     lastModifiedOn: "28-09-2023",
+                    deletedById: "adminek",
+                    deletedOn: "11.09.2001"
                 }
 
             ],
@@ -126,6 +138,8 @@ export class ResourcesApiMock implements ResourcesApi {
             createdById: 'Admin',
             createdOn: "28-09-2023",
             lastModifiedOn: "28-09-2023",
+            deletedById: "adminek",
+            deletedOn: "11.09.2001"
         }));
     }
 
@@ -141,6 +155,25 @@ export class ResourcesApiMock implements ResourcesApi {
             createdById: 'Admin',
             createdOn: "28-09-2023",
             lastModifiedOn: "28-09-2023",
+            deletedById: "adminek",
+            deletedOn: "11.09.2001"
+        }));
+    }
+
+    delete(id: string): Promise<ResourceDto> {
+        return mockTimeout(5000).then(() => ({
+            id: "111223",
+            name: 'Nazwa zasobu',
+            description: 'Opis zasobu',
+            value: 'Tekst zasobu może być naprawdę długi',
+            resourceType: ResourceType.text,
+            environmentId: '1',
+            projectId: '1',
+            createdById: 'Admin',
+            createdOn: "28-09-2023",
+            lastModifiedOn: "28-09-2023",
+            deletedById: "adminek",
+            deletedOn: "11.09.2001"
         }));
     }
 

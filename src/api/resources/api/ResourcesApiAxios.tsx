@@ -19,8 +19,8 @@ export class ResourcesApiAxios implements ResourcesApi {
             })
     }
 
-    searchByPath(form: SearchForm): Promise<SearchResponse<ResourceDto>> {
-        return axiosInstance.post<SearchResponse<ResourceDto>>('evnID/resID', form)
+    searchByPath(form: SearchForm, envId: string, projectID: string): Promise<SearchResponse<ResourceDto>> {
+        return axiosInstance.post<SearchResponse<ResourceDto>>(`${projectID}/${envId}`, form)
             .then(response => response.data)
             .catch(error => {
                 console.error('Error fetching resources:', error);
@@ -65,7 +65,14 @@ export class ResourcesApiAxios implements ResourcesApi {
              })
     }
 
-
+    delete(id: string): Promise<ResourceDto> {
+         return axiosInstance.post(`/resource/delete/${id}`)
+             .then(response => response.data)
+             .catch(error => {
+                 console.error('Delete resource error: ', error);
+                 throw error;
+             })
+    }
 
 
 }

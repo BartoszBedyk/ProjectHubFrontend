@@ -44,7 +44,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
     resources: languageResources
 
 
-});
+}).then();
 
-i18n.changeLanguage()
+i18n.changeLanguage().then()
 export default i18n;

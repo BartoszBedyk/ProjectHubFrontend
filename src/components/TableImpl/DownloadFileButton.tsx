@@ -1,7 +1,7 @@
 import React from 'react';
 import {api} from "../../api/AppApi";
 import {Button, Icon} from "@mui/material";
-import {Download, DownloadSharp} from "@mui/icons-material";
+import { DownloadSharp} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
 
 
@@ -48,7 +48,7 @@ export const DownloadFileButton = ({ children }: DownloadFileButtonProps) => {
 
         }
         downloadFile(children).then(() => {
-            console.log("file_downloaded")
+            //console.log("file_downloaded")
         });
 
 

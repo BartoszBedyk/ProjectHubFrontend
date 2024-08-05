@@ -52,7 +52,15 @@
       "closeTxt": "Close",
       "resourcesTableTitle": "Resources",
       "createResource": "Create a new resource",
-      "notFound": "Resource not found"
+      "notFound": "Resource not found",
+      "dialogUpdate": "The resource has been updated.",
+      "dialogUpdateTitle": "Resource update.",
+      "update" : "Update",
+      "dialogCreateTitle": "Resource created",
+      "dialogCreate": "The resource has been created.",
+      "deleteResource": "Delete resource",
+      "deleteResourceMessage": "The action of deleting a resource can only be undone by the system administrator. Do you want to delete the resource?"
+
     },
     "projects": {
       "name": "Name",
@@ -107,7 +115,8 @@
       "secret": "Secret",
       "attachment": "Attachment",
       "chooseType" : "Select type",
-      "resourceType" : "Resource type"
+      "resourceType" : "Resource type",
+      "cancel" : "Cancel"
     },
     "buttons": {
       "openLink": "Open link",
