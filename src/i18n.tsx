@@ -16,6 +16,7 @@ export const languageResources ={
         buttons: translationEnglish.pages.buttons,
         members: translationEnglish.pages.members,
         forms: translationEnglish.pages.forms,
+        userManagement: translationEnglish.pages.userManagement,
         environments: translationEnglish.pages.environments
     },
     pl: {
@@ -28,6 +29,7 @@ export const languageResources ={
         buttons: translationPolish.pages.buttons,
         members: translationPolish.pages.members,
         forms: translationPolish.pages.forms,
+        userManagement: translationPolish.pages.userManagement,
         environments: translationPolish.pages.environments
     }
 }
@@ -44,7 +46,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
     resources: languageResources
 
 
-});
+}).then();
 
-i18n.changeLanguage()
+i18n.changeLanguage().then()
 export default i18n;

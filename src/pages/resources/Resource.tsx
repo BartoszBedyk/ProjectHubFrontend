@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Box, Button, CircularProgress, Container, Icon, Paper, Typography} from '@mui/material';
 import {api} from '../../api/AppApi';
@@ -8,25 +8,40 @@ import {useTranslation} from "react-i18next";
 import {ResourceDto, ResourceType} from "../../api/resources/response/ResourceDto";
 import EditIcon from '@mui/icons-material/Edit';
 import ButtonByResourceType from "../../components/TableImpl/ButtonByResourceType";
+import DeleteDialog from "../../components/dialogs/DeleteDialog";
+import DeleteButton from "../../components/TableImpl/DeleteButton";
 
 
 const ProjectPageComponent: React.FC = () => {
-    const {id} = useParams<{ id: string }>();
+    const {resourceId, projectId} = useParams<{ resourceId: string, projectId: string }>();
     const [resource, setResource] = useState<ResourceDto | null>(null);
 
     const [loading, setLoading] = useState(true);
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const navigate = useNavigate();
     const {t} = useTranslation('overall')
+    const [open, setOpen] = React.useState(false);
+
+
+
+
+
+    const openDeleteDialog= () =>{
+        setOpen(true)
+    }
+
+    const closeDeleteDialog = () => {
+        setOpen(false);
+    }
 
     useEffect(() => {
         const fetchDetails = async () => {
             try {
-                const response = await api.resources.get(id!);
+                const response = await api.resources.get(resourceId!);
                 setResource(response);
 
                 if (response.createdById) {
-                    const creatorResponse = await api.projectMember.getByIds(response.createdById, id!);
+                    const creatorResponse = await api.projectMember.getByIds(response.createdById, resourceId!);
                     setCreator(creatorResponse);
                 }
             } catch (error) {
@@ -37,10 +52,10 @@ const ProjectPageComponent: React.FC = () => {
         };
 
         fetchDetails();
-    }, [id]);
+    }, [resourceId]);
 
     const handleEdit = () => {
-        navigate(`/project/resources/edit/${id}`);
+        navigate(`/project/${projectId}/resources/edit/${resourceId}`);
     };
 
 
@@ -68,6 +83,11 @@ const ProjectPageComponent: React.FC = () => {
         );
     }
 
+    const handleDelete= () =>{
+        api.resources.delete(resourceId!).then(r => console.log(r))
+        navigate(`/project/${projectId}/resources/any`);
+    }
+
     return (
         <CustomLayout>
             <Paper sx={{width: 'auto', mb: 2, margin: 3}}>
@@ -79,6 +99,7 @@ const ProjectPageComponent: React.FC = () => {
 
 
                 </Box>
+                <DeleteDialog open={open} dialogTitle={t('resources.deleteResource')} dialogText={t('resources.deleteResourceMessage')} handleDelete={handleDelete}></DeleteDialog>
                 <Box sx={{padding: 3}}>
                     <Typography variant="body1" gutterBottom>
                         {t('forms.value')} {resource.value}
@@ -97,6 +118,7 @@ const ProjectPageComponent: React.FC = () => {
                                 </EditIcon>
                             </Icon>
                         </Button>
+                        <DeleteButton openDialog={openDeleteDialog} />
                     </Box>
                     <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 3}}>
                         <Typography variant="body2" color="textSecondary">

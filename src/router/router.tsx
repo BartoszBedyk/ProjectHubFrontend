@@ -17,8 +17,11 @@ import {CreateResource} from "../pages/resources/CreateResource";
 import UpdateResource from "../pages/resources/UpdateResource";
 import Resources from "../pages/resources/Resources";
 import React from "react";
+import {Edit} from "@mui/icons-material";
 import Resource from "../pages/resources/Resource";
 import PrivateRoute from "../components/Login/PrivateRoute";
+import UserProfile from "../pages/user-profile/UserProfile";
+import Settings from "../pages/settings/Settings";
 import CreateProjectEnvironment from "../pages/projectEnvironment/CreateProjectEnvironment";
 import UpdateProjectEnvironment from "../pages/projectEnvironment/UpdateProjectEnvironment";
 import ProjectEnvironment from "../pages/projectEnvironment/ProjectEnvironment";
@@ -60,6 +63,11 @@ export const router = createBrowserRouter([
     {
         path: "/user",
         element:(<PrivateRoute> <UserManagement/> </PrivateRoute>),
+        errorElement: <Error/>
+    },
+    {
+        path: "/user/:userId",
+        element:(<PrivateRoute> <UserProfile/> </PrivateRoute>),
         errorElement: <Error/>
     },
     {
@@ -147,7 +155,7 @@ export const router = createBrowserRouter([
         errorElement: <Error/>
     },
     {
-        path: "/project/:projectId/resources/edit/:id",
+        path: "/project/:projectId/resources/edit/:resourceId",
         element: (<PrivateRoute>
                     <UpdateResource></UpdateResource>
                  </PrivateRoute>
@@ -155,7 +163,7 @@ export const router = createBrowserRouter([
 
         errorElement: <Error/>
     }, {
-        path: "/project/:projectId/resources/details/:id",
+        path: "/project/:projectId/resources/details/:resourceId",
         element:
             (
                 <PrivateRoute>
@@ -172,7 +180,13 @@ export const router = createBrowserRouter([
                 <CreateResource/>
             </PrivateRoute>
         ),
-    }
+    },
+
+    {
+        path: "/settings",
+        element:(<PrivateRoute> <Settings/> </PrivateRoute>),
+        errorElement: <Error/>
+    },
 
 ])
 

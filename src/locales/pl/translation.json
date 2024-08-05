@@ -55,7 +55,12 @@
       "closeTxt": "Zamknij",
       "resourcesTableTitle": "Zasoby",
       "createResource": "Utwórz nowy zasób",
-      "notFound": "Nie znaleziono zasobu"
+      "notFound": "Nie znaleziono zasobu",
+      "dialogUpdate" : "Zasób został zaktualizowany.",
+      "dialogUpdateTitle": "Aktualizacja zasobu",
+      "update" : "Zaktualizuj",
+      "deleteResource": "Usuń zasób",
+      "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?"
     },
     "projects": {
       "name": "Nazwa",
@@ -111,7 +116,8 @@
       "secret": "Secret",
       "attachment": "Załącznik",
       "chooseType" : "Wybierz typ",
-      "resourceType" : "Typ zasobu"
+      "resourceType" : "Typ zasobu",
+      "cancel" : "Anuluj"
 
     },
     "buttons": {

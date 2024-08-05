@@ -1,16 +1,17 @@
 import Dialog from "@mui/material/Dialog";
 import React, {useEffect, useState} from "react";
 import DialogTitle from "@mui/material/DialogTitle";
-import CheckIcon from '@mui/icons-material/Check';
 import DialogContent from "@mui/material/DialogContent";
-import {Icon} from "@mui/material";
+import DialogContentText from "@mui/material/DialogContentText";
 
 
 interface UpdateDialogProps {
     openProps: boolean;
+    title: string;
+    message: string;
 }
 
-export const UpdateDialog: React.FC<UpdateDialogProps> = ({ openProps }) => {
+export const UpdateDialog: React.FC<UpdateDialogProps> = ({ openProps,title, message }) => {
     const [isOpen, setIsOpen] = useState(openProps);
     const handleClose = () => {
         setIsOpen(false);
@@ -27,14 +28,13 @@ export const UpdateDialog: React.FC<UpdateDialogProps> = ({ openProps }) => {
 
     return (
         <Dialog open={isOpen}>
-            <DialogTitle>Update completed</DialogTitle>
+            <DialogTitle>{title}</DialogTitle>
             <DialogContent
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             onClick={handleClose}>
-                <Icon
-                >
-                    <CheckIcon />
-                </Icon>
+                <DialogContentText>
+                    {message}
+                </DialogContentText>
             </DialogContent>
         </Dialog>
     );

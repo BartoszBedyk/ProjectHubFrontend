@@ -3,11 +3,14 @@ import CustomLayout from "../../components/Layout/Layout";
 import AllResourcesTable from "../../components/TableImpl/AllResourcesTable";
 import {useTranslation} from "react-i18next";
 import {ResourceType} from "../../api/resources/response/ResourceDto";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {Box, Button, Icon} from "@mui/material";
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 
 function Resources() {
     const {t} = useTranslation("resources");
     let { projectId, type } = useParams<{ projectId: string; type: string }>();
+    const navigate = useNavigate();
 
         switch (type) {
             case "link": {
@@ -29,10 +32,27 @@ function Resources() {
             default:
                 type = "";
         }
+
+    const handleCreate = () => {
+        navigate(`/project/${projectId}/resources/create`);
+    };
+
     return (
         <div><CustomLayout>
-            <h1>ProjectName {t('resourcestxt')}</h1>
-            <h2>Here are resources of te project</h2>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 2, margin: 3  }}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleCreate}
+                    title={t('createProject')}
+                >
+                    <Icon
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <LibraryAddIcon></LibraryAddIcon>
+                    </Icon>
+                </Button>
+            </Box>
             <AllResourcesTable searchValue={projectId!} resourceType={type as ResourceType}></AllResourcesTable>
         </CustomLayout>
 

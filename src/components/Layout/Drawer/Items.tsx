@@ -29,8 +29,42 @@ const Items: React.FC<ItemsProps> = ({ open }) => {
     const isActive = (name: string) => openItems[name];
 
     const renderListItem = (item: NavLink, isChild: boolean = false) => {
-        if (item.name === 'Main' && projectId) {
-            item.link = `/project/${projectId}`;
+        switch (item.name) {
+            case 'Main':
+                if (projectId) {
+                    item.link = `/project/${projectId}`;
+                }
+                break;
+            case 'All':
+                if (projectId) {
+                    item.link = `/project/${projectId}/resources/any`;
+                }
+                break;
+            case 'Links':
+                if (projectId) {
+                    item.link = `/project/${projectId}/resources/link`;
+                }
+                break;
+            case 'Documentation':
+                if (projectId) {
+                    item.link = `/project/${projectId}/resources/text`;
+                }
+                break;
+            case 'Files':
+                if (projectId) {
+                    item.link = `/project/${projectId}/resources/attachment`;
+                }
+                break;
+            case 'Secret':
+                if (projectId) {
+                    item.link = `/project/${projectId}/resources/secret`;
+                }
+                break;
+            case 'Members':
+                if (projectId) {
+                    item.link = `/project/${projectId}/resources/members`;
+                }
+                break;
         }
 
 

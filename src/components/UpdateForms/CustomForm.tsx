@@ -226,10 +226,12 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
         if (errors.length === 0) {
             if (file) {
                 api.attachment.upload(file).then(r => {
-                    console.log("File is uploaded", r)
-                })
+                    formData['value'] = r.id;
+                    handleSubmit(formData, dropdownValue);
+                });
+            } else {
+                handleSubmit(formData, dropdownValue);
             }
-            handleSubmit(formData, dropdownValue)
         }
     };
 
