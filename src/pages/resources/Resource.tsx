@@ -10,6 +10,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import ButtonByResourceType from "../../components/TableImpl/ButtonByResourceType";
 import DeleteDialog from "../../components/dialogs/DeleteDialog";
 import DeleteButton from "../../components/TableImpl/DeleteButton";
+import {Role} from "../../api/project/project-member/response/Role";
+import AuthComponent from "../../components/authComponent";
+import authComponent from "../../components/authComponent";
+import NoAccessHandler from "../../components/NoAccesHandler";
 
 
 const ProjectPageComponent: React.FC = () => {
@@ -21,12 +25,13 @@ const ProjectPageComponent: React.FC = () => {
     const navigate = useNavigate();
     const {t} = useTranslation('overall')
     const [open, setOpen] = React.useState(false);
+    const [role, setRole] = useState<Role | null>(null)
+
+    //FUNKCJA SPRAWDZAJACA ROLĘ DLA AKTUALNEGO USERA ZWRACA Role lub null
+    AuthComponent(projectId!).then(r => setRole(r))
 
 
-
-
-
-    const openDeleteDialog= () =>{
+    const openDeleteDialog = () => {
         setOpen(true)
     }
 
@@ -70,6 +75,11 @@ const ProjectPageComponent: React.FC = () => {
             </CustomLayout>
         );
     }
+        // TUTAJ MACIE KIEDY NIE MA ROLI PRZEKLEJCIE DO SIEBIE
+    if(role===null){
+
+        return (<NoAccessHandler data={role}/>)
+    }
 
     if (!resource) {
         return (
@@ -83,13 +93,14 @@ const ProjectPageComponent: React.FC = () => {
         );
     }
 
-    const handleDelete= () =>{
+    const handleDelete = () => {
         api.resources.delete(resourceId!).then(r => console.log(r))
         navigate(`/project/${projectId}/resources/any`);
     }
 
     return (
         <CustomLayout>
+
             <Paper sx={{width: 'auto', mb: 2, margin: 3}}>
                 <Box sx={{display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2}}>
                     <Box sx={{width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2}}/>
@@ -99,7 +110,9 @@ const ProjectPageComponent: React.FC = () => {
 
 
                 </Box>
-                <DeleteDialog open={open} dialogTitle={t('resources.deleteResource')} dialogText={t('resources.deleteResourceMessage')} handleDelete={handleDelete}></DeleteDialog>
+                <DeleteDialog open={open} dialogTitle={t('resources.deleteResource')}
+                              dialogText={t('resources.deleteResourceMessage')}
+                              handleDelete={handleDelete}></DeleteDialog>
                 <Box sx={{padding: 3}}>
                     <Typography variant="body1" gutterBottom>
                         {t('forms.value')} {resource.value}
@@ -111,14 +124,21 @@ const ProjectPageComponent: React.FC = () => {
                         {resource.resourceType !== ResourceType.text && (
                             <ButtonByResourceType id={resource.id} resourceType={resource.resourceType}
                                                   value={resource.value}/>)}
-                        <Button variant="contained" color="primary" onClick={handleEdit} title={t('forms.edit')}>
-                            <Icon
-                                style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <EditIcon>
-                                </EditIcon>
-                            </Icon>
-                        </Button>
-                        <DeleteButton openDialog={openDeleteDialog} />
+                        //TUTAJ PRZYCISKI WYŚWIETLACIE ZALEŻNIE OD ROLI
+                        {role != Role.VISITOR && role != null  && (
+                            <>
+                                <Button variant="contained" color="primary" onClick={handleEdit}
+                                        title={t('forms.edit')}>
+                                    <Icon
+                                        style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                        <EditIcon>
+                                        </EditIcon>
+                                    </Icon>
+                                </Button>
+                                <DeleteButton openDialog={openDeleteDialog}/>
+                            </>
+                        )}
+
                     </Box>
                     <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 3}}>
                         <Typography variant="body2" color="textSecondary">
