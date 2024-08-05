@@ -3,9 +3,7 @@ import { Button, Icon } from '@mui/material';
 import { useTheme } from '../ThemeContext';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import styled, { keyframes } from 'styled-components';
-
-
+import styled from 'styled-components';
 
 const IconContainer = styled(Icon)`
     position: relative;

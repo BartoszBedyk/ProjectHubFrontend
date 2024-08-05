@@ -11,4 +11,5 @@ export interface ResourcesApi {
     updateResource(form : UpdateResourceForm): Promise<SearchResponse<ResourceDto>>
     get(id: string): Promise<ResourceDto>
     create(form: CreateResourceForm, type: string): Promise<ResourceDto>
+    delete(id: string): Promise<ResourceDto>
 }

@@ -9,6 +9,8 @@ export interface ResourceDto {
     createdById: string
     createdOn: string
     lastModifiedOn: string
+    deletedOn: string
+    deletedById: string
 }
 
 export enum ResourceType {

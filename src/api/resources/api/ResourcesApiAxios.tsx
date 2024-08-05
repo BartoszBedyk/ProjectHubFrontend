@@ -65,7 +65,14 @@ export class ResourcesApiAxios implements ResourcesApi {
              })
     }
 
-
+    delete(id: string): Promise<ResourceDto> {
+         return axiosInstance.post(`/resource/delete/${id}`)
+             .then(response => response.data)
+             .catch(error => {
+                 console.error('Delete resource error: ', error);
+                 throw error;
+             })
+    }
 
 
 }
