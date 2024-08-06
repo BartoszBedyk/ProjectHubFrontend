@@ -1,17 +1,23 @@
-import projectsIcon from "../../../assets/Drawer/icon-nav-projects.png";
-import newProjectIcon from "../../../assets/Drawer/icon-nav-new-project.png";
-import documentationIcon from "../../../assets/Drawer/icon-nav-documantation.png";
-import filesIcon from "../../../assets/Drawer/icon-nav-files.png";
-import homeIcon from "../../../assets/Drawer/icon-nav-home.png";
-import linksIcon from "../../../assets/Drawer/icon-nav-links.png";
-import membersIcon from "../../../assets/Drawer/icon-nav-members.png";
-import resourcesIcon from "../../../assets/Drawer/icon-nav-resources.png";
-import userManagementIcon from "../../../assets/Drawer/icon-nav-user-management.png";
-import activitiesIcon from "../../../assets/Drawer/icon-nav-activities.png";
+
+import HomeIcon from '@mui/icons-material/Home';
+import {SvgIconComponent} from "@mui/icons-material";
+import WorkIcon from '@mui/icons-material/Work';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import StorageIcon from '@mui/icons-material/Storage';
+import LinkIcon from '@mui/icons-material/Link';
+import LockIcon from '@mui/icons-material/Lock';
+import DescriptionIcon from '@mui/icons-material/Description';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import EventIcon from '@mui/icons-material/Event';
+import GroupIcon from '@mui/icons-material/Group';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+
+
+
 
 interface NavLink {
     name: string;
-    icon: string;
+    icon: SvgIconComponent;
     link?: string;
     children?: NavLink[];
 }
@@ -19,21 +25,21 @@ interface NavLink {
 const navLinks: NavLink[] = [
     {
       name: "Home",
-      icon: homeIcon,
+      icon: HomeIcon,
       link: "/"
     },
     {
         name: "Project",
-        icon: projectsIcon,
+        icon: WorkIcon,
         children: [
             {
                 name: "Project list",
-                icon: projectsIcon,
+                icon: WorkIcon,
                 link: "/project",
             },
             {
                 name: "Create project",
-                icon: newProjectIcon,
+                icon: NoteAddIcon,
                 link: "/project/create",
 
             },
@@ -41,53 +47,53 @@ const navLinks: NavLink[] = [
     },
     {
         name: "Main",
-        icon: homeIcon,
+        icon: HomeIcon,
         link: "/project:projectId",
     },
     {
         name: "Resources",
-        icon: resourcesIcon,
+        icon: StorageIcon,
         children: [
             {
                 name: "All",
-                icon: resourcesIcon,
+                icon: StorageIcon,
                 link: "/project/:projectId/resources/any",
             },
             {
                 name: "Links",
-                icon: linksIcon,
+                icon: LinkIcon,
                 link: "/project/:projectId/resources/link",
             },
             {
                 name: "Documentation",
-                icon: documentationIcon,
+                icon: DescriptionIcon,
                 link: "/project/:projectId/resources/text",
             },
             {
                 name: "Files",
-                icon: filesIcon,
+                icon: InsertDriveFileIcon,
                 link: "/project/:projectId/resources/attachment",
             },
             {
                 name: "Secret",
-                icon: filesIcon,
+                icon: LockIcon,
                 link: "/project/:projectId/resources/secret",
             },
             {
                 name: "Members",
-                icon: membersIcon,
+                icon: GroupIcon,
                 link: "/project/:projectId/resources/members",
             },
         ]
     },
     {
         name: "User management",
-        icon: userManagementIcon,
+        icon: AdminPanelSettingsIcon,
         link: "/user"
     },
     {
         name: "Activities",
-        icon: activitiesIcon,
+        icon: EventIcon,
         link: "/"
     },
 ]
