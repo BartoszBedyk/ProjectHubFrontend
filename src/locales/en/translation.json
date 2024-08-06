@@ -34,16 +34,16 @@
     "home": {
     },
     "login": {
-      "login": "Log in",
+      "login": "Login",
       "loginName": "Email address",
       "password": "Password",
-      "loginCred": "Remember login details",
+      "loginCred": "Remember me",
       "loginLink1": "Forgot password?",
       "loginLink1b": "Reset",
       "loginLink2": "Don't have an account?",
       "loginLink2b": "Register",
       "loggingError": "Incorrect email address or password",
-      "loggingTokenError": "Log in again"
+      "loggingTokenError": "Login again"
     },
     "resources": {
       "resourcestxt": " - project resources.",

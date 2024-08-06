@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface NoAccessHandlerProps {
     data: any | null;
 }
 
 const NoAccessHandler: React.FC<NoAccessHandlerProps> = ({ data }) => {
+    const [isVisible, setIsVisible] = useState(false);
+
     useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, 1000);
+
         if (data === null) {
             const handleCopy = (e: ClipboardEvent) => {
                 e.preventDefault();
@@ -41,12 +47,18 @@ const NoAccessHandler: React.FC<NoAccessHandlerProps> = ({ data }) => {
                 document.removeEventListener('keydown', handleKeyDown);
             };
         }
+
+        return () => clearTimeout(timer);
     }, [data]);
+
+    if (!isVisible) {
+        return null;
+    }
 
     if (data === null) {
         return (
-            <div style={styles.container}>
-                <h1>Sorry, nie masz dostępu do tych danych, zapytaj menagera</h1>
+            <div style={styles.noAccessBro}>
+                <h1>Sorry, nie masz dostępu do tych danych, zapytaj menagera :)</h1>
             </div>
         );
     }
@@ -55,7 +67,7 @@ const NoAccessHandler: React.FC<NoAccessHandlerProps> = ({ data }) => {
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
-    container: {
+    noAccessBro: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

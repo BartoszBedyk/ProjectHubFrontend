@@ -13,15 +13,15 @@ const AuthComponent = async (projectId: string): Promise<Role | null> => {
             if (currentUserResponse.role) {
                 return currentUserResponse.role;
             } else {
-                setTimeout(() => {navigate(-1)}, 2000)
+                setTimeout(() => {navigate("/")}, 2000)
                 navigate(-1);
             }
         } catch (error) {
             console.error("Error fetching user role:", error);
-            setTimeout(() => {navigate(-1)}, 2000)
+            setTimeout(() => {navigate("/")}, 2000)
         }
     } else {
-        setTimeout(() => {navigate(-1)}, 2000)
+        setTimeout(() => {navigate("/")}, 2000)
         throw new Error("User ID not found");
     }
     return null;

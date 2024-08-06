@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CustomLayout from "../../components/Layout/Layout";
 import AllResourcesTable from "../../components/TableImpl/AllResourcesTable";
 import {useTranslation} from "react-i18next";
@@ -16,7 +16,9 @@ function Resources() {
     const navigate = useNavigate();
 
     const [role, setRole] = useState<Role | null>(null)
+
     AuthComponent(projectId!).then(r => setRole(r))
+
 
     switch (type) {
         case "link": {
@@ -44,8 +46,7 @@ function Resources() {
     };
 
 
-    if (role === null) {
-
+    if(role === null) {
         return (<NoAccessHandler data={role}/>)
     }
 

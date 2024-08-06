@@ -15,7 +15,6 @@ import OpenLinkButton from "./OpenLinkButton";
 import ReadTextButton from "./ReadTextButton";
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
-import CustomLayout from "../Layout/Layout";
 
 type AllResourcesProps = {
     searchValue: string,
@@ -23,9 +22,6 @@ type AllResourcesProps = {
 }
 
 const AllResourcesTable = (props: AllResourcesProps) => {
-    const [loading, setLoading] = useState(true);
-
-
     const {t} = useTranslation("overall");
     let {type} = useParams<{ type: string }>();
     const columns: ColumnDefinition[] = [
@@ -58,8 +54,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                 fieldName: 'resourceType',
                 value: props.resourceType,
                 operator: CriteriaOperator.EQUALS
-            },
-               //tutaj dodać envId
+            }
         ];
     }
 
@@ -152,25 +147,12 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                         }
                         setRows(prevRows => [...prevRows, newRow]);
                         break;
-
                     }
                 }
-                setLoading(false);
             })
         })
     }, [type]);
 
-    if (loading) {
-        return (
-            <CustomLayout>
-                <Container>
-                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-                        <CircularProgress/>
-                    </Box>
-                </Container>
-            </CustomLayout>
-        );
-    }
 
     return (
         <div>
