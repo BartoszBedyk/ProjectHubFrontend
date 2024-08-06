@@ -204,6 +204,14 @@
       "delete": "Delete",
       "emptyFieldError": "This field cannot be empty",
       "environmentsList": "Environments list"
+    },
+    "activities": {
+      "type": "Type",
+      "createdOn": "Created On",
+      "createdById": "Created By",
+      "params": "Parameters",
+      "activitiesTableTitle": "Activities",
+      "accessDenied": "Access denied."
     }
   }
 }
