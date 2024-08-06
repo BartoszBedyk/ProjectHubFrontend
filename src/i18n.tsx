@@ -17,7 +17,8 @@ export const languageResources ={
         members: translationEnglish.pages.members,
         forms: translationEnglish.pages.forms,
         userManagement: translationEnglish.pages.userManagement,
-        environments: translationEnglish.pages.environments
+        environments: translationEnglish.pages.environments,
+        activity: translationEnglish.pages.activities
     },
     pl: {
         login: translationPolish.pages.login,
@@ -30,7 +31,8 @@ export const languageResources ={
         members: translationPolish.pages.members,
         forms: translationPolish.pages.forms,
         userManagement: translationPolish.pages.userManagement,
-        environments: translationPolish.pages.environments
+        environments: translationPolish.pages.environments,
+        activity: translationPolish.pages.activities
     }
 }
 const options = {

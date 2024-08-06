@@ -82,7 +82,7 @@ const navLinks: NavLink[] = [
             {
                 name: "Members",
                 icon: GroupIcon,
-                link: "/project/:projectId/resources/members",
+                link: "/project-member/:projectId",
             },
         ]
     },
@@ -94,7 +94,7 @@ const navLinks: NavLink[] = [
     {
         name: "Activities",
         icon: EventIcon,
-        link: "/"
+        link: "/activities"
     },
 ]
 

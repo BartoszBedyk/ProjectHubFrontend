@@ -206,6 +206,14 @@
       "delete": "Usuń",
       "emptyFieldError": "To pole nie może być puste",
       "environmentsList": "Lista środowisk"
+    },
+    "activities": {
+      "type": "Typ",
+      "createdOn": "Data stworzenia",
+      "createdById": "Stworzony przez",
+      "params": "Parametry",
+      "activitiesTableTitle": "Aktywności",
+      "accessDenied": "Brak dostępu."
     }
   }
 }
