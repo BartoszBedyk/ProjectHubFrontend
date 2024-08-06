@@ -60,7 +60,8 @@
       "dialogUpdateTitle": "Aktualizacja zasobu",
       "update" : "Zaktualizuj",
       "deleteResource": "Usuń zasób",
-      "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?"
+      "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?",
+      "attachmentDialog": "Edycja pola \"Wartość\" może spowodować nieodwracalną utratę dostępu do zasobu."
     },
     "projects": {
       "name": "Nazwa",
