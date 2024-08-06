@@ -12,7 +12,6 @@ import DeleteDialog from "../../components/dialogs/DeleteDialog";
 import DeleteButton from "../../components/TableImpl/DeleteButton";
 import {Role} from "../../api/project/project-member/response/Role";
 import AuthComponent from "../../components/authComponent";
-import authComponent from "../../components/authComponent";
 import NoAccessHandler from "../../components/NoAccesHandler";
 
 
@@ -25,9 +24,8 @@ const ProjectPageComponent: React.FC = () => {
     const navigate = useNavigate();
     const {t} = useTranslation('overall')
     const [open, setOpen] = React.useState(false);
-    const [role, setRole] = useState<Role | null>(null)
 
-    //FUNKCJA SPRAWDZAJACA ROLĘ DLA AKTUALNEGO USERA ZWRACA Role lub null
+    const [role, setRole] = useState<Role | null>(null)
     AuthComponent(projectId!).then(r => setRole(r))
 
 
@@ -75,8 +73,8 @@ const ProjectPageComponent: React.FC = () => {
             </CustomLayout>
         );
     }
-        // TUTAJ MACIE KIEDY NIE MA ROLI PRZEKLEJCIE DO SIEBIE
-    if(role===null){
+
+    if (role === null) {
 
         return (<NoAccessHandler data={role}/>)
     }
@@ -124,8 +122,8 @@ const ProjectPageComponent: React.FC = () => {
                         {resource.resourceType !== ResourceType.text && (
                             <ButtonByResourceType id={resource.id} resourceType={resource.resourceType}
                                                   value={resource.value}/>)}
-                        //TUTAJ PRZYCISKI WYŚWIETLACIE ZALEŻNIE OD ROLI
-                        {role != Role.VISITOR && role != null  && (
+
+                        {role != Role.VISITOR && role != null && (
                             <>
                                 <Button variant="contained" color="primary" onClick={handleEdit}
                                         title={t('forms.edit')}>

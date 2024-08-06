@@ -8,13 +8,14 @@ import {SearchSort} from "../../commons/Search/SearchSort";
 import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
-import {Link} from "@mui/material";
+import {Box, CircularProgress, Container, Link} from "@mui/material";
 import {DownloadFileButton} from "./DownloadFileButton";
 import SecretDialog from "./SecretDialog";
 import OpenLinkButton from "./OpenLinkButton";
 import ReadTextButton from "./ReadTextButton";
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
+import CustomLayout from "../Layout/Layout";
 
 type AllResourcesProps = {
     searchValue: string,
@@ -22,9 +23,11 @@ type AllResourcesProps = {
 }
 
 const AllResourcesTable = (props: AllResourcesProps) => {
+    const [loading, setLoading] = useState(true);
+
 
     const {t} = useTranslation("overall");
-    let {type} = useParams<{type: string}>();
+    let {type} = useParams<{ type: string }>();
     const columns: ColumnDefinition[] = [
         //{ id: 'id', label: 'Id', type: 'TEXT', minWidth: 50},
         {id: 'name', label: t('forms.name'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
@@ -55,7 +58,8 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                 fieldName: 'resourceType',
                 value: props.resourceType,
                 operator: CriteriaOperator.EQUALS
-            }
+            },
+               //tutaj dodać envId
         ];
     }
 
@@ -74,7 +78,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     const [rows, setRows] = useState<RowData[]>([
         {id: 'id', value: '1', name: 'nazwa byczku'},
     ]);
-    const link : string = `/project/${props.searchValue}/resources/details`;
+    const link: string = `/project/${props.searchValue}/resources/details`;
 
     useEffect(() => {
         api.resources.search(searchForm).then((response: SearchResponse<ResourceDto>) => {
@@ -151,11 +155,22 @@ const AllResourcesTable = (props: AllResourcesProps) => {
 
                     }
                 }
-
-
+                setLoading(false);
             })
         })
     }, [type]);
+
+    if (loading) {
+        return (
+            <CustomLayout>
+                <Container>
+                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+                        <CircularProgress/>
+                    </Box>
+                </Container>
+            </CustomLayout>
+        );
+    }
 
     return (
         <div>
