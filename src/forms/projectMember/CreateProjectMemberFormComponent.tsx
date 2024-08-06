@@ -27,6 +27,7 @@ import { SearchForm } from "../../commons/Search/SearchForm";
 import { SearchSortOrder } from "../../commons/Search/SearchSortOrder";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
 import { getUserId } from "../../storage/AuthStorage";
+import {CriteriaOperator} from "../../commons/Search/CriteriaOperator";
 
 const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
     const [form, setForm] = useState<CreateProjectMemberForm>({
@@ -62,7 +63,13 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
         const fetchUsers = async () => {
             try {
                 const searchForm: SearchForm = {
-                    criteria: [],
+                    criteria: [
+                        {
+                            fieldName: 'deletedOn',
+                            value: null,
+                            operator: CriteriaOperator.EQUALS
+                        }
+                    ],
                     page: 1,
                     size: 50,
                     sort: { by: 'firstName', order: SearchSortOrder.ASC }

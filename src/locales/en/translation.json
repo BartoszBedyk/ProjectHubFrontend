@@ -90,7 +90,8 @@
       "technologyDescription": "Technology description",
       "selectedTechnologies": "Selected technologies",
       "updateProject": "Update project",
-      "noAccess": "No permission."
+      "noAccess": "No permission.",
+      "createEnvironment": "Create new environment"
     },
     "forms": {
       "new": "New",
@@ -162,8 +163,8 @@
       "projectMemberName": "Project member name",
       "updateProjectMember": "Update project member",
       "addMember": "Add member",
-      "editMember": "Edit Member",
-      "deleteMember": "Delete Member",
+      "editMember": "Edit member",
+      "deleteMember": "Delete member",
       "confirmDelete": "Are you sure you want to delete this member? This action cannot be undone.",
       "cancel": "Cancel",
       "delete": "Delete",
@@ -173,7 +174,36 @@
       "membersList": "Project members list",
       "role": "Role",
       "noPermission": "No permission.",
-      "environments": "Environments"
+      "environments": "Environments",
+      "error": "Error",
+      "cannotDeleteSelf": "Cannot delete self.",
+      "ok": "Ok"
+    },
+    "environments": {
+      "name": "Name",
+      "isEncrypted": "Encrypted",
+      "createdOn": "Created On",
+      "createdBy": "Created By",
+      "updatedOn": "Updated On",
+      "editEnvironment": "Edit environment",
+      "environmentName": "Environment name",
+      "encrypted": "Encrypted",
+      "updateEnvironment": "Update environment",
+      "newEnvironment": "New environment",
+      "createEnvironment": "Create environment",
+      "notFound": "Environment not found",
+      "noAccess": "You do not have access to this environment",
+      "yes": "Yes",
+      "no": "No",
+      "edit": "Edit",
+      "deleteEnvironment": "Delete environment",
+      "created": "Created",
+      "confirmDeletion": "Confirm deletion",
+      "deletionAlert": "Are you sure you want to delete this environment?",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "emptyFieldError": "This field cannot be empty",
+      "environmentsList": "Environments list"
     }
   }
 }

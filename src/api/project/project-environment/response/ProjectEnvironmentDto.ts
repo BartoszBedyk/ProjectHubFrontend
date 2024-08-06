@@ -1,7 +1,7 @@
 export interface ProjectEnvironmentDto {
     id: string;
     name: string;
-    isEncrypted: boolean;
+    encrypted: boolean;
     projectId: string;
     createdOn: Date;
     updatedOn: Date | null;

@@ -22,6 +22,9 @@ import Resource from "../pages/resources/Resource";
 import PrivateRoute from "../components/Login/PrivateRoute";
 import UserProfile from "../pages/user-profile/UserProfile";
 import Settings from "../pages/settings/Settings";
+import CreateProjectEnvironment from "../pages/projectEnvironment/CreateProjectEnvironment";
+import UpdateProjectEnvironment from "../pages/projectEnvironment/UpdateProjectEnvironment";
+import ProjectEnvironment from "../pages/projectEnvironment/ProjectEnvironment";
 
 
 export const router = createBrowserRouter([
@@ -126,13 +129,18 @@ export const router = createBrowserRouter([
     /** PROJECT ENVIRONMENT **/
 
     {
-        path: "/project-environment/create",
-        element: <div>Create Project Environment</div>,
+        path: "/project-environment/create/:projectId",
+        element: (<PrivateRoute><CreateProjectEnvironment/></PrivateRoute>),
         errorElement: <Error/>
     },
     {
-        path: "/project-environment/edit",
-        element: <div>Edit Project Environment</div>,
+        path: "/project-environment/edit/:environmentId",
+        element: (<PrivateRoute><UpdateProjectEnvironment/></PrivateRoute>),
+        errorElement: <Error/>
+    },
+    {
+        path: "/project-environment/:environmentId",
+        element: (<PrivateRoute><ProjectEnvironment/></PrivateRoute>),
         errorElement: <Error/>
     },
 

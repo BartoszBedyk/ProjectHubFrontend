@@ -31,6 +31,7 @@ const ProjectMemberPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [errorDialogOpen, setErrorDialogOpen] = useState(false);
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation('members');
@@ -74,6 +75,11 @@ const ProjectMemberPage: React.FC = () => {
     };
 
     const handleDelete = async () => {
+        const currentUserId = getUserId();
+        if (currentUserId === userId) {
+            setErrorDialogOpen(true);
+            return;
+        }
         try {
             await api.projectMember.delete(projectId!, userId!);
             navigate(`/project-member/${projectId}`);
@@ -88,6 +94,10 @@ const ProjectMemberPage: React.FC = () => {
 
     const closeDeleteDialog = () => {
         setDeleteDialogOpen(false);
+    };
+
+    const closeErrorDialog = () => {
+        setErrorDialogOpen(false);
     };
 
     const isOwner = currentUserRole === Role.OWNER;
@@ -185,6 +195,19 @@ const ProjectMemberPage: React.FC = () => {
                     </Button>
                     <Button onClick={handleDelete} color="error">
                         {t('delete')}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={errorDialogOpen} onClose={closeErrorDialog}>
+                <DialogTitle>{t('error')}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {t('cannotDeleteSelf')}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeErrorDialog} color="primary">
+                        {t('ok')}
                     </Button>
                 </DialogActions>
             </Dialog>
