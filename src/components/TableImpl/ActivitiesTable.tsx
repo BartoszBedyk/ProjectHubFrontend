@@ -65,7 +65,11 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
                         type: activity.type.toString(),
                         createdOn: activity.createdOn,
                         createdById: activity.createdById,
-                        params,
+                        params: (
+                            <Typography style={{ whiteSpace: 'pre-wrap' }}>
+                                {params}
+                            </Typography>
+                        ),
                     };
                     return newRow;
                 });
