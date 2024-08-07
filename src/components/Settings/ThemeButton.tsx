@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Icon } from '@mui/material';
-import { useTheme } from '../ThemeContext';
+import { useTheme } from '../../ThemeContext';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import styled from 'styled-components';
 
 const IconContainer = styled(Icon)`
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 35px;
+    height: 35px;
 `;
 
 const IconStyled = styled.div<{ $fadeOut: boolean }>`

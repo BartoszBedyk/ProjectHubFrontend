@@ -1,8 +1,6 @@
-import {getUserId} from "../../../../storage/AuthStorage";
-
 interface NavLinksUserMenu {
     name: string;
-    link: string;
+    link?: string;
 }
 
 const navLinksUserMenu: NavLinksUserMenu[] = [
@@ -13,6 +11,9 @@ const navLinksUserMenu: NavLinksUserMenu[] = [
     {
         name: 'Settings',
         link: '/settings'
+    },
+    {
+        name: 'Logout',
     }
 ]
 

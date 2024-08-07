@@ -19,6 +19,11 @@
     "activities": "Aktywności",
     "logout": "Wyloguj się"
   },
+  "userMenu": {
+    "Profile": "Profil",
+    "Settings": "Ustawienia",
+    "Logout": "Wyloguj się"
+  },
   "table": {
     "previous": "Przejdź do poprzedniej strony",
     "next": "Przejdź do następnej strony",
@@ -214,6 +219,26 @@
       "params": "Parametry",
       "activitiesTableTitle": "Aktywności",
       "accessDenied": "Brak dostępu."
+    },
+    "userProfile": {
+      "userProfile": "Profil Użytkownika",
+      "name": "Imię i nazwisko",
+      "email": "Adres email",
+      "password": "Hasło",
+      "creationDate": "Data utworzenia",
+      "createdBy": "Utworzono przez",
+      "notFound": "Nie znaleziono użytkownika",
+      "changePassword": "Zmień hasło",
+      "settings": "Ustawienia",
+      "theme": "Motyw",
+      "language": "Język",
+      "enterOldNewPassword": "Podaj swoje obecne i nowe hasło",
+      "oldPassword": "Obecne hasło",
+      "newPassword": "Nowe hasło",
+      "cancel": "Anuluj",
+      "badOldPassword": "Wpisane przez Ciebie obecne hasło jest niepoprawne!",
+      "passwordTooShort": "Nowe hasło ma mniej niż 8 znaków!",
+      "passwordChangeSuccess": "Hasło zostało zmienione!"
     }
   }
 }
