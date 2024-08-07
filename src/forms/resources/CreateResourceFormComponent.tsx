@@ -48,7 +48,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
         name: '',
         description: '',
         value: '',
-        environmentId: environmentId = "testEnvironmentId",
+        environmentId: environmentId,
         projectId: projectId
     });
     const [formForType, setFormForType] = useState<FormElement[]>(

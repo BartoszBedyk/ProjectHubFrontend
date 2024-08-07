@@ -19,6 +19,7 @@ import {useParams} from "react-router-dom";
 type AllResourcesProps = {
     searchValue: string,
     resourceType?: ResourceType
+    environmentId: string
 }
 
 const AllResourcesTable = (props: AllResourcesProps) => {
@@ -38,10 +39,21 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     if (!props.resourceType) {
         searchFormCriteria = [
             {
+                fieldName: 'deletedOn',
+                value: null,
+                operator: CriteriaOperator.EQUALS
+            },
+            {
                 fieldName: 'projectId',
                 value: props.searchValue,
                 operator: CriteriaOperator.EQUALS
+            },
+            {
+                fieldName: 'environmentId',
+                value: props.environmentId,
+                operator: CriteriaOperator.EQUALS
             }
+
         ];
     } else {
         searchFormCriteria = [
@@ -54,7 +66,13 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                 fieldName: 'resourceType',
                 value: props.resourceType,
                 operator: CriteriaOperator.EQUALS
+            },
+            {
+                fieldName: 'environmentId',
+                value: props.environmentId,
+                operator: CriteriaOperator.EQUALS
             }
+
         ];
     }
 
@@ -151,7 +169,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                 }
             })
         })
-    }, [type]);
+    }, [type, props.searchValue, props.environmentId]);
 
 
     return (

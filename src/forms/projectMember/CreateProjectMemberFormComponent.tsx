@@ -28,6 +28,7 @@ import { SearchSortOrder } from "../../commons/Search/SearchSortOrder";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
 import { getUserId } from "../../storage/AuthStorage";
 import {CriteriaOperator} from "../../commons/Search/CriteriaOperator";
+import {useTheme} from "@mui/material/styles";
 
 const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
     const [form, setForm] = useState<CreateProjectMemberForm>({
@@ -49,6 +50,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation('members');
+    const theme = useTheme()
 
     useEffect(() => {
         const fetchEnvironments = async () => {
@@ -271,7 +273,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                         <ListItem
                             key={index}
                             onClick={() => addExistingEnvironment(env)}
-                            sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd', cursor: 'pointer' } }}
+                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main } }}
                         >
                             <ListItemText
                                 primary={env.name}
@@ -291,7 +293,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                                     <DeleteIcon />
                                 </IconButton>
                             }
-                            sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd' } }}
+                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main } } }
                         >
                             <ListItemText
                                 primary={env.name}

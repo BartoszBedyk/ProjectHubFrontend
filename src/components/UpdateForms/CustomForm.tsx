@@ -19,28 +19,28 @@ const textAreaStyle: React.CSSProperties = {
     padding: '12px 16px',
     border: '1px solid #ced4da',
     borderRadius: '4px',
-    backgroundColor: '#fff',
     fontFamily: 'Roboto, sans-serif',
     fontSize: '16px',
     fontWeight: 400,
     lineHeight: 1.5,
-    color: '#424242',
     boxSizing: 'content-box',
     overflow: 'auto',
     resize: 'both',
     width: '80%',
+    background: 'inherit',
+    color:'inherit'
 };
 
 const textFieldStyle: React.CSSProperties = {
     padding: "12px 16px",
     border: "1px solid #ced4da",
     borderRadius: "4px",
-    backgroundColor: "#fff",
     fontFamily: "Roboto, sans-serif",
     fontSize: "16px",
     fontWeight: 400,
     lineHeight: 1.5,
-    color: "#424242",
+    background: 'inherit',
+    color:'inherit'
 };
 
 const labelStyle: React.CSSProperties = {
@@ -48,6 +48,9 @@ const labelStyle: React.CSSProperties = {
     verticalAlign: 'middle',
     lineHeight: '1.5em',
     paddingRight: '10px',
+    background: 'inherit',
+    color:'inherit'
+
 }
 
 const button: React.CSSProperties = {
@@ -67,6 +70,7 @@ const customError: React.CSSProperties = {
     marginTop: "0",
     marginBottom: "0",
     marginLeft: "1%"
+
 }
 
 const checkboxStyle: React.CSSProperties = {}

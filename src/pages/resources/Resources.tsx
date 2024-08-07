@@ -9,11 +9,38 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import {Role} from "../../api/project/project-member/response/Role";
 import AuthComponent from "../../components/authComponent";
 import NoAccessHandler from "../../components/NoAccesHandler";
+import {EnvironmentDropdown} from "../../components/environmentDropdown";
+import {api} from "../../api/AppApi";
 
 function Resources() {
     const {t} = useTranslation("resources");
-    let {projectId, type} = useParams<{ projectId: string; type: string }>();
+    let {projectId,environmentId, type } = useParams<{ projectId: string; environmentId:string; type: string }>();
     const navigate = useNavigate();
+    const[stringType, setStringType] = useState<string>(type!);
+
+        useEffect(() => {
+            if(!environmentId) {
+                const fetchEnvironments = async () => {
+                    try {
+                        if(projectId){
+                            const response = await api.projectEnvironment.findAll(projectId)
+                            setEnvironment(response[0].id)
+                            navigate(`/project/${projectId}/${response[0].id}/resources/${stringType}`)
+                        }
+
+                    } catch (err) {
+                        console.log("No Id or environments",err);
+                    }
+                    if (projectId) {
+                        fetchEnvironments();
+                    }
+                };
+            }
+
+
+
+        }, [projectId]);
+
 
     const [role, setRole] = useState<Role | null>(null)
 
@@ -40,10 +67,19 @@ function Resources() {
         default:
             type = "";
     }
+    const [environment, setEnvironment] = useState('');
+
+    useEffect(() => {
+        api.projectEnvironment.findById(environmentId!).then(r=>setEnvironment(r.id))
+    }, []);
+
 
     const handleCreate = () => {
-        navigate(`/project/${projectId}/resources/create`);
+        navigate(`/project/${projectId}/${environmentId}/resources/create`);
     };
+
+
+
 
 
     if(role === null) {
@@ -51,7 +87,8 @@ function Resources() {
     }
 
     return (
-        <div><CustomLayout>
+        <CustomLayout>
+            <EnvironmentDropdown environmentId={environment!} projectId={projectId!} oldType={stringType!}></EnvironmentDropdown>
             <Box sx={{display: 'flex', justifyContent: 'flex-end', marginBottom: 2, margin: 3}}>
                 {role != Role.VISITOR && role != null && (
                     <>
@@ -71,10 +108,10 @@ function Resources() {
                 )}
 
             </Box>
-            <AllResourcesTable searchValue={projectId!} resourceType={type as ResourceType}></AllResourcesTable>
+            <AllResourcesTable searchValue={projectId!} resourceType={type as ResourceType} environmentId ={environmentId!}></AllResourcesTable>
         </CustomLayout>
 
-        </div>
+
 
     );
 }
