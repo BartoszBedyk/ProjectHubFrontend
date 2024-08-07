@@ -5,9 +5,8 @@ import navLinksUserMenu from "./navLinksUserMenu";
 import {getUserId} from "../../../../storage/AuthStorage";
 import {api} from "../../../../api/AppApi";
 import {useNavigate} from "react-router-dom";
-
-const settings = ["Settings", "Profile", "Smth", "Smth 2"];
-const userName = "Kacper Koncki";
+import {useTranslation} from "react-i18next";
+import logout from "../../../Login/LogoutButton";
 
 const UserMenu = () => {
 
@@ -43,7 +42,7 @@ const UserMenu = () => {
 
     return (
         <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Open options">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p:0 }}>
                     <Typography sx={{ pr: 1 }}><strong>{user.firstName} {user.lastName}</strong></Typography>
                     <Avatar alt="User image" src={userImg} />
@@ -66,7 +65,13 @@ const UserMenu = () => {
                             textAlign="center"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                navigate(`/user/${userId}`);
+                                if (item.name === 'Profile') {
+                                    navigate(`/user/${userId}`);
+                                } else if (item.name === 'Logout'){
+                                    logout();
+                                } else {
+                                    navigate(item.link!);
+                                }
                             }}
                             style={{ cursor: "pointer" }}
                         >

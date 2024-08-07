@@ -10,6 +10,7 @@ export const languageResources ={
         login: translationEnglish.pages.login,
         resources: translationEnglish.pages.resources,
         sideBar: translationEnglish.sidebar,
+        userMenu: translationEnglish.userMenu,
         projects: translationEnglish.pages.projects,
         overall: translationEnglish.pages,
         table: translationEnglish.table,
@@ -17,12 +18,14 @@ export const languageResources ={
         members: translationEnglish.pages.members,
         forms: translationEnglish.pages.forms,
         userManagement: translationEnglish.pages.userManagement,
-        environments: translationEnglish.pages.environments
+        environments: translationEnglish.pages.environments,
+        userProfile: translationEnglish.pages.userProfile,
     },
     pl: {
         login: translationPolish.pages.login,
         resources: translationPolish.pages.resources,
         sideBar: translationPolish.sidebar,
+        userMenu: translationPolish.userMenu,
         projects: translationPolish.pages.projects,
         overall: translationPolish.pages,
         table: translationPolish.table,
@@ -30,7 +33,8 @@ export const languageResources ={
         members: translationPolish.pages.members,
         forms: translationPolish.pages.forms,
         userManagement: translationPolish.pages.userManagement,
-        environments: translationPolish.pages.environments
+        environments: translationPolish.pages.environments,
+        userProfile: translationPolish.pages.userProfile,
     }
 }
 const options = {

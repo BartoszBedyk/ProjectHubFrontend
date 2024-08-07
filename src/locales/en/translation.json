@@ -16,6 +16,11 @@
     "activities": "Activities",
     "logout": "Log out"
   },
+  "userMenu": {
+    "Profile": "Profile",
+    "Settings": "Settings",
+    "Logout": "Logout"
+  },
   "table": {
     "previous": "Go to previous page",
     "next": "Go to next page",
@@ -204,6 +209,26 @@
       "delete": "Delete",
       "emptyFieldError": "This field cannot be empty",
       "environmentsList": "Environments list"
+    },
+    "userProfile": {
+      "userProfile": "User Profile",
+      "name": "First name and last name",
+      "email": "Email address",
+      "password": "Password",
+      "creationDate": "Creation date",
+      "createdBy": "Created by",
+      "notFound": "User not found",
+      "changePassword": "Change password",
+      "settings": "Settings",
+      "theme": "Theme",
+      "language": "Language",
+      "enterOldNewPassword": "Enter your current and new password",
+      "oldPassword": "Current password",
+      "newPassword": "New password",
+      "cancel": "Cancel",
+      "badOldPassword": "The current password you entered is incorrect!",
+      "passwordTooShort": "The new password is less than 8 characters long!",
+      "passwordChangeSuccess": "Password has been changed!"
     }
   }
 }
