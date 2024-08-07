@@ -39,16 +39,16 @@
     "home": {
     },
     "login": {
-      "login": "Log in",
+      "login": "Login",
       "loginName": "Email address",
       "password": "Password",
-      "loginCred": "Remember login details",
+      "loginCred": "Remember me",
       "loginLink1": "Forgot password?",
       "loginLink1b": "Reset",
       "loginLink2": "Don't have an account?",
       "loginLink2b": "Register",
       "loggingError": "Incorrect email address or password",
-      "loggingTokenError": "Log in again"
+      "loggingTokenError": "Login again"
     },
     "resources": {
       "resourcestxt": " - project resources.",
@@ -64,7 +64,8 @@
       "dialogCreateTitle": "Resource created",
       "dialogCreate": "The resource has been created.",
       "deleteResource": "Delete resource",
-      "deleteResourceMessage": "The action of deleting a resource can only be undone by the system administrator. Do you want to delete the resource?"
+      "deleteResourceMessage": "The action of deleting a resource can only be undone by the system administrator. Do you want to delete the resource?",
+      "attachmentDialog" : "Editing the \"Value\" field may result in irreversible loss of access to the resource."
 
     },
     "projects": {
@@ -209,6 +210,14 @@
       "delete": "Delete",
       "emptyFieldError": "This field cannot be empty",
       "environmentsList": "Environments list"
+    },
+    "activities": {
+      "type": "Type",
+      "createdOn": "Created On",
+      "createdById": "Created By",
+      "params": "Parameters",
+      "activitiesTableTitle": "Activities",
+      "accessDenied": "Access denied."
     },
     "userProfile": {
       "userProfile": "User Profile",

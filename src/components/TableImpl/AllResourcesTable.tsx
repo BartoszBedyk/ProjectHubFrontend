@@ -8,7 +8,7 @@ import {SearchSort} from "../../commons/Search/SearchSort";
 import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
-import {Link} from "@mui/material";
+import {Box, CircularProgress, Container, Link} from "@mui/material";
 import {DownloadFileButton} from "./DownloadFileButton";
 import SecretDialog from "./SecretDialog";
 import OpenLinkButton from "./OpenLinkButton";
@@ -22,9 +22,8 @@ type AllResourcesProps = {
 }
 
 const AllResourcesTable = (props: AllResourcesProps) => {
-
     const {t} = useTranslation("overall");
-    let {type} = useParams<{type: string}>();
+    let {type} = useParams<{ type: string }>();
     const columns: ColumnDefinition[] = [
         //{ id: 'id', label: 'Id', type: 'TEXT', minWidth: 50},
         {id: 'name', label: t('forms.name'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
@@ -74,7 +73,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     const [rows, setRows] = useState<RowData[]>([
         {id: 'id', value: '1', name: 'nazwa byczku'},
     ]);
-    const link : string = `/project/${props.searchValue}/resources/details`;
+    const link: string = `/project/${props.searchValue}/resources/details`;
 
     useEffect(() => {
         api.resources.search(searchForm).then((response: SearchResponse<ResourceDto>) => {
@@ -148,14 +147,12 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                         }
                         setRows(prevRows => [...prevRows, newRow]);
                         break;
-
                     }
                 }
-
-
             })
         })
     }, [type]);
+
 
     return (
         <div>

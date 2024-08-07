@@ -1,15 +1,16 @@
 import {UpdateResourceForm} from "../../api/resources/form/UpdateResourceForm";
 import CustomForm, {
-    FormElement,
     CustomLabelText,
     CustomTextArea,
-    CustomTextField, CustomDropZone
+    CustomTextField,
+    FormElement
 } from "../../components/UpdateForms/CustomForm";
 import React, {useEffect, useState} from "react";
 import {api} from "../../api/AppApi";
 import {UpdateDialog} from "../../components/dialogs/UpdateDialog";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {ResourceType} from "../../api/resources/response/ResourceDto";
 
 
 interface updateProps {
@@ -26,12 +27,13 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
         value: ''
     });
 
+    const [type, setType] = useState<ResourceType>()
+
     useEffect(() => {
         const fetchElements = async () => {
             try {
-                console.log(resourceId)
                 const elements = await api.resources.get(resourceId)
-                console.log("elements", elements)
+                setType(elements.resourceType)
                 setForm({
                     id: elements.id,
                     name: elements.name,
@@ -51,7 +53,7 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
     const navigate = useNavigate();
     const {t} = useTranslation("overall")
 
-    console.log(form)
+
     const formElements: FormElement[] = [
         {
             name: 'nameLabel',
@@ -108,9 +110,8 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
             }
         }
     ]
-    const handleSubmit = (formData: Record<string, any>) => {
-        console.log(formData);
 
+    const handleSubmit = (formData: Record<string, any>) => {
         api.resources.updateResource(formData as UpdateResourceForm).then(
             response => {
                 setOpen(true);
@@ -136,7 +137,13 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
         <div>
             <CustomForm formElements={formElements} buttonName={t('resources.update')} handleSubmit={handleSubmit}
                         id={resourceId}></CustomForm>
-            <UpdateDialog openProps={open} title={t('resources.dialogUpdateTitle')} message={t('resources.dialogUpdate')}></UpdateDialog>
+            {
+                type == ResourceType.attachment && <>
+                    <p>{t('resources.attachmentDialog')}</p>
+                </>
+            }
+            <UpdateDialog openProps={open} title={t('resources.dialogUpdateTitle')}
+                          message={t('resources.dialogUpdate')}></UpdateDialog>
         </div>
     )
 

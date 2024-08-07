@@ -65,7 +65,8 @@
       "dialogUpdateTitle": "Aktualizacja zasobu",
       "update" : "Zaktualizuj",
       "deleteResource": "Usuń zasób",
-      "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?"
+      "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?",
+      "attachmentDialog": "Edycja pola \"Wartość\" może spowodować nieodwracalną utratę dostępu do zasobu."
     },
     "projects": {
       "name": "Nazwa",
@@ -210,6 +211,14 @@
       "delete": "Usuń",
       "emptyFieldError": "To pole nie może być puste",
       "environmentsList": "Lista środowisk"
+    },
+    "activities": {
+      "type": "Typ",
+      "createdOn": "Data stworzenia",
+      "createdById": "Stworzony przez",
+      "params": "Parametry",
+      "activitiesTableTitle": "Aktywności",
+      "accessDenied": "Brak dostępu."
     },
     "userProfile": {
       "userProfile": "Profil Użytkownika",

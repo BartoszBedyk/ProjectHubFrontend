@@ -62,7 +62,7 @@ const Items: React.FC<ItemsProps> = ({ open }) => {
                 break;
             case 'Members':
                 if (projectId) {
-                    item.link = `/project/${projectId}/resources/members`;
+                    item.link = `/project-member/${projectId}`;
                 }
                 break;
         }
@@ -89,7 +89,8 @@ const Items: React.FC<ItemsProps> = ({ open }) => {
                         color: isActive(item.name) ? '#2196f3' : '#e8edf7',
                     }}
                     >
-                        <img src={item.icon} alt={item.name} style={{height: 24, width: 24}}/>
+                        <item.icon style={{height: 24, width: 24}}/>
+
                     </ListItemIcon>
                     <ListItemText primary={item.name}
                                   sx={{opacity: open ? 1 : 0, color: isActive(item.name) ? '#2196f3' : '#e8edf7'}}/>

@@ -19,7 +19,8 @@ export const languageResources ={
         forms: translationEnglish.pages.forms,
         userManagement: translationEnglish.pages.userManagement,
         environments: translationEnglish.pages.environments,
-        userProfile: translationEnglish.pages.userProfile,
+        activity: translationEnglish.pages.activities,
+        userProfile: translationEnglish.pages.userProfile
     },
     pl: {
         login: translationPolish.pages.login,
@@ -34,7 +35,8 @@ export const languageResources ={
         forms: translationPolish.pages.forms,
         userManagement: translationPolish.pages.userManagement,
         environments: translationPolish.pages.environments,
-        userProfile: translationPolish.pages.userProfile,
+        activity: translationPolish.pages.activities,
+        userProfile: translationPolish.pages.userProfile
     }
 }
 const options = {
