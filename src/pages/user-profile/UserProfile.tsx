@@ -8,7 +8,7 @@ import {
     Container,
     Dialog, DialogActions,
     DialogContent, DialogContentText,
-    DialogTitle,
+    DialogTitle, IconButton, InputAdornment,
     Paper, Snackbar, TextField,
     Typography
 } from "@mui/material";
@@ -19,6 +19,8 @@ import {UserDto} from "../../api/user-management/response/UserDto";
 import ChangeTheme from "../../components/Settings/ThemeButton";
 import LanguageButton from "../../components/Settings/LanguageButton";
 import {stylesLogin} from "../../components/Login/styles/LoginStyles";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 
 
 const UserProfile = () => {
@@ -31,6 +33,7 @@ const UserProfile = () => {
     const [newPassword, setNewPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const {t} = useTranslation("userProfile");
 
@@ -85,11 +88,15 @@ const UserProfile = () => {
         } catch {
             setError(t('badOldPassword'));
         }
-    }
+    };
 
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
-    }
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     if (loading) {
         return (
@@ -163,22 +170,48 @@ const UserProfile = () => {
                         margin="dense"
                         id="oldPassword"
                         label={t('oldPassword')}
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         fullWidth
                         variant="outlined"
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={toggleShowPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
                     />
                     <TextField
                         autoFocus
                         margin="dense"
                         id="newPassword"
                         label={t('newPassword')}
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         fullWidth
                         variant="outlined"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={toggleShowPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
                     />
                 </DialogContent>
                 <DialogActions>
