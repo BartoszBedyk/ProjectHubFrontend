@@ -2,19 +2,24 @@
   "buttons": {
     "save": "Save"
   },
-  "sidebar": {
+  "drawer": {
     "home": "Home",
     "project": "Project",
-    "addProject": "Create a project",
-    "main": "Home",
+    "projectList": "Projects list",
+    "addProject": "Create project",
+    "main": "Main",
+    "all": "All",
     "resources": "Resources",
     "resourcesLink": "Links",
     "resourcesDocumentation": "Documentation",
     "resourcesMembers": "Members",
     "resourcesFiles": "Files",
+    "resourcesSecret": "Secret",
     "userManagement": "User Management",
     "activities": "Activities",
-    "logout": "Log out"
+    "logout": "Log out",
+    "profile": "Profile",
+    "settings": "Settings"
   },
   "userMenu": {
     "Profile": "Profile",

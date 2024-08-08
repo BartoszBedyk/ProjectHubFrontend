@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import navLinks, {NavLink} from "./navLinks";
 import {Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
 import {Link, useParams} from "react-router-dom";
+import useNavLinks, {NavLink} from "./navLinks";
 
 interface ItemsProps {
     open: boolean;
 }
 
-
-const Items: React.FC<ItemsProps> = ({ open }) => {
+const Items: React.FC<ItemsProps> = ({open}) => {
     const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
-    const { projectId } = useParams<{projectId: string}>();
+    const {projectId} = useParams<{ projectId: string }>();
+    const navLinks = useNavLinks();
 
     useEffect(() => {
-        if(!open) {
+        if (!open) {
             setOpenItems({})
         }
     }, [open]);
@@ -67,7 +67,6 @@ const Items: React.FC<ItemsProps> = ({ open }) => {
                 break;
         }
 
-
         return (
             <ListItem key={item.name} disablePadding sx={{display: 'block', pl: isChild ? 2.5 : 0}}>
                 <ListItemButton
@@ -108,13 +107,13 @@ const Items: React.FC<ItemsProps> = ({ open }) => {
     };
 
     const filteredNavLinks = navLinks.filter((item) => {
-       if (item.name === 'Main' || item.name === 'Resources') {
-           return !!projectId;
-       }
-        if (item.name === "User management" || item.name === "Activities") {
+        if (item.sortName === 'Main' || item.sortName === 'Resources') {
+            return !!projectId;
+        }
+        if (item.sortName === "User management" || item.sortName === "Activities") {
             return !projectId;
         }
-       return true;
+        return true;
     });
 
     return (

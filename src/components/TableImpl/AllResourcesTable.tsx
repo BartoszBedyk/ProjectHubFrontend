@@ -19,6 +19,7 @@ import {useParams} from "react-router-dom";
 type AllResourcesProps = {
     searchValue: string,
     resourceType?: ResourceType
+    environmentId: string
 }
 
 const AllResourcesTable = (props: AllResourcesProps) => {
@@ -38,10 +39,21 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     if (!props.resourceType) {
         searchFormCriteria = [
             {
+                fieldName: 'deletedOn',
+                value: null,
+                operator: CriteriaOperator.EQUALS
+            },
+            {
                 fieldName: 'projectId',
                 value: props.searchValue,
                 operator: CriteriaOperator.EQUALS
+            },
+            {
+                fieldName: 'environmentId',
+                value: props.environmentId,
+                operator: CriteriaOperator.EQUALS
             }
+
         ];
     } else {
         searchFormCriteria = [
@@ -54,7 +66,13 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                 fieldName: 'resourceType',
                 value: props.resourceType,
                 operator: CriteriaOperator.EQUALS
+            },
+            {
+                fieldName: 'environmentId',
+                value: props.environmentId,
+                operator: CriteriaOperator.EQUALS
             }
+
         ];
     }
 
@@ -78,8 +96,14 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     useEffect(() => {
         api.resources.search(searchForm).then((response: SearchResponse<ResourceDto>) => {
             setRows([]);
-            response.items.map((responseValue) => {
+            response.items.map(async (responseValue) => {
+                let userData: string = await api.userManagement.get(responseValue.createdById).then(
+                    response => {
+                        return `${response.firstName} ${response.lastName}`
+                    }
+                )
                 switch (responseValue.resourceType) {
+
                     case  'ATTACHMENT': {
                         const newRow: RowData = {
                             id: responseValue.id,
@@ -87,7 +111,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <DownloadFileButton>{responseValue.value}</DownloadFileButton>
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -101,7 +125,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <SecretDialog>{responseValue.id}</SecretDialog>
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -116,7 +140,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                                       target="_blank"> {responseValue.value} </Link>,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <OpenLinkButton>{responseValue.value}</OpenLinkButton>
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -129,7 +153,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <ReadTextButton>{responseValue.value}</ReadTextButton>
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -142,7 +166,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: ''
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -151,12 +175,12 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                 }
             })
         })
-    }, [type]);
+    }, [type, props.searchValue, props.environmentId]);
 
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={t('resourcesTableTitle')} navigateTo={link}/>
+            <CustomTable columns={columns} rows={rows} title={t('resources.resourcesTableTitle')} navigateTo={link}/>
         </div>
     );
 }

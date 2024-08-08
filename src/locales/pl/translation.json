@@ -5,7 +5,7 @@
     "copyTxt": "Skopiuj tekst",
     "closeTxt": "Zamknij"
   },
-  "sidebar": {
+  "drawer": {
     "home": "Strona startowa",
     "project": "Projekt",
     "addProject": "Utwórz projekt",
@@ -15,9 +15,11 @@
     "resourcesDocumentation": "Dokumentacja",
     "resourcesMembers": "Członkowie",
     "resourcesFiles": "Pliki",
-    "userManagement": "Zarządzanie urzytkownikami",
+    "userManagement": "Użytkownicy",
     "activities": "Aktywności",
-    "logout": "Wyloguj się"
+    "logout": "Wyloguj się",
+    "profile": "Profil",
+    "settings": "Ustawienia"
   },
   "userMenu": {
     "Profile": "Profil",

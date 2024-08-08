@@ -9,8 +9,8 @@ export const languageResources ={
     en: {
         login: translationEnglish.pages.login,
         resources: translationEnglish.pages.resources,
-        sideBar: translationEnglish.sidebar,
         userMenu: translationEnglish.userMenu,
+        drawer: translationEnglish.drawer,
         projects: translationEnglish.pages.projects,
         overall: translationEnglish.pages,
         table: translationEnglish.table,
@@ -25,7 +25,7 @@ export const languageResources ={
     pl: {
         login: translationPolish.pages.login,
         resources: translationPolish.pages.resources,
-        sideBar: translationPolish.sidebar,
+        drawer: translationPolish.drawer,
         userMenu: translationPolish.userMenu,
         projects: translationPolish.pages.projects,
         overall: translationPolish.pages,

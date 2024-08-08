@@ -18,7 +18,8 @@ import { api } from "../../api/AppApi";
 import { TechnologyDTO } from "../../api/project/technology/response/TechnologyDTO";
 import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 import { useNavigate } from 'react-router-dom';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { useTheme } from '@mui/material/styles';
 
 const CreateProjectFormComponent: React.FC = () => {
     const [form, setForm] = useState<CreateProjectForm>({
@@ -38,7 +39,8 @@ const CreateProjectFormComponent: React.FC = () => {
     const [formError, setFormError] = useState<string | null>(null);
     const [technologyError, setTechnologyError] = useState<string | null>(null);
     const navigate = useNavigate();
-    const {t} = useTranslation('projects');
+    const { t } = useTranslation('projects');
+    const theme = useTheme();
 
     useEffect(() => {
         const fetchTechnologies = async () => {
@@ -149,7 +151,7 @@ const CreateProjectFormComponent: React.FC = () => {
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
-                <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
+                <Box sx={{ width: 8, height: 32, backgroundColor: theme.palette.primary.main, marginRight: 2 }} />
                 <Typography variant="h5" component="div">
                     Nowy projekt
                 </Typography>
@@ -197,10 +199,10 @@ const CreateProjectFormComponent: React.FC = () => {
                     sx={{ mb: 2, borderRadius: 1 }}
                     size="small"
                 >
-                    <ToggleButton value="new" aria-label="new technology" sx={{ '&.Mui-selected': { backgroundColor: '#1976d2', color: '#fff' } }}>
+                    <ToggleButton value="new" aria-label="new technology" sx={{ '&.Mui-selected': { backgroundColor: theme.palette.primary.main, color: '#fff' } }}>
                         {t('new')}
                     </ToggleButton>
-                    <ToggleButton value="existing" aria-label="existing technology" sx={{ '&.Mui-selected': { backgroundColor: '#1976d2', color: '#fff' } }}>
+                    <ToggleButton value="existing" aria-label="existing technology" sx={{ '&.Mui-selected': { backgroundColor: theme.palette.primary.main, color: '#fff' } }}>
                         {t('exists')}
                     </ToggleButton>
                 </ToggleButtonGroup>
@@ -237,7 +239,13 @@ const CreateProjectFormComponent: React.FC = () => {
                             <ListItem
                                 key={index}
                                 onClick={() => addExistingTechnology(tech)}
-                                sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd', cursor: 'pointer' } }}
+                                sx={{
+                                    mb: 1,
+                                    '&:hover': {
+                                        backgroundColor: theme.palette.customHover.main,
+                                        cursor: 'pointer',
+                                    },
+                                }}
                             >
                                 <ListItemText
                                     primary={tech.name}
@@ -259,7 +267,7 @@ const CreateProjectFormComponent: React.FC = () => {
                                     <DeleteIcon />
                                 </IconButton>
                             }
-                            sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd' } }}
+                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main} }}
                         >
                             <ListItemText
                                 primary={tech.name}
