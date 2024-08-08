@@ -107,10 +107,10 @@ const Items: React.FC<ItemsProps> = ({open}) => {
     };
 
     const filteredNavLinks = navLinks.filter((item) => {
-        if (item.name === 'Main' || item.name === 'Resources') {
+        if (item.sortName === 'Main' || item.sortName === 'Resources') {
             return !!projectId;
         }
-        if (item.name === "User management" || item.name === "Activities") {
+        if (item.sortName === "User management" || item.sortName === "Activities") {
             return !projectId;
         }
         return true;

@@ -17,7 +17,9 @@
     "resourcesSecret": "Secret",
     "userManagement": "User Management",
     "activities": "Activities",
-    "logout": "Log out"
+    "logout": "Log out",
+    "profile": "Profile",
+    "settings": "Settings"
   },
   "table": {
     "previous": "Go to previous page",

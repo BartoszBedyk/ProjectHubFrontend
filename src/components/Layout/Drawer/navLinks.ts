@@ -14,6 +14,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 interface NavLink {
     name: string;
+    sortName: string;
     icon: SvgIconComponent;
     link?: string;
     children?: NavLink[];
@@ -25,20 +26,24 @@ const useNavLinks = (): NavLink[] => {
     return [
         {
             name: t('home'),
+            sortName: "Home",
             icon: HomeIcon,
             link: "/"
         },
         {
             name: t("project"),
+            sortName: "Project",
             icon: WorkIcon,
             children: [
                 {
                     name: t('projectList'),
+                    sortName: "Project List",
                     icon: WorkIcon,
                     link: "/project",
                 },
                 {
                     name: t('addProject'),
+                    sortName: "Add Project",
                     icon: NoteAddIcon,
                     link: "/project/create",
                 },
@@ -46,40 +51,48 @@ const useNavLinks = (): NavLink[] => {
         },
         {
             name: t('main'),
+            sortName: "Main",
             icon: HomeIcon,
             link: "/project:projectId",
         },
         {
             name: t('resources'),
+            sortName: "Resources",
             icon: StorageIcon,
             children: [
                 {
                     name: t('all'),
+                    sortName: "AllResources",
                     icon: StorageIcon,
                     link: "/project/:projectId/resources/any",
                 },
                 {
                     name: t('resourcesLink'),
+                    sortName: "LinkResources",
                     icon: LinkIcon,
                     link: "/project/:projectId/resources/link",
                 },
                 {
                     name: t('resourcesDocumentation'),
+                    sortName: "DocumentationResources",
                     icon: DescriptionIcon,
                     link: "/project/:projectId/resources/text",
                 },
                 {
                     name: t('resourcesFiles'),
+                    sortName: "FilesResources",
                     icon: InsertDriveFileIcon,
                     link: "/project/:projectId/resources/attachment",
                 },
                 {
                     name: t('resourcesSecret'),
+                    sortName: "SecretResources",
                     icon: LockIcon,
                     link: "/project/:projectId/resources/secret",
                 },
                 {
                     name: t('resourcesMembers'),
+                    sortName: "MemberResources",
                     icon: GroupIcon,
                     link: "/project/:projectId/resources/members",
                 },
@@ -87,11 +100,13 @@ const useNavLinks = (): NavLink[] => {
         },
         {
             name: t('userManagement'),
+            sortName: "User management",
             icon: AdminPanelSettingsIcon,
             link: "/user"
         },
         {
             name: t('activities'),
+            sortName: "Activities",
             icon: EventIcon,
             link: "/"
         },

@@ -17,7 +17,9 @@
     "resourcesFiles": "Pliki",
     "userManagement": "Użytkownicy",
     "activities": "Aktywności",
-    "logout": "Wyloguj się"
+    "logout": "Wyloguj się",
+    "profile": "Profil",
+    "settings": "Ustawienia"
   },
   "table": {
     "previous": "Przejdź do poprzedniej strony",
