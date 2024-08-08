@@ -8,7 +8,7 @@ import {SearchSort} from "../../commons/Search/SearchSort";
 import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
-import {Box, CircularProgress, Container, Link} from "@mui/material";
+import {Link} from "@mui/material";
 import {DownloadFileButton} from "./DownloadFileButton";
 import SecretDialog from "./SecretDialog";
 import OpenLinkButton from "./OpenLinkButton";

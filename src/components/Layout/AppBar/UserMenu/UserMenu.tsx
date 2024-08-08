@@ -13,7 +13,7 @@ const UserMenu = () => {
     const [user, setUser] = useState({ firstName: '', lastName: '' });
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-    const navLinksUserMenu = useNavLinksUserMenu();  // Use the hook
+    const navLinksUserMenu = useNavLinksUserMenu();
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);

@@ -44,7 +44,7 @@ export function UpdateResourceFormComponent({ resourceId, projectId }: updatePro
                 });
             } catch (error) {
                 console.error('Error fetching elements data:', error);
-                setGlobalError(t('errors.fetchFailed')); // Optionally, display a generic fetch error
+                setGlobalError(t('errors.fetchFailed'));
             }
         };
 
