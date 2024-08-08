@@ -18,28 +18,6 @@ function Resources() {
     const navigate = useNavigate();
     const[stringType, setStringType] = useState<string>(type!);
 
-        useEffect(() => {
-            if(!environmentId) {
-                const fetchEnvironments = async () => {
-                    try {
-                        if(projectId){
-                            const response = await api.projectEnvironment.findAll(projectId)
-                            setEnvironment(response[0].id)
-                            navigate(`/project/${projectId}/${response[0].id}/resources/${stringType}`)
-                        }
-
-                    } catch (err) {
-                        console.log("No Id or environments",err);
-                    }
-                    if (projectId) {
-                        fetchEnvironments();
-                    }
-                };
-            }
-
-
-
-        }, [projectId]);
 
 
     const [role, setRole] = useState<Role | null>(null)
@@ -70,8 +48,11 @@ function Resources() {
     const [environment, setEnvironment] = useState('');
 
     useEffect(() => {
-        api.projectEnvironment.findById(environmentId!).then(r=>setEnvironment(r.id))
-    }, []);
+        if(environmentId){
+            api.projectEnvironment.findById(environmentId!).then(r=>setEnvironment(r.id))
+        }
+
+    }, [environment]);
 
 
     const handleCreate = () => {
