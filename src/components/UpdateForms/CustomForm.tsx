@@ -227,7 +227,7 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
 
         setErrors(newErrors);
 
-        if (errors.length === 0) {
+
             if (file) {
                 api.attachment.upload(file).then(r => {
                     formData['value'] = r.id;
@@ -237,7 +237,7 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
                 handleSubmit(formData, dropdownValue);
             }
         }
-    };
+
 
     const handleDropdownChange = (event: SelectChangeEvent<string>, child: React.ReactNode) => {
         setDropdownValue(event.target.value);

@@ -18,6 +18,7 @@ import { getToken, setToken } from "../../storage/AuthStorage";
 import secureLocalStorage from "react-secure-storage";
 import { useNavigate } from "react-router-dom";
 import { stylesLogin } from "./styles/LoginStyles";
+import {UpdateDialog} from "../dialogs/UpdateDialog";
 
 export const LogInCard = () => {
     const { t } = useTranslation("login");
@@ -29,6 +30,7 @@ export const LogInCard = () => {
     const [saveCredentials, setSaveCredentials] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isBlocked, setIsBlocked] = useState<boolean>(false);
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
@@ -75,8 +77,13 @@ export const LogInCard = () => {
                     setErrorMessage("");
                     navigate(linkToHomePage);
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.log("Error: ",  error.response.data.message);
                     setErrorMessage(t("loggingError"));
+                    if(error.response.data.message==='User is blocked') {
+                        setIsBlocked(true)
+                        setErrorMessage(t('bannedUser'))
+                    }
                 })
                 .finally(() => {
                     setLoading(false);
@@ -93,7 +100,7 @@ export const LogInCard = () => {
                     sx={stylesLogin.lockIconProps}
                     src={LockSensilabsColor}
                 />
-
+                <UpdateDialog openProps={isBlocked} title={t('bannedUserTitle')} message={t('bannedUserMessage')}/>
                 <Typography variant="h4" component="p">{t("login")}</Typography>
                 <span style={stylesLogin.errorProps}>{errorMessage}</span>
                 <form onSubmit={handleSubmit} autoComplete="on">

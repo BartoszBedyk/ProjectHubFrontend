@@ -10,16 +10,36 @@ interface ItemsProps {
 }
 
 const Items: React.FC<ItemsProps> = ({open}) => {
-    const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
-    const {projectId} = useParams<{ projectId: string }>();
+
     const [envId, setEnvId] = useState<string>()
     const navLinks = useNavLinks();
+    const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
+    const { projectId: paramProjectId, environmentId } = useParams<{ projectId?: string; environmentId?: string }>();
+    const [projectId, setProjectId] = useState<string | undefined>(paramProjectId);
+
+    useEffect(() => {
+        const fetchProjectId = async () => {
+            if (environmentId) {
+                try {
+                    const environment = await api.projectEnvironment.findById(environmentId);
+                    setProjectId(environment.projectId);
+                } catch (error) {
+                    console.error('Error fetching environment details:', error);
+                }
+            }
+        };
+
+        fetchProjectId();
+    }, [environmentId]);
 
     useEffect(() => {
         if (!open) {
-            setOpenItems({})
+            setOpenItems({});
         }
     }, [open]);
+
+
+
 
     const handleClick = (name: string) => {
         setOpenItems((prevOpenItems) => ({
@@ -27,6 +47,7 @@ const Items: React.FC<ItemsProps> = ({open}) => {
             [name]: !prevOpenItems[name],
         }));
     };
+
 
     useEffect(() => {
         if(projectId){

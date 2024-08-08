@@ -53,7 +53,10 @@
       "loginLink2": "Nie masz konta?",
       "loginLink2b": "Zarejestruj się",
       "loggingError": "Niepoprawny adres email lub hasło",
-      "loggingTokenError": "Zaloguj się ponownie"
+      "loggingTokenError": "Zaloguj się ponownie",
+      "bannedUserTitle": "Użytkownik jest zablokowany.",
+      "bannedUserMessage": "Wygląda na to, że Twoje konto zostało zablokowane. Nie masz dostępu do usług ProjectHub.",
+      "bannedUser": "Konto na które się logujesz jest zablokowane."
     },
     "resources": {
       "resourcestxt": " - zasoby projektu.",

@@ -58,6 +58,11 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     } else {
         searchFormCriteria = [
             {
+                fieldName: 'deletedOn',
+                value: null,
+                operator: CriteriaOperator.EQUALS
+            },
+            {
                 fieldName: 'projectId',
                 value: props.searchValue,
                 operator: CriteriaOperator.EQUALS

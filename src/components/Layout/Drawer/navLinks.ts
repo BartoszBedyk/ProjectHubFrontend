@@ -108,7 +108,7 @@ const useNavLinks = (): NavLink[] => {
             name: t('activities'),
             sortName: "Activities",
             icon: EventIcon,
-            link: "/"
+            link: "/activities"
         },
     ];
 };

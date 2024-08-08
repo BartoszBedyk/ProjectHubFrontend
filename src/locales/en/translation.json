@@ -53,7 +53,10 @@
       "loginLink2": "Don't have an account?",
       "loginLink2b": "Register",
       "loggingError": "Incorrect email address or password",
-      "loggingTokenError": "Login again"
+      "loggingTokenError": "Login again",
+      "bannedUserTitle": "User is blocked.",
+      "bannedUserMessage": "It appears that your account has been blocked. You do not have access to the ProjectHub services.",
+      "bannedUser": "The account you are logging in with is banned."
     },
     "resources": {
       "resourcestxt": " - project resources.",
