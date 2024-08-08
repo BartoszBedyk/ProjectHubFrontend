@@ -139,10 +139,15 @@ const ProjectPageComponent: React.FC = () => {
 
                     </Box>
                     <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 3}}>
+
                         <Typography variant="body2" color="textSecondary">
                             {`${t('forms.creationDate')}: ${new Date(resource.createdOn).toLocaleDateString()}   `}
-                            {`${t('forms.modifyDate')}: ${new Date(resource.lastModifiedOn).toLocaleDateString()}`}
+                            {resource.lastModifiedOn && (
+                                `${t('forms.modifyDate')}: ${new Date(resource.lastModifiedOn).toLocaleDateString()}`
+                                )}
                         </Typography>
+
+
                         {creator && (
                             <Typography variant="body2" color="textSecondary">
                                 {`${t('forms.createdBy')}: ${creator.firstName} ${creator.lastName}`}

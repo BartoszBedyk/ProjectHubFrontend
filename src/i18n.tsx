@@ -9,7 +9,7 @@ export const languageResources ={
     en: {
         login: translationEnglish.pages.login,
         resources: translationEnglish.pages.resources,
-        sideBar: translationEnglish.sidebar,
+        drawer: translationEnglish.drawer,
         projects: translationEnglish.pages.projects,
         overall: translationEnglish.pages,
         table: translationEnglish.table,
@@ -22,7 +22,7 @@ export const languageResources ={
     pl: {
         login: translationPolish.pages.login,
         resources: translationPolish.pages.resources,
-        sideBar: translationPolish.sidebar,
+        drawer: translationPolish.drawer,
         projects: translationPolish.pages.projects,
         overall: translationPolish.pages,
         table: translationPolish.table,

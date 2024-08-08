@@ -96,8 +96,14 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     useEffect(() => {
         api.resources.search(searchForm).then((response: SearchResponse<ResourceDto>) => {
             setRows([]);
-            response.items.map((responseValue) => {
+            response.items.map(async (responseValue) => {
+                let userData: string = await api.userManagement.get(responseValue.createdById).then(
+                    response => {
+                        return `${response.firstName} ${response.lastName}`
+                    }
+                )
                 switch (responseValue.resourceType) {
+
                     case  'ATTACHMENT': {
                         const newRow: RowData = {
                             id: responseValue.id,
@@ -105,7 +111,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <DownloadFileButton>{responseValue.value}</DownloadFileButton>
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -119,7 +125,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <SecretDialog>{responseValue.id}</SecretDialog>
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -134,7 +140,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                                       target="_blank"> {responseValue.value} </Link>,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <OpenLinkButton>{responseValue.value}</OpenLinkButton>
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -147,7 +153,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <ReadTextButton>{responseValue.value}</ReadTextButton>
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -160,7 +166,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: ''
                         }
                         setRows(prevRows => [...prevRows, newRow]);
@@ -174,7 +180,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={t('resourcesTableTitle')} navigateTo={link}/>
+            <CustomTable columns={columns} rows={rows} title={t('resources.resourcesTableTitle')} navigateTo={link}/>
         </div>
     );
 }

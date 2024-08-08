@@ -1,4 +1,4 @@
-
+import {useTranslation} from "react-i18next";
 import HomeIcon from '@mui/icons-material/Home';
 import {SvgIconComponent} from "@mui/icons-material";
 import WorkIcon from '@mui/icons-material/Work';
@@ -12,9 +12,6 @@ import EventIcon from '@mui/icons-material/Event';
 import GroupIcon from '@mui/icons-material/Group';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
-
-
-
 interface NavLink {
     name: string;
     icon: SvgIconComponent;
@@ -22,81 +19,84 @@ interface NavLink {
     children?: NavLink[];
 }
 
-const navLinks: NavLink[] = [
-    {
-      name: "Home",
-      icon: HomeIcon,
-      link: "/"
-    },
-    {
-        name: "Project",
-        icon: WorkIcon,
-        children: [
-            {
-                name: "Project list",
-                icon: WorkIcon,
-                link: "/project",
-            },
-            {
-                name: "Create project",
-                icon: NoteAddIcon,
-                link: "/project/create",
+const useNavLinks = (): NavLink[] => {
+    const {t} = useTranslation("drawer");
 
-            },
-        ]
-    },
-    {
-        name: "Main",
-        icon: HomeIcon,
-        link: "/project:projectId",
-    },
-    {
-        name: "Resources",
-        icon: StorageIcon,
-        children: [
-            {
-                name: "All",
-                icon: StorageIcon,
-                link: "/project/:projectId/resources/any",
-            },
-            {
-                name: "Links",
-                icon: LinkIcon,
-                link: "/project/:projectId/resources/link",
-            },
-            {
-                name: "Documentation",
-                icon: DescriptionIcon,
-                link: "/project/:projectId/resources/text",
-            },
-            {
-                name: "Files",
-                icon: InsertDriveFileIcon,
-                link: "/project/:projectId/resources/attachment",
-            },
-            {
-                name: "Secret",
-                icon: LockIcon,
-                link: "/project/:projectId/resources/secret",
-            },
-            {
-                name: "Members",
-                icon: GroupIcon,
-                link: "/project/:projectId/resources/members",
-            },
-        ]
-    },
-    {
-        name: "User management",
-        icon: AdminPanelSettingsIcon,
-        link: "/user"
-    },
-    {
-        name: "Activities",
-        icon: EventIcon,
-        link: "/"
-    },
-]
+    return [
+        {
+            name: t('home'),
+            icon: HomeIcon,
+            link: "/"
+        },
+        {
+            name: t("project"),
+            icon: WorkIcon,
+            children: [
+                {
+                    name: t('projectList'),
+                    icon: WorkIcon,
+                    link: "/project",
+                },
+                {
+                    name: t('addProject'),
+                    icon: NoteAddIcon,
+                    link: "/project/create",
+                },
+            ]
+        },
+        {
+            name: t('main'),
+            icon: HomeIcon,
+            link: "/project:projectId",
+        },
+        {
+            name: t('resources'),
+            icon: StorageIcon,
+            children: [
+                {
+                    name: t('all'),
+                    icon: StorageIcon,
+                    link: "/project/:projectId/resources/any",
+                },
+                {
+                    name: t('resourcesLink'),
+                    icon: LinkIcon,
+                    link: "/project/:projectId/resources/link",
+                },
+                {
+                    name: t('resourcesDocumentation'),
+                    icon: DescriptionIcon,
+                    link: "/project/:projectId/resources/text",
+                },
+                {
+                    name: t('resourcesFiles'),
+                    icon: InsertDriveFileIcon,
+                    link: "/project/:projectId/resources/attachment",
+                },
+                {
+                    name: t('resourcesSecret'),
+                    icon: LockIcon,
+                    link: "/project/:projectId/resources/secret",
+                },
+                {
+                    name: t('resourcesMembers'),
+                    icon: GroupIcon,
+                    link: "/project/:projectId/resources/members",
+                },
+            ]
+        },
+        {
+            name: t('userManagement'),
+            icon: AdminPanelSettingsIcon,
+            link: "/user"
+        },
+        {
+            name: t('activities'),
+            icon: EventIcon,
+            link: "/"
+        },
+    ];
+};
 
-export default navLinks;
-export type { NavLink };
+export default useNavLinks;
+export type {NavLink};
