@@ -5,8 +5,10 @@ import useNavLinksUserMenu from "./navLinksUserMenu";
 import { getUserId } from "../../../../storage/AuthStorage";
 import { api } from "../../../../api/AppApi";
 import { useNavigate } from "react-router-dom";
+import logout from "../../../Login/LogoutButton";
 
 const UserMenu = () => {
+
     const navigate = useNavigate();
     const [user, setUser] = useState({ firstName: '', lastName: '' });
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -41,11 +43,9 @@ const UserMenu = () => {
 
     return (
         <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Typography sx={{ pr: 1 }}>
-                        <strong>{user.firstName} {user.lastName}</strong>
-                    </Typography>
+            <Tooltip title="Open options">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p:0 }}>
+                    <Typography sx={{ pr: 1 }}><strong>{user.firstName} {user.lastName}</strong></Typography>
                     <Avatar alt="User image" src={userImg} />
                 </IconButton>
             </Tooltip>
@@ -66,7 +66,13 @@ const UserMenu = () => {
                             textAlign="center"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                navigate(item.link.replace(':userId', userId!));
+                                if (item.name === 'Profile') {
+                                    navigate(`/user/${userId}`);
+                                } else if (item.name === 'Logout'){
+                                    logout();
+                                } else {
+                                    navigate(item.link!);
+                                }
                             }}
                             style={{ cursor: "pointer" }}
                         >

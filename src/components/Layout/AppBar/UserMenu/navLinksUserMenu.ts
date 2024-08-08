@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 interface NavLinksUserMenu {
     name: string;
-    link: string;
+    link?: string;
 }
 
 const useNavLinksUserMenu = (): NavLinksUserMenu[] => {

@@ -62,7 +62,7 @@ const Items: React.FC<ItemsProps> = ({open}) => {
                 break;
             case 'Members':
                 if (projectId) {
-                    item.link = `/project/${projectId}/resources/members`;
+                    item.link = `/project-member/${projectId}`;
                 }
                 break;
         }
