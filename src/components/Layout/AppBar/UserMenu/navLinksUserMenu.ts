@@ -17,6 +17,9 @@ const useNavLinksUserMenu = (): NavLinksUserMenu[] => {
             name: t('settings'),
             link: '/settings',
         },
+        {
+            name: 'Logout',
+        }
     ];
 };
 
