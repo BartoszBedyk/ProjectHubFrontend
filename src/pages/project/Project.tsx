@@ -21,15 +21,16 @@ import { ProjectMemberDto } from "../../api/project/project-member/response/Proj
 import { ProjectDTO } from "../../api/project/response/ProjectDTO";
 import { useTranslation } from "react-i18next";
 import { Role } from '../../api/project/project-member/response/Role';
-import { getUserId } from "../../storage/AuthStorage";
 import ProjectEnvironmentsTable from "../../components/TableImpl/ProjectEnvironmentTable";
+import { getUserRole } from "../../components/authComponent";
+import {UserDto} from "../../api/user-management/response/UserDto";
 
 const ProjectPageComponent: React.FC = () => {
     const { projectId } = useParams<{ projectId: string }>();
     const [project, setProject] = useState<ProjectDTO | null>(null);
     const [technologies, setTechnologies] = useState<TechnologyDTO[]>([]);
     const [loading, setLoading] = useState(true);
-    const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
+    const [creator, setCreator] = useState<UserDto | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
@@ -47,15 +48,13 @@ const ProjectPageComponent: React.FC = () => {
                 setTechnologies(technologyResponses);
 
                 if (projectResponse.createdById) {
-                    const creatorResponse = await api.projectMember.getByIds(projectResponse.createdById, projectId!);
+                    const creatorResponse = await api.userManagement.get(projectResponse.createdById);
                     setCreator(creatorResponse);
                 }
 
-                const currentUserId = getUserId();
-                if (currentUserId) {
-                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId!);
-                    setCurrentUserRole(currentUserResponse.role);
-                }
+                const role = await getUserRole(projectId!);
+                console.log('Role: ' + role)
+                setCurrentUserRole(role);
             } catch (error) {
                 console.error('Error fetching project details:', error);
             } finally {
@@ -88,6 +87,7 @@ const ProjectPageComponent: React.FC = () => {
     };
 
     const isOwner = currentUserRole === Role.OWNER;
+    const isAdmin = currentUserRole === Role.ADMIN;
 
     const handleCreateEnvironment = () => {
         navigate(`/project-environment/create/${projectId}`);
@@ -117,6 +117,30 @@ const ProjectPageComponent: React.FC = () => {
         );
     }
 
+    if (project.deletedOn != null && !isAdmin) {
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('deleted')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
+    if (currentUserRole === null) {
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('noAccess')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
     return (
         <CustomLayout>
             <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
@@ -136,7 +160,7 @@ const ProjectPageComponent: React.FC = () => {
                         {project.description}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2 }}>
-                        {isOwner && (
+                        {(isOwner || isAdmin) && (
                             <>
                                 <Button variant="contained" color="primary" onClick={handleEdit}>
                                     {t('edit')}
@@ -160,20 +184,18 @@ const ProjectPageComponent: React.FC = () => {
                 </Box>
             </Paper>
             <ProjectEnvironmentsTable projectId={projectId!}/>
-                {isOwner && (
-                    <>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, marginRight: 3 }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleCreateEnvironment}
-                                title={t('createProject')}
-                            >
-                                {t('createEnvironment')}
-                            </Button>
-                        </Box>
-                    </>
-                )}
+            {(isOwner || isAdmin) && (
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, marginRight: 3 }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleCreateEnvironment}
+                        title={t('createProject')}
+                    >
+                        {t('createEnvironment')}
+                    </Button>
+                </Box>
+            )}
             <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
                 <DialogTitle>{t('confirmDeletion')}</DialogTitle>
                 <DialogContent>

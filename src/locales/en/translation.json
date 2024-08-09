@@ -92,7 +92,9 @@
       "selectedTechnologies": "Selected technologies",
       "updateProject": "Update project",
       "noAccess": "No permission.",
-      "createEnvironment": "Create new environment"
+      "createEnvironment": "Create new environment",
+      "projectName": "Project name",
+      "newProject": "New project"
     },
     "forms": {
       "new": "New",
@@ -174,7 +176,7 @@
       "createdBy": "Created by",
       "membersList": "Project members list",
       "role": "Role",
-      "noPermission": "No permission.",
+      "noPermission": "No access.",
       "environments": "Environments",
       "error": "Error",
       "cannotDeleteSelf": "Cannot delete self.",

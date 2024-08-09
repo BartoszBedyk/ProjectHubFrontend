@@ -8,13 +8,9 @@ import {
     Paper,
     FormControlLabel,
     Checkbox,
-    Container,
-    CircularProgress
 } from '@mui/material';
 import { api } from "../../api/AppApi";
 import { useTranslation } from "react-i18next";
-import { Role } from "../../api/project/project-member/response/Role";
-import { getUserId } from "../../storage/AuthStorage";
 import { UpdateProjectEnvironmentForm } from "../../api/project/project-environment/form/UpdateProjectEnvironmentForm";
 
 const UpdateProjectEnvironmentFormComponent: React.FC<{ environmentId: string }> = ({ environmentId }) => {
@@ -25,8 +21,6 @@ const UpdateProjectEnvironmentFormComponent: React.FC<{ environmentId: string }>
         encrypted: false,
     });
     const [formError, setFormError] = useState<string | null>(null);
-    const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
-    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,16 +32,8 @@ const UpdateProjectEnvironmentFormComponent: React.FC<{ environmentId: string }>
                     name: environment.name,
                     encrypted: environment.encrypted,
                 });
-
-                const currentUserId = getUserId();
-                if (currentUserId) {
-                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, environment.projectId);
-                    setCurrentUserRole(currentUserResponse.role);
-                }
             } catch (error) {
                 console.error('Error fetching environment details:', error);
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -81,71 +67,51 @@ const UpdateProjectEnvironmentFormComponent: React.FC<{ environmentId: string }>
         }
     };
 
-    if (loading) {
-        return (
-                <Container>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                        <CircularProgress />
-                    </Box>
-                </Container>
-        );
-    }
-
-    if (currentUserRole !== Role.OWNER) {
-        return (
-                <Container>
-                    <Typography variant="h6" color="error" align="center" sx={{ marginTop: 3 }}>
-                        {t('noAccess')}
-                    </Typography>
-                </Container>
-        );
-    }
-
     return (
-            <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
-                    <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
-                    <Typography variant="h5" component="div">
-                        {t('editEnvironment')}
+        <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
+                <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
+                <Typography variant="h5" component="div">
+                    {t('editEnvironment')}
+                </Typography>
+            </Box>
+            <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{ '& .MuiTextField-root': { m: 1, width: '100%' }, padding: 3 }}
+                noValidate
+                autoComplete="off"
+            >
+                <TextField
+                    required
+                    id="name"
+                    name="name"
+                    label={t('environmentName')}
+                    value={form.name}
+                    onChange={handleInputChange}
+                    error={!!formError}
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={form.encrypted}
+                            onChange={handleCheckboxChange}
+                            name="encrypted"
+                            color="primary"
+                        />
+                    }
+                    label={t('encrypted')}
+                />
+                {formError && (
+                    <Typography color="error" sx={{ marginTop: 2 }}>
+                        {formError}
                     </Typography>
-                </Box>
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    sx={{ '& .MuiTextField-root': { m: 1, width: '100%' }, padding: 3 }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField
-                        required
-                        id="name"
-                        name="name"
-                        label={t('environmentName')}
-                        value={form.name}
-                        onChange={handleInputChange}
-                        error={!!formError}
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={form.encrypted}
-                                onChange={handleCheckboxChange}
-                                name="encrypted"
-                                color="primary"
-                            />
-                        }
-                        label={t('encrypted')}
-                    />
-                    {formError && (
-                        <Typography color="error" sx={{ marginTop: 2 }}>
-                            {formError}
-                        </Typography>
-                    )}
-                    <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, marginTop: 3 }}>
-                        {t('updateEnvironment')}
-                    </Button>
-                </Box>
-            </Paper>
+                )}
+                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, marginTop: 3 }}>
+                    {t('updateEnvironment')}
+                </Button>
+            </Box>
+        </Paper>
     );
 };
 

@@ -22,7 +22,6 @@ import { Role } from "../../api/project/project-member/response/Role";
 import { UpdateProjectMemberForm } from "../../api/project/project-member/form/UpdateProjectMemberForm";
 import { ProjectEnvironmentDto } from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
-import { getUserId } from "../../storage/AuthStorage";
 
 const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: string }> = ({ projectId, userId }) => {
     const [form, setForm] = useState<UpdateProjectMemberForm>({
@@ -36,7 +35,6 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
     const [selectedEnvironments, setSelectedEnvironments] = useState<ProjectEnvironmentDto[]>([]);
     const [projectMember, setProjectMember] = useState<ProjectMemberDto | null>(null);
     const [formError, setFormError] = useState<string | null>(null);
-    const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation('members');
 
@@ -78,21 +76,8 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
             }
         };
 
-        const fetchCurrentUserRole = async () => {
-            try {
-                const currentUserId = getUserId();
-                if (currentUserId) {
-                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId);
-                    setCurrentUserRole(currentUserResponse.role);
-                }
-            } catch (error) {
-                console.error('Error fetching current user role:', error);
-            }
-        };
-
         fetchEnvironments();
         fetchProjectMember();
-        fetchCurrentUserRole();
     }, [projectId, userId]);
 
     const handleRoleChange = (event: SelectChangeEvent<Role>) => {
@@ -125,20 +110,11 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
 
         try {
             const response = await api.projectMember.update(form);
-            console.log('Project member updated:', response);
             navigate(`/project-member/${projectId}/${response.userId}`);
         } catch (error) {
             console.error('Error updating project member:', error);
         }
     };
-
-    if (currentUserRole !== Role.OWNER) {
-        return (
-            <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-                {t('noPermission')}
-            </Typography>
-        );
-    }
 
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>

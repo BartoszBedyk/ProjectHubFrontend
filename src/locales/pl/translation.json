@@ -92,7 +92,9 @@
       "selectedTechnologies": "Wybrane technologie",
       "updateProject": "Zaktualizuj projekt",
       "noAccess": "Brak dostępu.",
-      "createEnvironment": "Nowe środowisko"
+      "createEnvironment": "Nowe środowisko",
+      "projectName": "Nazwa projektu",
+      "newProject": "Nowy projekt"
     },
     "forms": {
       "new": "Nowe",

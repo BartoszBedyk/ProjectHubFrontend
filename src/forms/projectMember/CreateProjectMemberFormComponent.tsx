@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
     Box,
     Button,
-    TextField,
     Typography,
     List,
     ListItem,
@@ -26,8 +25,7 @@ import { UserDto } from "../../api/user-management/response/UserDto";
 import { SearchForm } from "../../commons/Search/SearchForm";
 import { SearchSortOrder } from "../../commons/Search/SearchSortOrder";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
-import { getUserId } from "../../storage/AuthStorage";
-import {CriteriaOperator} from "../../commons/Search/CriteriaOperator";
+import { CriteriaOperator } from "../../commons/Search/CriteriaOperator";
 
 const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
     const [form, setForm] = useState<CreateProjectMemberForm>({
@@ -46,22 +44,15 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
     const [existingMembers, setExistingMembers] = useState<ProjectMemberDto[]>([]);
     const [formError, setFormError] = useState<string | null>(null);
     const [userError, setUserError] = useState<string | null>(null);
-    const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation('members');
 
     useEffect(() => {
-        const fetchEnvironments = async () => {
+        const fetchInitialData = async () => {
             try {
-                const response = await api.projectEnvironment.findAll(projectId);
-                setExistingEnvironments(response);
-            } catch (error) {
-                console.error('Error fetching environments:', error);
-            }
-        };
+                const environments = await api.projectEnvironment.findAll(projectId);
+                setExistingEnvironments(environments);
 
-        const fetchUsers = async () => {
-            try {
                 const searchForm: SearchForm = {
                     criteria: [
                         {
@@ -74,51 +65,24 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                     size: 50,
                     sort: { by: 'firstName', order: SearchSortOrder.ASC }
                 };
-                const response = await api.userManagement.search(searchForm);
-                setUsers(response.items);
+                const usersResponse = await api.userManagement.search(searchForm);
+                setUsers(usersResponse.items);
+
+                const members = await api.projectMember.getByProjectId(projectId);
+                setExistingMembers(members);
             } catch (error) {
-                console.error('Error fetching users:', error);
+                console.error('Error fetching initial data:', error);
             }
         };
 
-        const fetchExistingMembers = async () => {
-            try {
-                const response = await api.projectMember.getByProjectId(projectId);
-                setExistingMembers(response);
-            } catch (error) {
-                console.error('Error fetching existing project members:', error);
-            }
-        };
-
-        const fetchCurrentUserRole = async () => {
-            try {
-                const currentUserId = getUserId();
-                if (currentUserId) {
-                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId);
-                    setCurrentUserRole(currentUserResponse.role);
-                }
-            } catch (error) {
-                console.error('Error fetching current user role:', error);
-            }
-        };
-
-        fetchEnvironments();
-        fetchUsers();
-        fetchExistingMembers();
-        fetchCurrentUserRole();
+        fetchInitialData();
     }, [projectId]);
 
     useEffect(() => {
         const fetchSelectedEnvironments = async () => {
-            const environments: ProjectEnvironmentDto[] = [];
-            for (const envId of form.environmentIds) {
-                try {
-                    const response = await api.projectEnvironment.findById(envId);
-                    environments.push(response);
-                } catch (error) {
-                    console.error(`Error fetching environment with id ${envId}:`, error);
-                }
-            }
+            const environments = await Promise.all(
+                form.environmentIds.map(envId => api.projectEnvironment.findById(envId))
+            );
             setSelectedEnvironments(environments);
         };
 
@@ -135,32 +99,34 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
     }, [users, existingMembers]);
 
     const handleRoleChange = (event: SelectChangeEvent<Role>) => {
-        setForm({ ...form, role: event.target.value as Role });
+        setForm(prevForm => ({ ...prevForm, role: event.target.value as Role }));
     };
 
     const handleUserChange = (event: SelectChangeEvent<string>) => {
         const userId = event.target.value as string;
         const selectedUser = users.find(user => user.id === userId);
         if (selectedUser) {
-            setForm({
-                ...form,
+            setForm(prevForm => ({
+                ...prevForm,
                 userId,
                 firstName: selectedUser.firstName,
                 lastName: selectedUser.lastName
-            });
+            }));
         }
     };
 
     const addExistingEnvironment = (env: ProjectEnvironmentDto) => {
-        setForm({
-            ...form,
-            environmentIds: [...form.environmentIds, env.id]
-        });
+        setForm(prevForm => ({
+            ...prevForm,
+            environmentIds: [...prevForm.environmentIds, env.id]
+        }));
     };
 
     const removeEnvironment = (index: number) => {
-        const newEnvironmentIds = form.environmentIds.filter((_, i) => i !== index);
-        setForm({ ...form, environmentIds: newEnvironmentIds });
+        setForm(prevForm => ({
+            ...prevForm,
+            environmentIds: prevForm.environmentIds.filter((_, i) => i !== index)
+        }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -172,7 +138,6 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
         }
 
         try {
-            const existingMembers = await api.projectMember.getByProjectId(projectId);
             const isUserAlreadyMember = existingMembers.some(member => member.userId === form.userId);
 
             if (isUserAlreadyMember) {
@@ -184,7 +149,6 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
             setFormError(null);
 
             const response = await api.projectMember.create(form);
-            console.log('Project member created:', response);
             setForm({
                 firstName: '',
                 lastName: '',
@@ -198,14 +162,6 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
             console.error('Error creating project member:', error);
         }
     };
-
-    if (currentUserRole !== Role.OWNER) {
-        return (
-            <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-                {t('noPermission')}
-            </Typography>
-        );
-    }
 
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
@@ -231,6 +187,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                         value={form.userId}
                         onChange={handleUserChange}
                         error={!!userError}
+                        label={t('selectUser')}
                     >
                         {filteredUsers.map(user => (
                             <MenuItem key={user.id} value={user.id}>
@@ -252,6 +209,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                         name="role"
                         value={form.role}
                         onChange={handleRoleChange}
+                        label={t('selectRole')}
                     >
                         <MenuItem value={Role.OWNER}>{t('owner')}</MenuItem>
                         <MenuItem value={Role.MAINTAINER}>{t('maintainer')}</MenuItem>
@@ -267,9 +225,9 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                     {t('selectEnvironments')}
                 </Typography>
                 <List>
-                    {existingEnvironments.map((env, index) => (
+                    {existingEnvironments.map(env => (
                         <ListItem
-                            key={index}
+                            key={env.id}
                             onClick={() => addExistingEnvironment(env)}
                             sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd', cursor: 'pointer' } }}
                         >
@@ -285,7 +243,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                 <List>
                     {selectedEnvironments.map((env, index) => (
                         <ListItem
-                            key={index}
+                            key={env.id}
                             secondaryAction={
                                 <IconButton edge="end" aria-label="delete" onClick={() => removeEnvironment(index)}>
                                     <DeleteIcon />

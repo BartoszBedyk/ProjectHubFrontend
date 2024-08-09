@@ -1,21 +1,37 @@
-import React, {useEffect, useState} from 'react';
-import navLinks, {NavLink} from "./navLinks";
-import {Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {ExpandLess, ExpandMore} from "@mui/icons-material";
-import {Link, useParams} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import navLinks, { NavLink } from "./navLinks";
+import { Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { Link, useParams } from "react-router-dom";
+import {api} from "../../../api/AppApi";
 
 interface ItemsProps {
     open: boolean;
 }
 
-
 const Items: React.FC<ItemsProps> = ({ open }) => {
     const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
-    const { projectId } = useParams<{projectId: string}>();
+    const { projectId: paramProjectId, environmentId } = useParams<{ projectId?: string; environmentId?: string }>();
+    const [projectId, setProjectId] = useState<string | undefined>(paramProjectId);
 
     useEffect(() => {
-        if(!open) {
-            setOpenItems({})
+        const fetchProjectId = async () => {
+            if (environmentId) {
+                try {
+                    const environment = await api.projectEnvironment.findById(environmentId);
+                    setProjectId(environment.projectId);
+                } catch (error) {
+                    console.error('Error fetching environment details:', error);
+                }
+            }
+        };
+
+        fetchProjectId();
+    }, [environmentId]);
+
+    useEffect(() => {
+        if (!open) {
+            setOpenItems({});
         }
     }, [open]);
 
@@ -67,9 +83,8 @@ const Items: React.FC<ItemsProps> = ({ open }) => {
                 break;
         }
 
-
         return (
-            <ListItem key={item.name} disablePadding sx={{display: 'block', pl: isChild ? 2.5 : 0}}>
+            <ListItem key={item.name} disablePadding sx={{ display: 'block', pl: isChild ? 2.5 : 0 }}>
                 <ListItemButton
                     component={Link} to={item.link!}
                     onClick={() => item.children ? handleClick(item.name) : null}
@@ -89,12 +104,11 @@ const Items: React.FC<ItemsProps> = ({ open }) => {
                         color: isActive(item.name) ? '#2196f3' : '#e8edf7',
                     }}
                     >
-                        <item.icon style={{height: 24, width: 24}}/>
-
+                        <item.icon style={{ height: 24, width: 24 }} />
                     </ListItemIcon>
                     <ListItemText primary={item.name}
-                                  sx={{opacity: open ? 1 : 0, color: isActive(item.name) ? '#2196f3' : '#e8edf7'}}/>
-                    {open && item.children ? (openItems[item.name] ? <ExpandLess/> : <ExpandMore/>) : null}
+                                  sx={{ opacity: open ? 1 : 0, color: isActive(item.name) ? '#2196f3' : '#e8edf7' }} />
+                    {open && item.children ? (openItems[item.name] ? <ExpandLess /> : <ExpandMore />) : null}
                 </ListItemButton>
                 {item.children && (
                     <Collapse in={openItems[item.name] && open} timeout="auto" unmountOnExit>
@@ -108,13 +122,13 @@ const Items: React.FC<ItemsProps> = ({ open }) => {
     };
 
     const filteredNavLinks = navLinks.filter((item) => {
-       if (item.name === 'Main' || item.name === 'Resources') {
-           return !!projectId;
-       }
+        if (item.name === 'Main' || item.name === 'Resources') {
+            return !!projectId;
+        }
         if (item.name === "User management" || item.name === "Activities") {
             return !projectId;
         }
-       return true;
+        return true;
     });
 
     return (
