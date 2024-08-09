@@ -6,7 +6,7 @@ import {
     CardContent,
     Checkbox,
     FormControl,
-    FormControlLabel,
+    FormControlLabel, IconButton, InputAdornment,
     TextField,
     Typography,
 } from "@mui/material";
@@ -19,6 +19,8 @@ import secureLocalStorage from "react-secure-storage";
 import { useNavigate } from "react-router-dom";
 import { stylesLogin } from "./styles/LoginStyles";
 import {UpdateDialog} from "../dialogs/UpdateDialog";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 
 export const LogInCard = () => {
     const { t } = useTranslation("login");
@@ -31,6 +33,7 @@ export const LogInCard = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [isBlocked, setIsBlocked] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
@@ -91,6 +94,10 @@ export const LogInCard = () => {
         }
     }, [loading]);
 
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
         <Card variant={"outlined"} sx={{ "--Card-radius": "0px" }}>
             <CardContent
@@ -123,7 +130,20 @@ export const LogInCard = () => {
                             autoComplete="on"
                             onChange={(e) => setPassword(e.target.value)}
                             sx={stylesLogin.textFields}
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={toggleShowPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
 
                         <FormControlLabel

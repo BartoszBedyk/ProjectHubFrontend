@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import {getUserId} from "../../../../storage/AuthStorage";
 
 interface NavLinksUserMenu {
     name: string;
@@ -7,11 +8,11 @@ interface NavLinksUserMenu {
 
 const useNavLinksUserMenu = (): NavLinksUserMenu[] => {
     const { t } = useTranslation('drawer');
-
+    const userId = getUserId()
     return [
         {
             name: t('profile'),
-            link: `/user/:userId`,
+            link: `/user/${userId}`,
         },
         {
             name: t('settings'),
