@@ -11,23 +11,20 @@ import ButtonByResourceType from "../../components/TableImpl/ButtonByResourceTyp
 import DeleteDialog from "../../components/dialogs/DeleteDialog";
 import DeleteButton from "../../components/TableImpl/DeleteButton";
 import {Role} from "../../api/project/project-member/response/Role";
-import AuthComponent from "../../components/authComponent";
-import NoAccessHandler from "../../components/NoAccesHandler";
-
+import {ProjectDTO} from "../../api/project/response/ProjectDTO";
+import {getUserRole} from "../../components/authComponent";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 const ProjectPageComponent: React.FC = () => {
     const {resourceId, projectId} = useParams<{ resourceId: string, projectId: string }>();
     const [resource, setResource] = useState<ResourceDto | null>(null);
-
     const [loading, setLoading] = useState(true);
     const [creator, setCreator] = useState<ProjectMemberDto | null>(null);
     const navigate = useNavigate();
     const {t} = useTranslation('overall')
     const [open, setOpen] = React.useState(false);
-
-    const [role, setRole] = useState<Role | null>(null)
-    AuthComponent(projectId!).then(r => setRole(r))
-
+    const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
+    const [project, setProject] = useState<ProjectDTO | null>(null);
 
     const openDeleteDialog = () => {
         setOpen(true)
@@ -42,6 +39,12 @@ const ProjectPageComponent: React.FC = () => {
             try {
                 const response = await api.resources.get(resourceId!);
                 setResource(response);
+
+                const projectResponse = await api.project.get(projectId!);
+                setProject(projectResponse);
+
+                const role = await getUserRole(projectId!);
+                setCurrentUserRole(role);
 
                 if (response.createdById) {
                     const creatorResponse = await api.projectMember.getByIds(response.createdById, resourceId!);
@@ -61,6 +64,7 @@ const ProjectPageComponent: React.FC = () => {
         navigate(`/project/${projectId}/resources/edit/${resourceId}`);
     };
 
+    const isAdmin = currentUserRole === Role.ADMIN;
 
     if (loading) {
         return (
@@ -74,17 +78,52 @@ const ProjectPageComponent: React.FC = () => {
         );
     }
 
-    if (role === null) {
-
-        return (<NoAccessHandler data={role}/>)
-    }
-
     if (!resource) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
                     <Typography variant="h6" align="center" sx={{mt: 4}}>
-                        {t('projects.notFound')}
+                        {t('resources.notFound')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
+    if (!project) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('resources.notFound2')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
+    if (project.deletedOn != null && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('resources.deleted')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
+    if (currentUserRole === null) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('resources.noAccess')}
                     </Typography>
                 </Container>
             </CustomLayout>
@@ -123,7 +162,7 @@ const ProjectPageComponent: React.FC = () => {
                             <ButtonByResourceType id={resource.id} resourceType={resource.resourceType}
                                                   value={resource.value}/>)}
 
-                        {role != Role.VISITOR && role != null && (
+                        {currentUserRole != Role.VISITOR && currentUserRole != null && (
                             <>
                                 <Button variant="contained" color="primary" onClick={handleEdit}
                                         title={t('forms.edit')}>

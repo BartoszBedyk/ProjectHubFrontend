@@ -27,4 +27,31 @@ const AuthComponent = async (projectId: string): Promise<Role | null> => {
     return null;
 };
 
+export const getUserRole = async (projectId: string): Promise<Role | null> => {
+    const currentUserId = getUserId();
+
+    if (!currentUserId) {
+        console.error("User ID not found");
+        return null;
+    }
+
+    try {
+        const userDetails = await api.userManagement.get(currentUserId);
+
+        if (userDetails.createdById === 'SYSTEM') {
+            return Role.ADMIN;
+        }
+
+        const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId);
+
+        if (currentUserResponse.role) {
+            return currentUserResponse.role;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        return null;
+    }
+};
+
 export default AuthComponent;

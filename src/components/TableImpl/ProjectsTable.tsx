@@ -4,12 +4,12 @@ import { api } from "../../api/AppApi";
 import { ProjectDTO } from "../../api/project/response/ProjectDTO";
 import { SearchFormCriteria } from "../../commons/Search/SearchFormCriteria";
 import { CriteriaOperator } from "../../commons/Search/CriteriaOperator";
-import { SearchSort } from "../../commons/Search/SearchSort";
 import { SearchSortOrder } from "../../commons/Search/SearchSortOrder";
 import { SearchForm } from "../../commons/Search/SearchForm";
 import { SearchResponse } from "../../commons/Search/SearchResponse";
 import { useNavigate } from "react-router-dom";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { getUserId } from "../../storage/AuthStorage";
 
 type ProjectsTableProps = {
     searchValue: string
@@ -17,7 +17,7 @@ type ProjectsTableProps = {
 
 const ProjectsTable = (props: ProjectsTableProps) => {
     const navigate = useNavigate();
-    const {t} = useTranslation("projects")
+    const { t } = useTranslation("projects");
 
     const columns: ColumnDefinition[] = [
         { id: 'name', label: t('name'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
@@ -26,50 +26,72 @@ const ProjectsTable = (props: ProjectsTableProps) => {
         { id: 'createdBy', label: t('createdById'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
     ];
 
-    const searchFormCriteria: SearchFormCriteria[] = [
-        {
-            fieldName: 'name',
-            value: `%${props.searchValue}%`,
-            operator: CriteriaOperator.LIKE
-        }
-    ];
-
-    const searchSort: SearchSort = {
-        by: 'name',
-        order: SearchSortOrder.DSC
-    };
-
-    const searchForm: SearchForm = {
-        criteria: searchFormCriteria,
+    const [rows, setRows] = useState<RowData[]>([]);
+    const [searchForm, setSearchForm] = useState<SearchForm>({
+        criteria: [],
         page: 1,
         size: 50,
-        sort: searchSort
-    };
-
-    const [rows, setRows] = useState<RowData[]>([]);
+        sort: {
+            by: 'name',
+            order: SearchSortOrder.DSC
+        }
+    });
 
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response: SearchResponse<ProjectDTO> = await api.project.search(searchForm);
-                const projectRows: RowData[] = await Promise.all(response.items.map(async (project) => {
-                    let createdBy = t('unknown');
-                    try {
-                        const creator = await api.projectMember.getByIds(project.createdById, project.id);
-                        createdBy = `${creator.firstName} ${creator.lastName}`;
-                    } catch (error) {
-                        console.error('Error fetching creator details:', error);
+                const currentUserId = getUserId();
+                if (currentUserId) {
+                    const user = await api.userManagement.get(currentUserId);
+                    const criteria: SearchFormCriteria[] = [
+                        {
+                            fieldName: 'name',
+                            value: `%${props.searchValue}%`,
+                            operator: CriteriaOperator.LIKE
+                        }
+                    ];
+
+                    if (user.createdById !== 'SYSTEM') {
+                        criteria.push(
+                            { fieldName: "members.userId", value: currentUserId, operator: CriteriaOperator.EQUALS },
+                            { fieldName: "deletedOn", value: null, operator: CriteriaOperator.EQUALS },
+                            { fieldName: "deletedById", value: null, operator: CriteriaOperator.EQUALS }
+                        );
                     }
-                    const newRow: RowData = {
-                        id: project.id,
-                        name: project.name,
-                        description: project.description,
-                        createdOn: project.createdOn,
-                        createdBy,
-                    };
-                    return newRow;
-                }));
-                setRows(projectRows);
+
+                    setSearchForm({
+                        ...searchForm,
+                        criteria
+                    });
+
+                    const response: SearchResponse<ProjectDTO> = await api.project.search({
+                        ...searchForm,
+                        criteria
+                    });
+
+                    const projectRows: RowData[] = await Promise.all(response.items.map(async (project) => {
+                        let createdBy = t('unknown');
+                        try {
+                            const creator = await api.userManagement.get(project.createdById);
+                            createdBy = `${creator.firstName} ${creator.lastName}`;
+                        } catch (error) {
+                            console.error('Error fetching creator details:', error);
+                        }
+
+                        const projectName = project.deletedOn ? `${project.name} ${t('deleted2')}` : project.name;
+
+                        const newRow: RowData = {
+                            id: project.id,
+                            name: projectName,
+                            description: project.description,
+                            createdOn: project.createdOn,
+                            createdBy,
+                        };
+                        return newRow;
+                    }));
+
+                    setRows(projectRows);
+                }
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }

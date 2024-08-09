@@ -23,6 +23,8 @@ import { ProjectMemberDto } from "../../api/project/project-member/response/Proj
 import { Role } from '../../api/project/project-member/response/Role';
 import { ProjectEnvironmentDto } from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 import { getUserId } from "../../storage/AuthStorage";
+import {getUserRole} from "../../components/authComponent";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 const ProjectMemberPage: React.FC = () => {
     const { projectId, userId } = useParams<{ projectId: string; userId: string }>();
@@ -35,6 +37,8 @@ const ProjectMemberPage: React.FC = () => {
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation('members');
+    const [isProjectDeleted, setIsProjectDeleted] = useState(false);
+
 
     useEffect(() => {
         const fetchProjectMemberDetails = async () => {
@@ -55,11 +59,14 @@ const ProjectMemberPage: React.FC = () => {
                     setEnvironments(envResponses);
                 }
 
-                const currentUserId = getUserId();
-                if (currentUserId) {
-                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId!);
-                    setCurrentUserRole(currentUserResponse.role);
+                const role = await getUserRole(projectId!);
+
+                const projectResponse = await api.project.get(projectId!);
+
+                if(projectResponse.deletedOn != null){
+                    setIsProjectDeleted(true)
                 }
+                setCurrentUserRole(role);
             } catch (error) {
                 console.error('Error fetching project member details:', error);
             } finally {
@@ -101,6 +108,7 @@ const ProjectMemberPage: React.FC = () => {
     };
 
     const isOwner = currentUserRole === Role.OWNER;
+    const isAdmin = currentUserRole === Role.ADMIN;
 
     if (loading) {
         return (
@@ -115,11 +123,38 @@ const ProjectMemberPage: React.FC = () => {
     }
 
     if (!projectMember) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
                     <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-                        {t('memberNotFound')}
+                        {t('notFound')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
+    if (isProjectDeleted && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('deleted')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
+    if (currentUserRole === null) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('noAccess')}
                     </Typography>
                 </Container>
             </CustomLayout>
@@ -159,7 +194,7 @@ const ProjectMemberPage: React.FC = () => {
                     )}
 
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2 }}>
-                        {isOwner && (
+                        {(isOwner || isAdmin) && (
                             <>
                                 <Button variant="contained" color="primary" onClick={handleEdit}>
                                     {t('editMember')}

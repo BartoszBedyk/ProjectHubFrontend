@@ -9,13 +9,14 @@ import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
 import {UserDto} from "../../api/user-management/response/UserDto";
-import {IconButton, Tooltip} from "@mui/material";
+import {Container, IconButton, Tooltip, Typography} from "@mui/material";
 import TrueIcon from '@mui/icons-material/Check';
 import FalseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import BlockIcon from '@mui/icons-material/Block';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useTranslation} from "react-i18next";
+import {getUserId} from "../../storage/AuthStorage";
 
 type UsersTableProps = {
     searchValue: string;
@@ -72,12 +73,22 @@ const UsersTable = (props: UsersTableProps) => {
         await api.userManagement.delete(userId);
     };
 
+    const [accessDenied, setAccessDenied] = useState<boolean>(false);
+
 
     const [rows, setRows] = useState<RowData[]>([]);
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
+                const currentUserId = getUserId();
+                if (currentUserId) {
+                    const user = await api.userManagement.get(currentUserId);
+                    if (user.createdById !== "SYSTEM") {
+                        setAccessDenied(true);
+                        return;
+                    }
+                }
                 const response: SearchResponse<UserDto> = await api.userManagement.search(searchForm);
                 const userRows: RowData[] = await Promise.all(response.items.map(async (user) => {
                     let createdBy = 'SYSTEM';
@@ -136,6 +147,16 @@ const UsersTable = (props: UsersTableProps) => {
 
         fetchUsers();
     }, [props.searchValue, navigate]);
+
+    if (accessDenied) {
+        return (
+            <Container>
+                <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                    {t('accessDenied')}
+                </Typography>
+            </Container>
+        );
+    }
 
     return (
         <CustomTable columns={columns} rows={rows} title={t('userList')} />
