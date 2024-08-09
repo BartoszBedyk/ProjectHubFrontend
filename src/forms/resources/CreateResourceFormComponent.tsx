@@ -68,6 +68,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
     const [typeSetter, setTypeSetter] = useState<string>("")
     const linkToPage = `/project/${projectId}/resources/${typeSetter}`
     const navigate = useNavigate();
+    const [globalError, setGlobalError] = useState<string>('');
 
     function formTypeDeclaration(typeFromDropdown: ResourceType) {
         switch (typeFromDropdown) {
@@ -344,11 +345,18 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
         setForm(form as CreateResourceForm);
         api.resources.create(form, typeSetter).then(
             response => {
+                console.log(response)
                 setOpen(true);
                 setTimeout(() => {
                     navigate(linkToPage);
                 }, 1000);}
         )
+            .catch(error => {
+                const errorMessage = error.response?.data?.errors?.name ||error.response?.data?.errors?.value
+                setGlobalError(errorMessage);
+                console.error("Error during create:", errorMessage);
+                setGlobalError(prevError => `${prevError}`);
+            });
 
     }
 
@@ -366,6 +374,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
         <div>
             <CustomForm formElements={formElements2} buttonName={t('forms.chooseType')} handleSubmit={handleSubmit2}></CustomForm>
             <CustomForm formElements={formForType} buttonName={t('forms.create')} handleSubmit={handleSubmit} buttonDisable={buttonState} ></CustomForm>
+            {globalError && <p style={{ color: 'red' }}>{globalError}</p>}
             <UpdateDialog openProps={open} title={t('resources.dialogCreateTitle')} message={t('resources.dialogCreate')}></UpdateDialog>
         </div>
     )

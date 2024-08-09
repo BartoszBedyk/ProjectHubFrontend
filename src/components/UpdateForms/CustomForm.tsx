@@ -110,7 +110,7 @@ export interface UpdateFormProps {
 export const CustomTextArea: React.FC<{ name?: string, id?: string, defaultValue?: string, error?: string }> =
     ({name, id, defaultValue, error}) => (
         <div>
-            <textarea name={name} id={id} defaultValue={defaultValue} style={textAreaStyle}/>
+            <textarea name={name} id={id} placeholder={defaultValue} style={textAreaStyle}/>
             {error && <p style={customError}>{error}</p>}
         </div>
     );
@@ -124,7 +124,7 @@ export const CustomTextField: React.FC<{
 }> =
     ({type = "text", name, id, defaultValue, error}) => (
         <div>
-            <input type={type} name={name} id={id} defaultValue={defaultValue} style={textFieldStyle}/>
+            <input type={type} name={name} id={id} placeholder={defaultValue} style={textFieldStyle}/>
             {error && <p style={customError}>{error}</p>}
         </div>
     );
