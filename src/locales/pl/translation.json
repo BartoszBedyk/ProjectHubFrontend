@@ -56,7 +56,8 @@
       "loggingTokenError": "Zaloguj się ponownie",
       "bannedUserTitle": "Użytkownik jest zablokowany.",
       "bannedUserMessage": "Wygląda na to, że Twoje konto zostało zablokowane. Nie masz dostępu do usług ProjectHub.",
-      "bannedUser": "Konto na które się logujesz jest zablokowane."
+      "bannedUser": "Konto na które się logujesz jest zablokowane.",
+      "resetPassword": "Zresetuj hasło"
     },
     "resources": {
       "resourcestxt": " - zasoby projektu.",

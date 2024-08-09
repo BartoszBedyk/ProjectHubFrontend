@@ -56,7 +56,8 @@
       "loggingTokenError": "Login again",
       "bannedUserTitle": "User is blocked.",
       "bannedUserMessage": "It appears that your account has been blocked. You do not have access to the ProjectHub services.",
-      "bannedUser": "The account you are logging in with is banned."
+      "bannedUser": "The account you are logging in with is banned.",
+      "resetPassword": "Reset Password"
     },
     "resources": {
       "resourcestxt": " - project resources.",
