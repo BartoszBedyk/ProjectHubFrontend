@@ -1,5 +1,19 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+    interface Palette {
+        customHover: {
+            main: string;
+        };
+    }
+
+    interface PaletteOptions {
+        customHover?: {
+            main: string;
+        };
+    }
+}
+
 const getDesignTokens = (mode: 'light' | 'dark'): ThemeOptions => ({
     palette: {
         mode,
@@ -16,13 +30,15 @@ const getDesignTokens = (mode: 'light' | 'dark'): ThemeOptions => ({
         text: {
             primary: mode === 'light' ? '#000' : '#e0e0e0',
         },
+        customHover: {
+            main: mode === 'light' ? '#f1f1f1' : 'rgba(255,255,255,0.24)',
+        },
     },
     typography: {
         fontFamily: 'Roboto, Arial, sans-serif',
         h1: {
             fontSize: '2rem',
         },
-
     },
     spacing: 8,
     components: {

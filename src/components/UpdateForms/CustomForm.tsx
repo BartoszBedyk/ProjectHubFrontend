@@ -19,28 +19,28 @@ const textAreaStyle: React.CSSProperties = {
     padding: '12px 16px',
     border: '1px solid #ced4da',
     borderRadius: '4px',
-    backgroundColor: '#fff',
     fontFamily: 'Roboto, sans-serif',
     fontSize: '16px',
     fontWeight: 400,
     lineHeight: 1.5,
-    color: '#424242',
     boxSizing: 'content-box',
     overflow: 'auto',
     resize: 'both',
     width: '80%',
+    background: 'inherit',
+    color:'inherit'
 };
 
 const textFieldStyle: React.CSSProperties = {
     padding: "12px 16px",
     border: "1px solid #ced4da",
     borderRadius: "4px",
-    backgroundColor: "#fff",
     fontFamily: "Roboto, sans-serif",
     fontSize: "16px",
     fontWeight: 400,
     lineHeight: 1.5,
-    color: "#424242",
+    background: 'inherit',
+    color:'inherit'
 };
 
 const labelStyle: React.CSSProperties = {
@@ -48,6 +48,9 @@ const labelStyle: React.CSSProperties = {
     verticalAlign: 'middle',
     lineHeight: '1.5em',
     paddingRight: '10px',
+    background: 'inherit',
+    color:'inherit'
+
 }
 
 const button: React.CSSProperties = {
@@ -67,6 +70,7 @@ const customError: React.CSSProperties = {
     marginTop: "0",
     marginBottom: "0",
     marginLeft: "1%"
+
 }
 
 const checkboxStyle: React.CSSProperties = {}
@@ -86,6 +90,7 @@ export interface FormElement {
     id?: string;
     label?: string;
     defaultValue?: string;
+    placeholder?:string;
     error?: string;
     typeOfElement: ComponentType;
     menuItems?: MenuItem[];
@@ -103,10 +108,10 @@ export interface UpdateFormProps {
     buttonDisable? :boolean
 }
 
-export const CustomTextArea: React.FC<{ name?: string, id?: string, defaultValue?: string, error?: string }> =
-    ({name, id, defaultValue, error}) => (
+export const CustomTextArea: React.FC<{ name?: string, id?: string, defaultValue?: string, error?: string, placeholder?: string}> =
+    ({name, id, defaultValue, error,placeholder}) => (
         <div>
-            <textarea name={name} id={id} defaultValue={defaultValue} style={textAreaStyle}/>
+            <textarea name={name} id={id} defaultValue={defaultValue} style={textAreaStyle} placeholder={placeholder}/>
             {error && <p style={customError}>{error}</p>}
         </div>
     );
@@ -116,11 +121,12 @@ export const CustomTextField: React.FC<{
     name?: string;
     id?: string,
     defaultValue?: string,
+    placeholder?: string,
     error?: string
 }> =
-    ({type = "text", name, id, defaultValue, error}) => (
+    ({type = "text", name, id, defaultValue, error, placeholder}) => (
         <div>
-            <input type={type} name={name} id={id} defaultValue={defaultValue} style={textFieldStyle}/>
+            <input type={type} name={name} id={id} defaultValue={defaultValue} style={textFieldStyle} placeholder={placeholder}/>
             {error && <p style={customError}>{error}</p>}
         </div>
     );
@@ -223,7 +229,7 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
 
         setErrors(newErrors);
 
-        if (errors.length === 0) {
+
             if (file) {
                 api.attachment.upload(file).then(r => {
                     formData['value'] = r.id;
@@ -233,7 +239,7 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
                 handleSubmit(formData, dropdownValue);
             }
         }
-    };
+
 
     const handleDropdownChange = (event: SelectChangeEvent<string>, child: React.ReactNode) => {
         setDropdownValue(event.target.value);

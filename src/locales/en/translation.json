@@ -2,19 +2,29 @@
   "buttons": {
     "save": "Save"
   },
-  "sidebar": {
+  "drawer": {
     "home": "Home",
     "project": "Project",
-    "addProject": "Create a project",
-    "main": "Home",
+    "projectList": "Projects list",
+    "addProject": "Create project",
+    "main": "Main",
+    "all": "All",
     "resources": "Resources",
     "resourcesLink": "Links",
     "resourcesDocumentation": "Documentation",
     "resourcesMembers": "Members",
     "resourcesFiles": "Files",
+    "resourcesSecret": "Secret",
     "userManagement": "User Management",
     "activities": "Activities",
-    "logout": "Log out"
+    "logout": "Log out",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "userMenu": {
+    "Profile": "Profile",
+    "Settings": "Settings",
+    "Logout": "Logout"
   },
   "table": {
     "previous": "Go to previous page",
@@ -43,7 +53,10 @@
       "loginLink2": "Don't have an account?",
       "loginLink2b": "Register",
       "loggingError": "Incorrect email address or password",
-      "loggingTokenError": "Login again"
+      "loggingTokenError": "Login again",
+      "bannedUserTitle": "User is blocked.",
+      "bannedUserMessage": "It appears that your account has been blocked. You do not have access to the ProjectHub services.",
+      "bannedUser": "The account you are logging in with is banned."
     },
     "resources": {
       "resourcestxt": " - project resources.",
@@ -205,6 +218,34 @@
       "delete": "Delete",
       "emptyFieldError": "This field cannot be empty",
       "environmentsList": "Environments list"
+    },
+    "activities": {
+      "type": "Type",
+      "createdOn": "Created On",
+      "createdById": "Created By",
+      "params": "Parameters",
+      "activitiesTableTitle": "Activities",
+      "accessDenied": "Access denied."
+    },
+    "userProfile": {
+      "userProfile": "User Profile",
+      "name": "First name and last name",
+      "email": "Email address",
+      "password": "Password",
+      "creationDate": "Creation date",
+      "createdBy": "Created by",
+      "notFound": "User not found",
+      "changePassword": "Change password",
+      "settings": "Settings",
+      "theme": "Theme",
+      "language": "Language",
+      "enterOldNewPassword": "Enter your current and new password",
+      "oldPassword": "Current password",
+      "newPassword": "New password",
+      "cancel": "Cancel",
+      "badOldPassword": "The current password you entered is incorrect!",
+      "passwordTooShort": "The new password is less than 8 characters long!",
+      "passwordChangeSuccess": "Password has been changed!"
     }
   }
 }

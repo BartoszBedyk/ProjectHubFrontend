@@ -5,7 +5,7 @@
     "copyTxt": "Skopiuj tekst",
     "closeTxt": "Zamknij"
   },
-  "sidebar": {
+  "drawer": {
     "home": "Strona startowa",
     "project": "Projekt",
     "addProject": "Utwórz projekt",
@@ -15,9 +15,16 @@
     "resourcesDocumentation": "Dokumentacja",
     "resourcesMembers": "Członkowie",
     "resourcesFiles": "Pliki",
-    "userManagement": "Zarządzanie urzytkownikami",
+    "userManagement": "Użytkownicy",
     "activities": "Aktywności",
-    "logout": "Wyloguj się"
+    "logout": "Wyloguj się",
+    "profile": "Profil",
+    "settings": "Ustawienia"
+  },
+  "userMenu": {
+    "Profile": "Profil",
+    "Settings": "Ustawienia",
+    "Logout": "Wyloguj się"
   },
   "table": {
     "previous": "Przejdź do poprzedniej strony",
@@ -46,7 +53,10 @@
       "loginLink2": "Nie masz konta?",
       "loginLink2b": "Zarejestruj się",
       "loggingError": "Niepoprawny adres email lub hasło",
-      "loggingTokenError": "Zaloguj się ponownie"
+      "loggingTokenError": "Zaloguj się ponownie",
+      "bannedUserTitle": "Użytkownik jest zablokowany.",
+      "bannedUserMessage": "Wygląda na to, że Twoje konto zostało zablokowane. Nie masz dostępu do usług ProjectHub.",
+      "bannedUser": "Konto na które się logujesz jest zablokowane."
     },
     "resources": {
       "resourcestxt": " - zasoby projektu.",
@@ -206,6 +216,34 @@
       "delete": "Usuń",
       "emptyFieldError": "To pole nie może być puste",
       "environmentsList": "Lista środowisk"
+    },
+    "activities": {
+      "type": "Typ",
+      "createdOn": "Data stworzenia",
+      "createdById": "Stworzony przez",
+      "params": "Parametry",
+      "activitiesTableTitle": "Aktywności",
+      "accessDenied": "Brak dostępu."
+    },
+    "userProfile": {
+      "userProfile": "Profil Użytkownika",
+      "name": "Imię i nazwisko",
+      "email": "Adres email",
+      "password": "Hasło",
+      "creationDate": "Data utworzenia",
+      "createdBy": "Utworzono przez",
+      "notFound": "Nie znaleziono użytkownika",
+      "changePassword": "Zmień hasło",
+      "settings": "Ustawienia",
+      "theme": "Motyw",
+      "language": "Język",
+      "enterOldNewPassword": "Podaj swoje obecne i nowe hasło",
+      "oldPassword": "Obecne hasło",
+      "newPassword": "Nowe hasło",
+      "cancel": "Anuluj",
+      "badOldPassword": "Wpisane przez Ciebie obecne hasło jest niepoprawne!",
+      "passwordTooShort": "Nowe hasło ma mniej niż 8 znaków!",
+      "passwordChangeSuccess": "Hasło zostało zmienione!"
     }
   }
 }

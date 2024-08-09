@@ -1,27 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import {Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import userImg from "../../../../assets/user-profile-image-test.png";
-import navLinksUserMenu from "./navLinksUserMenu";
-import {getUserId} from "../../../../storage/AuthStorage";
-import {api} from "../../../../api/AppApi";
-import {useNavigate} from "react-router-dom";
-
-const settings = ["Settings", "Profile", "Smth", "Smth 2"];
-const userName = "Kacper Koncki";
+import useNavLinksUserMenu from "./navLinksUserMenu";
+import { getUserId } from "../../../../storage/AuthStorage";
+import { api } from "../../../../api/AppApi";
+import { useNavigate } from "react-router-dom";
+import logout from "../../../Login/LogoutButton";
 
 const UserMenu = () => {
 
     const navigate = useNavigate();
-    const [user, setUser] = useState({firstName: '', lastName: ''})
+    const [user, setUser] = useState({ firstName: '', lastName: '' });
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const navLinksUserMenu = useNavLinksUserMenu();
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
-    }
+    };
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
-    }
+    };
 
     const userId = getUserId();
 
@@ -43,7 +43,7 @@ const UserMenu = () => {
 
     return (
         <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Open options">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p:0 }}>
                     <Typography sx={{ pr: 1 }}><strong>{user.firstName} {user.lastName}</strong></Typography>
                     <Avatar alt="User image" src={userImg} />
@@ -61,12 +61,18 @@ const UserMenu = () => {
                 onClose={handleCloseUserMenu}
             >
                 {navLinksUserMenu.map((item) => (
-                    <MenuItem key={item.name} onClick={handleOpenUserMenu}>
+                    <MenuItem key={item.name} onClick={handleCloseUserMenu}>
                         <Typography
                             textAlign="center"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                navigate(`/user/${userId}`);
+                                if (item.name === 'Profile') {
+                                    navigate(`/user/${userId}`);
+                                } else if (item.name === 'Logout'){
+                                    logout();
+                                } else {
+                                    navigate(item.link!);
+                                }
                             }}
                             style={{ cursor: "pointer" }}
                         >
