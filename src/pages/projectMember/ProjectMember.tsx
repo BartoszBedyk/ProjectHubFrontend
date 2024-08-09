@@ -24,6 +24,7 @@ import { Role } from '../../api/project/project-member/response/Role';
 import { ProjectEnvironmentDto } from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 import { getUserId } from "../../storage/AuthStorage";
 import {getUserRole} from "../../components/authComponent";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 const ProjectMemberPage: React.FC = () => {
     const { projectId, userId } = useParams<{ projectId: string; userId: string }>();
@@ -122,6 +123,7 @@ const ProjectMemberPage: React.FC = () => {
     }
 
     if (!projectMember) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -134,6 +136,7 @@ const ProjectMemberPage: React.FC = () => {
     }
 
     if (isProjectDeleted && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -146,6 +149,7 @@ const ProjectMemberPage: React.FC = () => {
     }
 
     if (currentUserRole === null) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>

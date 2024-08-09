@@ -19,6 +19,7 @@
     "activities": "Aktywności",
     "logout": "Wyloguj się",
     "profile": "Profil",
+    "projectList": "Lista projektów",
     "settings": "Ustawienia"
   },
   "userMenu": {
@@ -71,6 +72,8 @@
       "update" : "Zaktualizuj",
       "deleteResource": "Usuń zasób",
       "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?",
+      "deleted": "Projekt został usunięty.",
+      "noAccess": "Brak dostępu.",
       "attachmentDialog": "Edycja pola \"Wartość\" może spowodować nieodwracalną utratę dostępu do zasobu."
     },
     "projects": {
@@ -160,6 +163,7 @@
       "createdOn": "Data utworzenia",
       "createdBy": "Utworzony przez",
       "isBlocked": "Zablokowany",
+      "accessDenied": "Brak dostępu",
       "details": "Pokaż szczegóły"
     },
     "members": {

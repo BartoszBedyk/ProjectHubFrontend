@@ -19,7 +19,6 @@ import { TechnologyDTO } from "../../api/project/technology/response/TechnologyD
 import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-import { Role } from "../../api/project/project-member/response/Role";
 import {useTheme} from "@mui/material/styles";
 
 const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {

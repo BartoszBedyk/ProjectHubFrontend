@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Role } from "../../api/project/project-member/response/Role";
 import { getUserRole } from "../../components/authComponent";
 import { api } from '../../api/AppApi';
+import {TIMEOUTS} from "../../utils/timeouts";
 
 const ProjectMembers: React.FC = () => {
     const navigate = useNavigate();
@@ -58,6 +59,7 @@ const ProjectMembers: React.FC = () => {
     }
 
     if (isProjectDeleted && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -70,6 +72,7 @@ const ProjectMembers: React.FC = () => {
     }
 
     if (currentUserRole === null) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>

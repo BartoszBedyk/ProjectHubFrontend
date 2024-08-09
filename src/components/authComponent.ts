@@ -29,7 +29,6 @@ const AuthComponent = async (projectId: string): Promise<Role | null> => {
 
 export const getUserRole = async (projectId: string): Promise<Role | null> => {
     const currentUserId = getUserId();
-    console.log("Current User ID:", currentUserId);
 
     if (!currentUserId) {
         console.error("User ID not found");

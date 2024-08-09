@@ -1,7 +1,7 @@
 import CustomLayout from "../../components/Layout/Layout";
 import CreateProjectEnvironmentFormComponent
     from "../../forms/projectEnvironment/CreateProjectEnvironmentFormComponent";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
 import {Role} from "../../api/project/project-member/response/Role";
@@ -9,13 +9,15 @@ import {ProjectDTO} from "../../api/project/response/ProjectDTO";
 import {api} from "../../api/AppApi";
 import {getUserRole} from "../../components/authComponent";
 import {Box, CircularProgress, Container, Typography} from "@mui/material";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 function CreateProjectEnvironment () {
     const { projectId } = useParams<{ projectId: string }>();
-    const { t } = useTranslation('projects');
+    const { t } = useTranslation('environments');
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const [project, setProject] = useState<ProjectDTO | null>(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchEnvironmentsDetails = async () => {
@@ -50,6 +52,7 @@ function CreateProjectEnvironment () {
     }
 
     if (!project) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -62,6 +65,7 @@ function CreateProjectEnvironment () {
     }
 
     if (project.deletedOn != null && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -74,6 +78,7 @@ function CreateProjectEnvironment () {
     }
 
     if (currentUserRole === null || currentUserRole === Role.MAINTAINER || currentUserRole === Role.VISITOR) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>

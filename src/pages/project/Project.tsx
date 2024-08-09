@@ -23,6 +23,7 @@ import { Role } from '../../api/project/project-member/response/Role';
 import ProjectEnvironmentsTable from "../../components/TableImpl/ProjectEnvironmentTable";
 import { getUserRole } from "../../components/authComponent";
 import {UserDto} from "../../api/user-management/response/UserDto";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 const ProjectPageComponent: React.FC = () => {
     const { projectId } = useParams<{ projectId: string }>();
@@ -52,7 +53,6 @@ const ProjectPageComponent: React.FC = () => {
                 }
 
                 const role = await getUserRole(projectId!);
-                console.log('Role: ' + role)
                 setCurrentUserRole(role);
             } catch (error) {
                 console.error('Error fetching project details:', error);
@@ -105,6 +105,7 @@ const ProjectPageComponent: React.FC = () => {
     }
 
     if (!project) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -117,6 +118,7 @@ const ProjectPageComponent: React.FC = () => {
     }
 
     if (project.deletedOn != null && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -129,6 +131,7 @@ const ProjectPageComponent: React.FC = () => {
     }
 
     if (currentUserRole === null) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>

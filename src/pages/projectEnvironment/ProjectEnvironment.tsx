@@ -20,6 +20,7 @@ import { useTranslation } from "react-i18next";
 import { Role } from '../../api/project/project-member/response/Role';
 import {ProjectEnvironmentDto} from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 import {getUserRole} from "../../components/authComponent";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 const ProjectEnvironmentPageComponent: React.FC = () => {
     const { environmentId } = useParams<{ environmentId: string }>();
@@ -95,6 +96,7 @@ const ProjectEnvironmentPageComponent: React.FC = () => {
     }
 
     if (!environment) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -107,6 +109,7 @@ const ProjectEnvironmentPageComponent: React.FC = () => {
     }
 
     if (isProjectDeleted && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -119,6 +122,7 @@ const ProjectEnvironmentPageComponent: React.FC = () => {
     }
 
     if (currentUserRole === null) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>

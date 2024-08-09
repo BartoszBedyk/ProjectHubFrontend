@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import CustomLayout from "../../components/Layout/Layout";
 import UpdateProjectEnvironmentFormComponent
     from "../../forms/projectEnvironment/UpdateProjectEnvironmentFormComponent";
@@ -9,19 +9,23 @@ import {ProjectDTO} from "../../api/project/response/ProjectDTO";
 import {api} from "../../api/AppApi";
 import {getUserRole} from "../../components/authComponent";
 import {Box, CircularProgress, Container, Typography} from "@mui/material";
+import {TIMEOUTS} from "../../utils/timeouts";
+import {ProjectEnvironmentDto} from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 
 const UpdateProjectEnvironment: React.FC = () => {
     const { environmentId } = useParams<{ environmentId: string }>();
-    const { t } = useTranslation('projects');
+    const { t } = useTranslation('environments');
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const [project, setProject] = useState<ProjectDTO | null>(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    const [environment, setEnvironment] = useState<ProjectEnvironmentDto | null>(null);
 
     useEffect(() => {
         const fetchEnvironmentDetails = async () => {
             try {
                 const environmentResponse = await api.projectEnvironment.findById(environmentId!);
-
+                setEnvironment(environmentResponse);
                 const projectResponse = await api.project.get(environmentResponse.projectId);
                 setProject(projectResponse);
 
@@ -51,7 +55,8 @@ const UpdateProjectEnvironment: React.FC = () => {
         );
     }
 
-    if (!project) {
+    if (!environment) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -63,7 +68,21 @@ const UpdateProjectEnvironment: React.FC = () => {
         );
     }
 
+    if (!project) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('notFound2')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
     if (project.deletedOn != null && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -76,6 +95,7 @@ const UpdateProjectEnvironment: React.FC = () => {
     }
 
     if (currentUserRole === null || currentUserRole === Role.MAINTAINER || currentUserRole === Role.VISITOR) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>

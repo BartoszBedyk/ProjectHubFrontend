@@ -73,6 +73,9 @@
       "dialogCreate": "The resource has been created.",
       "deleteResource": "Delete resource",
       "deleteResourceMessage": "The action of deleting a resource can only be undone by the system administrator. Do you want to delete the resource?",
+      "deleted": "Project has been deleted.",
+      "noAccess": "No access.",
+      "notFound2": "Project not found",
       "attachmentDialog" : "Editing the \"Value\" field may result in irreversible loss of access to the resource."
 
     },
@@ -104,7 +107,7 @@
       "technologyDescription": "Technology description",
       "selectedTechnologies": "Selected technologies",
       "updateProject": "Update project",
-      "noAccess": "No permission.",
+      "noAccess": "No access.",
       "createEnvironment": "Create new environment",
       "projectName": "Project name",
       "deleted": "Project has been deleted.",
@@ -162,6 +165,7 @@
       "createdOn": "Creation date",
       "createdBy": "Created by",
       "isBlocked": "Blocked",
+      "accessDenied": "No access",
       "details": "Show details"
     },
     "members": {

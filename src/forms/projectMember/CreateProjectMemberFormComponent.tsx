@@ -85,7 +85,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                 console.error('Error fetching initial data:', error);
             }
         };
-
+        fetchUsers();
         fetchInitialData();
     }, [projectId]);
 

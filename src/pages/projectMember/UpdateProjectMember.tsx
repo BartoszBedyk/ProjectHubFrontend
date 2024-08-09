@@ -1,5 +1,5 @@
 import CustomLayout from "../../components/Layout/Layout";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import UpdateProjectMemberFormComponent from "../../forms/projectMember/UpdateProjectMemberFormComponent";
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
@@ -8,13 +8,15 @@ import {ProjectDTO} from "../../api/project/response/ProjectDTO";
 import {api} from "../../api/AppApi";
 import {getUserRole} from "../../components/authComponent";
 import {Box, CircularProgress, Container, Typography} from "@mui/material";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 function UpdateProjectMember () {
     const { projectId, userId } = useParams<{ projectId: string, userId: string }>();
-    const { t } = useTranslation('projects');
+    const { t } = useTranslation('members');
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const [project, setProject] = useState<ProjectDTO | null>(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchEnvironmentsDetails = async () => {
@@ -49,6 +51,7 @@ function UpdateProjectMember () {
     }
 
     if (!project) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -61,6 +64,7 @@ function UpdateProjectMember () {
     }
 
     if (project.deletedOn != null && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>
@@ -73,6 +77,7 @@ function UpdateProjectMember () {
     }
 
     if (currentUserRole === null || currentUserRole === Role.MAINTAINER || currentUserRole === Role.VISITOR) {
+        setTimeout(() => { navigate("/"); }, 5000);
         return (
             <CustomLayout>
                 <Container>
