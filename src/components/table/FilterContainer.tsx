@@ -128,7 +128,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                     select
                     variant="outlined"
                     size="small"
-                    value={filterValue}  // Ustaw wartość na stan filterValue
+                    value={filterValue}
                     InputLabelProps={{
                         shrink: true,
                     }}

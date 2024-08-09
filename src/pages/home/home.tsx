@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomLayout from "../../components/Layout/Layout";
-import ChangeTheme from "../../components/ThemeButton";
+import ChangeTheme from "../../components/Settings/ThemeButton";
 import DeleteDialog from "../../components/dialogs/DeleteDialog";
 import {api} from "../../api/AppApi";
 

@@ -8,7 +8,7 @@ import {SearchSort} from "../../commons/Search/SearchSort";
 import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
-import {Box, CircularProgress, Container, Link} from "@mui/material";
+import {Link} from "@mui/material";
 import {DownloadFileButton} from "./DownloadFileButton";
 import SecretDialog from "./SecretDialog";
 import OpenLinkButton from "./OpenLinkButton";
@@ -19,6 +19,7 @@ import {useParams} from "react-router-dom";
 type AllResourcesProps = {
     searchValue: string,
     resourceType?: ResourceType
+    environmentId: string
 }
 
 const AllResourcesTable = (props: AllResourcesProps) => {
@@ -38,13 +39,29 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     if (!props.resourceType) {
         searchFormCriteria = [
             {
+                fieldName: 'deletedOn',
+                value: null,
+                operator: CriteriaOperator.EQUALS
+            },
+            {
                 fieldName: 'projectId',
                 value: props.searchValue,
                 operator: CriteriaOperator.EQUALS
+            },
+            {
+                fieldName: 'environmentId',
+                value: props.environmentId,
+                operator: CriteriaOperator.EQUALS
             }
+
         ];
     } else {
         searchFormCriteria = [
+            {
+                fieldName: 'deletedOn',
+                value: null,
+                operator: CriteriaOperator.EQUALS
+            },
             {
                 fieldName: 'projectId',
                 value: props.searchValue,
@@ -54,7 +71,13 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                 fieldName: 'resourceType',
                 value: props.resourceType,
                 operator: CriteriaOperator.EQUALS
+            },
+            {
+                fieldName: 'environmentId',
+                value: props.environmentId,
+                operator: CriteriaOperator.EQUALS
             }
+
         ];
     }
 
@@ -76,87 +99,75 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     const link: string = `/project/${props.searchValue}/resources/details`;
 
     useEffect(() => {
-        api.resources.search(searchForm).then((response: SearchResponse<ResourceDto>) => {
-            setRows([]);
-            response.items.map((responseValue) => {
-                switch (responseValue.resourceType) {
-                    case  'ATTACHMENT': {
-                        const newRow: RowData = {
-                            id: responseValue.id,
-                            name: responseValue.name,
-                            value: responseValue.value,
-                            type: responseValue.resourceType,
-                            date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
-                            action: <DownloadFileButton>{responseValue.value}</DownloadFileButton>
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
+        api.resources.search(searchForm).then(async (response: SearchResponse<ResourceDto>) => {
+            const newRows = await Promise.all(response.items.map(async (responseValue) => {
+                let userData = await api.userManagement.get(responseValue.createdById)
+                    .then(response => `${response.firstName} ${response.lastName}`);
 
-                    }
-                    case 'SECRET': {
-                        const newRow: RowData = {
+                switch (responseValue.resourceType) {
+                    case 'ATTACHMENT':
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
+                            action: <DownloadFileButton>{responseValue.value}</DownloadFileButton>
+                        };
+                    case 'SECRET':
+                        return {
+                            id: responseValue.id,
+                            name: responseValue.name,
+                            value: responseValue.value,
+                            type: responseValue.resourceType,
+                            date: responseValue.createdOn,
+                            createdBy: userData,
                             action: <SecretDialog>{responseValue.id}</SecretDialog>
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-                    }
-                    case 'LINK': {
-                        const newRow: RowData = {
+                        };
+                    case 'LINK':
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
-                            value:
+                            value: (
                                 <Link href={responseValue.value} underline="hover" color="inherit" rel="noreferrer"
-                                      target="_blank"> {responseValue.value} </Link>,
+                                      target="_blank">{responseValue.value}</Link>
+                            ),
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <OpenLinkButton>{responseValue.value}</OpenLinkButton>
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-                    }
-                    case 'TEXT': {
-                        const newRow: RowData = {
+                        };
+                    case 'TEXT':
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: <ReadTextButton>{responseValue.value}</ReadTextButton>
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-                    }
-                    default: {
-                        const newRow: RowData = {
+                        };
+                    default:
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: responseValue.createdById,
+                            createdBy: userData,
                             action: ''
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-                    }
+                        };
                 }
-            })
-        })
-    }, [type]);
+            }));
+            setRows(newRows);
+        });
+    }, [type, props.searchValue, props.environmentId]);
 
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={t('resourcesTableTitle')} navigateTo={link}/>
+            <CustomTable columns={columns} rows={rows} title={t('resources.resourcesTableTitle')} navigateTo={link}/>
         </div>
     );
 }

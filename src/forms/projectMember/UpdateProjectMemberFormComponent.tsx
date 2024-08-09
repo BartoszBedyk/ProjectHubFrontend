@@ -22,6 +22,7 @@ import { Role } from "../../api/project/project-member/response/Role";
 import { UpdateProjectMemberForm } from "../../api/project/project-member/form/UpdateProjectMemberForm";
 import { ProjectEnvironmentDto } from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
+import {useTheme} from "@mui/material/styles";
 
 const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: string }> = ({ projectId, userId }) => {
     const [form, setForm] = useState<UpdateProjectMemberForm>({
@@ -37,6 +38,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
     const [formError, setFormError] = useState<string | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation('members');
+    const theme = useTheme();
 
     useEffect(() => {
         const fetchEnvironments = async () => {
@@ -165,7 +167,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                         <ListItem
                             key={env.id}
                             onClick={() => addExistingEnvironment(env)}
-                            sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd', cursor: 'pointer' } }}
+                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main, cursor: 'pointer' } }}
                         >
                             <ListItemText primary={env.name} />
                         </ListItem>
@@ -183,7 +185,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                                     <DeleteIcon />
                                 </IconButton>
                             }
-                            sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd' } }}
+                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main } }}
                         >
                             <ListItemText primary={env.name} />
                         </ListItem>

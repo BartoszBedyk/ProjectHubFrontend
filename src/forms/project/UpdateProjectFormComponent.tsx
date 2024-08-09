@@ -19,6 +19,8 @@ import { TechnologyDTO } from "../../api/project/technology/response/TechnologyD
 import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import { Role } from "../../api/project/project-member/response/Role";
+import {useTheme} from "@mui/material/styles";
 
 const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
     const [form, setForm] = useState<UpdateProjectForm>({
@@ -40,6 +42,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
     const [technologyError, setTechnologyError] = useState<string | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation('projects');
+    const theme = useTheme();
 
     useEffect(() => {
         const fetchTechnologies = async () => {
@@ -237,7 +240,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                             <ListItem
                                 key={tech.id}
                                 onClick={() => addExistingTechnology(tech)}
-                                sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd' } }}
+                                sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main } }}
                             >
                                 <ListItemText
                                     primary={tech.name}
@@ -259,7 +262,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                                     <DeleteIcon />
                                 </IconButton>
                             }
-                            sx={{ mb: 1, '&:hover': { backgroundColor: '#e3f2fd' } }}
+                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main} }}
                         >
                             <ListItemText
                                 primary={tech.name}

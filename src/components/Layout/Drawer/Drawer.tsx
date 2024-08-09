@@ -52,33 +52,6 @@ const CustomDrawer = () => {
                 <Divider sx={{ height: 15, width:  42, alignSelf: 'center' }} />
             )}
            <Items open={open} />
-            <Box sx={{ position: "absolute", bottom: 0, width: "100%" }}>
-                <List>
-                    <ListItem disablePadding sx={{ display: "block" }}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? "initial" : "center",
-                                p: 2.5,
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <ListItemIcon
-                                sx={{
-                                    minWidth: 48,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
-                                    color: "#e8edf7",
-                                }}
-                            >
-                                <ExitToAppIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Logout" sx={{ opacity: open ? 1 : 0 }} onClick={logout} />
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-            </Box>
         </Drawer>
     );
 }
