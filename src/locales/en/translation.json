@@ -94,6 +94,8 @@
       "noAccess": "No permission.",
       "createEnvironment": "Create new environment",
       "projectName": "Project name",
+      "deleted": "Project has been deleted.",
+      "deleted2": " (deleted)",
       "newProject": "New project"
     },
     "forms": {
@@ -180,6 +182,9 @@
       "environments": "Environments",
       "error": "Error",
       "cannotDeleteSelf": "Cannot delete self.",
+      "deleted": "Project has been deleted.",
+      "notFound": "Member not found.",
+      "noAccess": "No access.",
       "ok": "Ok"
     },
     "environments": {
@@ -195,7 +200,7 @@
       "newEnvironment": "New environment",
       "createEnvironment": "Create environment",
       "notFound": "Environment not found",
-      "noAccess": "You do not have access to this environment",
+      "noAccess": "No access",
       "yes": "Yes",
       "no": "No",
       "edit": "Edit",
@@ -206,6 +211,8 @@
       "cancel": "Cancel",
       "delete": "Delete",
       "emptyFieldError": "This field cannot be empty",
+      "deleted": "Project has been deleted.",
+      "notFound": "Environment not found.",
       "environmentsList": "Environments list"
     },
     "activities": {

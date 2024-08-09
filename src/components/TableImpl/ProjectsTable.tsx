@@ -78,7 +78,7 @@ const ProjectsTable = (props: ProjectsTableProps) => {
                             console.error('Error fetching creator details:', error);
                         }
 
-                        const projectName = project.deletedOn ? `${project.name} {t('deleted)}` : project.name;
+                        const projectName = project.deletedOn ? `${project.name} ${t('deleted2')}` : project.name;
 
                         const newRow: RowData = {
                             id: project.id,

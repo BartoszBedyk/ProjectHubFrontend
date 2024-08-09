@@ -94,6 +94,8 @@
       "noAccess": "Brak dostępu.",
       "createEnvironment": "Nowe środowisko",
       "projectName": "Nazwa projektu",
+      "deleted": "Projekt został usunięty.",
+      "deleted2": " (usunięty)",
       "newProject": "Nowy projekt"
     },
     "forms": {
@@ -181,6 +183,9 @@
       "environments": "Środowiska",
       "error": "Błąd",
       "cannotDeleteSelf": "Nie można usunąć samego siebie.",
+      "deleted": "Projekt został usunięty.",
+      "notFound": "Nie znaleziono członka projektu.",
+      "noAccess": "Brak dostępu.",
       "ok": "Ok"
     },
     "environments": {
@@ -196,7 +201,7 @@
       "newEnvironment": "Nowe środowisko",
       "createEnvironment": "Utwórz środowisko",
       "notFound": "Środowisko nie znalezione",
-      "noAccess": "Nie masz dostępu do tego środowiska",
+      "noAccess": "Brak dostępu",
       "yes": "Tak",
       "no": "Nie",
       "edit": "Edytuj",
@@ -207,6 +212,8 @@
       "cancel": "Anuluj",
       "delete": "Usuń",
       "emptyFieldError": "To pole nie może być puste",
+      "deleted": "Projekt został usunięty.",
+      "notFound": "Nie znaleziono środowiska.",
       "environmentsList": "Lista środowisk"
     },
     "activities": {

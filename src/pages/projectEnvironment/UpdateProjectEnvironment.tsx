@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import CustomLayout from "../../components/Layout/Layout";
-import UpdateProjectFormComponent from "../../forms/project/UpdateProjectFormComponent";
 import UpdateProjectEnvironmentFormComponent
     from "../../forms/projectEnvironment/UpdateProjectEnvironmentFormComponent";
 import {useTranslation} from "react-i18next";

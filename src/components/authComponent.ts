@@ -38,21 +38,16 @@ export const getUserRole = async (projectId: string): Promise<Role | null> => {
 
     try {
         const userDetails = await api.userManagement.get(currentUserId);
-        console.log("User Details:", userDetails);
 
         if (userDetails.createdById === 'SYSTEM') {
-            console.log("User is Admin");
             return Role.ADMIN;
         }
 
         const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId);
-        console.log("Current User Response:", currentUserResponse);
 
         if (currentUserResponse.role) {
-            console.log("User Role Found:", currentUserResponse.role);
             return currentUserResponse.role;
         } else {
-            console.log("User Role Not Found");
             return null;
         }
     } catch (error) {

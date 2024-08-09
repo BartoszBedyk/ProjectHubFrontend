@@ -17,7 +17,6 @@ import {
 import { api } from '../../api/AppApi';
 import { TechnologyDTO } from '../../api/project/technology/response/TechnologyDTO';
 import CustomLayout from "../../components/Layout/Layout";
-import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
 import { ProjectDTO } from "../../api/project/response/ProjectDTO";
 import { useTranslation } from "react-i18next";
 import { Role } from '../../api/project/project-member/response/Role';

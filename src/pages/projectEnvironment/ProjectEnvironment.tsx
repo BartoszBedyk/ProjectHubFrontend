@@ -18,7 +18,6 @@ import CustomLayout from "../../components/Layout/Layout";
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
 import { useTranslation } from "react-i18next";
 import { Role } from '../../api/project/project-member/response/Role';
-import { getUserId } from "../../storage/AuthStorage";
 import {ProjectEnvironmentDto} from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 import {getUserRole} from "../../components/authComponent";
 
