@@ -1,23 +1,23 @@
-import { UpdateResourceForm } from "../../api/resources/form/UpdateResourceForm";
+import {UpdateResourceForm} from "../../api/resources/form/UpdateResourceForm";
 import CustomForm, {
     CustomLabelText,
     CustomTextArea,
     CustomTextField,
     FormElement,
 } from "../../components/UpdateForms/CustomForm";
-import React, { useEffect, useState } from "react";
-import { api } from "../../api/AppApi";
-import { UpdateDialog } from "../../components/dialogs/UpdateDialog";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { ResourceType } from "../../api/resources/response/ResourceDto";
+import React, {useEffect, useState} from "react";
+import {api} from "../../api/AppApi";
+import {UpdateDialog} from "../../components/dialogs/UpdateDialog";
+import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {ResourceType} from "../../api/resources/response/ResourceDto";
 
 interface updateProps {
     resourceId: string;
     projectId: string;
 }
 
-export function UpdateResourceFormComponent({ resourceId, projectId }: updateProps) {
+export function UpdateResourceFormComponent({resourceId, projectId}: updateProps) {
     const [open, setOpen] = useState(false);
     const [form, setForm] = useState<UpdateResourceForm>({
         id: resourceId,
@@ -29,7 +29,7 @@ export function UpdateResourceFormComponent({ resourceId, projectId }: updatePro
     const [type, setType] = useState<ResourceType>();
     const [globalError, setGlobalError] = useState<string>('');
     const navigate = useNavigate();
-    const { t } = useTranslation("overall");
+    const {t} = useTranslation("overall");
 
     useEffect(() => {
         const fetchElements = async () => {
@@ -67,6 +67,7 @@ export function UpdateResourceFormComponent({ resourceId, projectId }: updatePro
             name: 'name',
             id: 'name',
             defaultValue: form.name,
+            placeholder: form.name,
             typeOfElement: {
                 Component: CustomTextField,
                 props: {},
@@ -85,6 +86,7 @@ export function UpdateResourceFormComponent({ resourceId, projectId }: updatePro
             name: 'value',
             id: 'value',
             defaultValue: form.value,
+            placeholder: form.value,
             typeOfElement: {
                 Component: CustomTextField,
                 props: {},
@@ -103,6 +105,7 @@ export function UpdateResourceFormComponent({ resourceId, projectId }: updatePro
             name: 'description',
             id: 'description',
             defaultValue: form.description,
+            placeholder: form.description,
             typeOfElement: {
                 Component: CustomTextArea,
                 props: {},
@@ -122,7 +125,7 @@ export function UpdateResourceFormComponent({ resourceId, projectId }: updatePro
                 }, 1000);
             })
             .catch(error => {
-                const errorMessage = error.response?.data?.errors?.name ||error.response?.data?.errors?.value
+                const errorMessage = error.response?.data?.errors?.name || error.response?.data?.errors?.value
                 setGlobalError(errorMessage);
                 console.error("Error during update:", errorMessage);
                 setGlobalError(prevError => `${prevError}`);
@@ -138,15 +141,15 @@ export function UpdateResourceFormComponent({ resourceId, projectId }: updatePro
     return (
         <div>
             <CustomForm formElements={formElements} buttonName={t('resources.update')} handleSubmit={handleSubmit}
-                        id={resourceId} />
-            {globalError && <p style={{ color: 'red' }}>{globalError}</p>}
+                        id={resourceId}/>
+            {globalError && <p style={{color: 'red'}}>{globalError}</p>}
             {
                 type === ResourceType.attachment && (
                     <p>{t('resources.attachmentDialog')}</p>
                 )
             }
             <UpdateDialog openProps={open} title={t('resources.dialogUpdateTitle')}
-                          message={t('resources.dialogUpdate')} />
+                          message={t('resources.dialogUpdate')}/>
         </div>
     );
 }

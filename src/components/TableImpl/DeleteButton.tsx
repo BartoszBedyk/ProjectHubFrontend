@@ -1,6 +1,5 @@
 import React from "react";
 import {Button, Icon} from "@mui/material";
-import {TravelExploreOutlined} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
 import DeleteIcon from "@mui/icons-material/Delete";
 

@@ -90,6 +90,7 @@ export interface FormElement {
     id?: string;
     label?: string;
     defaultValue?: string;
+    placeholder?:string;
     error?: string;
     typeOfElement: ComponentType;
     menuItems?: MenuItem[];
@@ -107,10 +108,10 @@ export interface UpdateFormProps {
     buttonDisable? :boolean
 }
 
-export const CustomTextArea: React.FC<{ name?: string, id?: string, defaultValue?: string, error?: string }> =
-    ({name, id, defaultValue, error}) => (
+export const CustomTextArea: React.FC<{ name?: string, id?: string, defaultValue?: string, error?: string, placeholder?: string}> =
+    ({name, id, defaultValue, error,placeholder}) => (
         <div>
-            <textarea name={name} id={id} placeholder={defaultValue} style={textAreaStyle}/>
+            <textarea name={name} id={id} defaultValue={defaultValue} style={textAreaStyle} placeholder={placeholder}/>
             {error && <p style={customError}>{error}</p>}
         </div>
     );
@@ -120,11 +121,12 @@ export const CustomTextField: React.FC<{
     name?: string;
     id?: string,
     defaultValue?: string,
+    placeholder?: string,
     error?: string
 }> =
-    ({type = "text", name, id, defaultValue, error}) => (
+    ({type = "text", name, id, defaultValue, error, placeholder}) => (
         <div>
-            <input type={type} name={name} id={id} placeholder={defaultValue} style={textFieldStyle}/>
+            <input type={type} name={name} id={id} defaultValue={defaultValue} style={textFieldStyle} placeholder={placeholder}/>
             {error && <p style={customError}>{error}</p>}
         </div>
     );
