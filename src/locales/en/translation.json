@@ -57,7 +57,11 @@
       "bannedUserTitle": "User is blocked.",
       "bannedUserMessage": "It appears that your account has been blocked. You do not have access to the ProjectHub services.",
       "bannedUser": "The account you are logging in with is banned.",
-      "resetPassword": "Reset Password"
+      "resetPassword": "Reset Password",
+      "correctEmail": "A link has been sent to the provided email address.",
+      "errorNotEmail": "The value provided is not an email address.",
+      "errorBadEmail": "This email address is not in the system.",
+      "errorUnknown": "Unknown error."
     },
     "resources": {
       "resourcestxt": " - project resources.",
@@ -74,7 +78,12 @@
       "dialogCreate": "The resource has been created.",
       "deleteResource": "Delete resource",
       "deleteResourceMessage": "The action of deleting a resource can only be undone by the system administrator. Do you want to delete the resource?",
-      "attachmentDialog" : "Editing the \"Value\" field may result in irreversible loss of access to the resource."
+      "attachmentDialog" : "Editing the \"Value\" field may result in irreversible loss of access to the resource.",
+      "lengthNameError50": "Length of name of the resource cannot be less than 1 and longer than 50.",
+      "nullValueError": "Value of the resource cannot be null.",
+      "nullNameError": "Name of the resource cannot be null.",
+      "lengthValueError200": "Length of value of the resource cannot be less than 1 and longer than 200.",
+      "unknownError": "Unknown error"
 
     },
     "projects": {

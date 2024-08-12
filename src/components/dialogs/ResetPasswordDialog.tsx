@@ -1,26 +1,38 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import {ResetPasswordForms} from "../Login/ResetPasswordForms";
+import { ResetPasswordForms } from "../Login/ResetPasswordForms";
 
 type ResetPasswordDialogProps = {
     open: boolean;
+    onClose: () => void;
 }
 
-const ResetPasswordDialog = ({ open }: ResetPasswordDialogProps) => {
-    const [openDialog, setOpenDialog] = useState(open);
+const ResetPasswordDialog = ({ open, onClose }: ResetPasswordDialogProps) => {
+    const [hasError, setHasError] = useState(false);
+
     useEffect(() => {
-        setOpenDialog(open);
-    }, [open]);
+        let timer: NodeJS.Timeout;
+        if (open && !hasError) {
+            timer = setTimeout(() => {
+                onClose();
+            }, 20000);
+        }
+        return () => clearTimeout(timer);
+    }, [open, onClose, hasError]);
 
     const closeResetDialog = () => {
-        setOpenDialog(false);
+        if (!hasError) {
+            onClose();
+        }
     };
 
-
+    const handleError = (error: boolean) => {
+        setHasError(error);
+    };
 
     return (
-        <Dialog open={openDialog} onClose={closeResetDialog} sx={{margin:"0", padding:"0"}}>
-            <ResetPasswordForms></ResetPasswordForms>
+        <Dialog open={open} onClose={closeResetDialog} sx={{ margin: "0", padding: "0" }}>
+            <ResetPasswordForms onError={handleError} />
         </Dialog>
     );
 };

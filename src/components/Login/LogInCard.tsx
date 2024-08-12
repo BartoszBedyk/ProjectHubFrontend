@@ -105,6 +105,14 @@ export const LogInCard = () => {
         setResetOpen(true);
     };
 
+    const handleResetDialogClose = () => {
+        setResetOpen(false);
+    };
+
+    useEffect(() => {
+        console.log("reset open state ", resetOpen);
+    }, [resetOpen]);
+
 
     return (
         <Card variant={"outlined"} sx={{"--Card-radius": "0px"}}>
@@ -115,7 +123,7 @@ export const LogInCard = () => {
                     sx={stylesLogin.lockIconProps}
                     src={LockSensilabsColor}
                 />
-                <ResetPasswordDialog open={resetOpen}></ResetPasswordDialog>
+                <ResetPasswordDialog open={resetOpen} onClose={handleResetDialogClose} />
                 <UpdateDialog openProps={isBlocked} title={t('bannedUserTitle')} message={t('bannedUserMessage')}/>
                 <Typography variant="h4" component="p">{t("login")}</Typography>
                 <span style={stylesLogin.errorProps}>{errorMessage}</span>
