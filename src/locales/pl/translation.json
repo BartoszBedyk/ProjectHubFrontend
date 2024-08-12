@@ -109,7 +109,10 @@
       "projectName": "Nazwa projektu",
       "deleted": "Projekt został usunięty.",
       "deleted2": " (usunięty)",
-      "newProject": "Nowy projekt"
+      "newProject": "Nowy projekt",
+      "projectCreatedSuccess": "Projekt został utworzony",
+      "projectEditedSuccess": "Projekt został edytowany",
+      "projectDeletedSuccess": "Projekt został usunięty"
     },
     "forms": {
       "new": "Nowe",
