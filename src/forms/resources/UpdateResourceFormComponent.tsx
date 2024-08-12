@@ -121,7 +121,7 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
                 setOpen(true);
                 setTimeout(() => {
                     setOpen(false);
-                    navigate(linkToPage);
+                    navigate(linkToPage, { state: { showSnackbarEdit: true } });
                 }, 1000);
             })
             .catch(error => {

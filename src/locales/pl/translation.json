@@ -74,7 +74,10 @@
       "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?",
       "deleted": "Projekt został usunięty.",
       "noAccess": "Brak dostępu.",
-      "attachmentDialog": "Edycja pola \"Wartość\" może spowodować nieodwracalną utratę dostępu do zasobu."
+      "attachmentDialog": "Edycja pola \"Wartość\" może spowodować nieodwracalną utratę dostępu do zasobu.",
+      "resourceCreatedSuccess": "Zasób został utworzony",
+      "resourceEditedSuccess": "Zasób został edytowany",
+      "resourceDeletedSuccess": "Zasób został usunięty"
     },
     "projects": {
       "name": "Nazwa",

@@ -76,7 +76,10 @@
       "deleted": "Project has been deleted.",
       "noAccess": "No access.",
       "notFound2": "Project not found",
-      "attachmentDialog" : "Editing the \"Value\" field may result in irreversible loss of access to the resource."
+      "attachmentDialog" : "Editing the \"Value\" field may result in irreversible loss of access to the resource.",
+      "resourceCreatedSuccess": "Resource has been created",
+      "resourceEditedSuccess": "Resource has been edited",
+      "resourceDeletedSuccess": "Resource has been deleted"
 
     },
     "projects": {

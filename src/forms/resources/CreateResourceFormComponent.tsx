@@ -348,7 +348,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                 console.log(response)
                 setOpen(true);
                 setTimeout(() => {
-                    navigate(linkToPage);
+                    navigate(linkToPage, { state: { showSnackbarCreate: true } });
                 }, 1000);
             }
         )
