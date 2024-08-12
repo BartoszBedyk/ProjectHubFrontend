@@ -50,6 +50,9 @@ const ProjectPageComponent: React.FC = () => {
         if (location.state?.showSnackbarEdit) {
             setSnackbarData({open: true, message: t('projectEditedSuccess'), severity: 'success'});
         }
+        if (location.state?.showSnackbarEnvDelete) {
+            setSnackbarData({open: true, message: t('envDeletedSuccess'), severity: 'success'});
+        }
     }, [location.state, t]);
 
     const handleSnackbarClose = () => {

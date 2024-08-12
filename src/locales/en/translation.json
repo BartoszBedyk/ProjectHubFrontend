@@ -115,7 +115,8 @@
       "newProject": "New project",
       "projectCreatedSuccess": "Project has been created",
       "projectEditedSuccess": "Project has been edited",
-      "projectDeletedSuccess": "Project has been deleted"
+      "projectDeletedSuccess": "Project has been deleted",
+      "envDeletedSuccess": "Environment has been deleted"
     },
     "forms": {
       "new": "New",
@@ -240,7 +241,10 @@
       "emptyFieldError": "This field cannot be empty",
       "deleted": "Project has been deleted.",
       "notFound": "Environment not found.",
-      "environmentsList": "Environments list"
+      "environmentsList": "Environments list",
+      "envCreatedSuccess": "Environment has been created",
+      "envEditedSuccess": "Environment has been edited",
+      "envDeletedSuccess": "Environment has been deleted"
     },
     "activities": {
       "type": "Type",

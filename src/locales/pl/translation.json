@@ -112,7 +112,8 @@
       "newProject": "Nowy projekt",
       "projectCreatedSuccess": "Projekt został utworzony",
       "projectEditedSuccess": "Projekt został edytowany",
-      "projectDeletedSuccess": "Projekt został usunięty"
+      "projectDeletedSuccess": "Projekt został usunięty",
+      "envDeletedSuccess": "Środowisko zostało usunięte"
     },
     "forms": {
       "new": "Nowe",
@@ -238,7 +239,10 @@
       "emptyFieldError": "To pole nie może być puste",
       "deleted": "Projekt został usunięty.",
       "notFound": "Nie znaleziono środowiska.",
-      "environmentsList": "Lista środowisk"
+      "environmentsList": "Lista środowisk",
+      "envCreatedSuccess": "Środowisko zostało utworzone",
+      "envEditedSuccess": "Środowisko zostało edytowane",
+      "envDeletedSuccess": "Środowisko zostało usunięte"
     },
     "activities": {
       "type": "Typ",
