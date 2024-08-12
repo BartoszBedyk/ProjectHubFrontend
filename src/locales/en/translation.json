@@ -180,7 +180,11 @@
       "userUnblockedSuccess": "User has been unblocked",
       "userBlockedSuccess": "User has been blocked",
       "userDeletedSuccess": "User has been deleted",
-      "userActionError": "Something went wrong"
+      "userActionError": "Something went wrong",
+      "confirmDeleteTitle": "Confirm deletion",
+      "confirmDeleteMessage": "Are you sure you want to delete this user?\nThis operation cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
     },
     "members": {
       "selectUser": "Select user",

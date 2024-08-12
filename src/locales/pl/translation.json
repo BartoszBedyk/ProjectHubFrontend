@@ -178,7 +178,11 @@
       "userUnblockedSuccess": "Użytkownik został odblokowany",
       "userBlockedSuccess": "Użytkownik został zablokowany",
       "userDeletedSuccess": "Użytkownik został usunięty",
-      "userActionError": "Coś poszło nie tak"
+      "userActionError": "Coś poszło nie tak",
+      "confirmDeleteTitle": "Potwierdź usunięcie",
+      "confirmDeleteMessage": "Czy na pewno chcesz usunąć tego użytkownika?\nTej operacji nie można cofnąć.",
+      "cancel": "Anuluj",
+      "delete": "Usuń"
     },
     "members": {
       "selectUser": "Wybierz użytkownika",
