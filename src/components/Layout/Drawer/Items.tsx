@@ -20,7 +20,6 @@ const Items: React.FC<ItemsProps> = ({open}) => {
     const {projectId: paramProjectId, environmentId} = useParams<{ projectId?: string; environmentId?: string }>();
     const [projectId, setProjectId] = useState<string | undefined>(paramProjectId);
 
-    const [environment, setEnvironment] = useState<string>('');
     const [environments, setEnvironments] = useState<ProjectEnvironmentDto[]>([]);
     const [member, setMember] = useState<ProjectMemberDto>();
 
@@ -28,6 +27,7 @@ const Items: React.FC<ItemsProps> = ({open}) => {
         const fetchProjectId = async () => {
             if (environmentId) {
                 try {
+                    setEnvId(environmentId)
                     const environment = await api.projectEnvironment.findById(environmentId);
                     setProjectId(environment.projectId);
                 } catch (error) {
@@ -56,7 +56,11 @@ const Items: React.FC<ItemsProps> = ({open}) => {
 
     useEffect(() => {
         const fetchEnvironments = async () => {
-            if (projectId) {
+            if(environmentId) {
+                setEnvId(environmentId);
+                return;
+            }
+            if (projectId && !environmentId) {
                 const response = await api.projectEnvironment.findAll(projectId!)
                 setEnvironments(response);
                 const responseMember = await api.projectMember.getByIds(getUserId()!, projectId!);
@@ -68,9 +72,9 @@ const Items: React.FC<ItemsProps> = ({open}) => {
                 setEnvId(commonEnvs[0].id);
 
             }
-
         }
         fetchEnvironments()
+
     }, [projectId, envId]);
 
 
