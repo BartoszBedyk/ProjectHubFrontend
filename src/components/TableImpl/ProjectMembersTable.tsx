@@ -11,11 +11,11 @@ type ProjectMembersTableProps = {
 const ProjectMembersTable = ({ projectId }: ProjectMembersTableProps) => {
     const {t} = useTranslation('members');
     const columns: ColumnDefinition[] = [
-        { id: 'firstName', label: 'Imię', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
-        { id: 'lastName', label: 'Nazwisko', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
-        { id: 'createdOn', label: 'Data stworzenia', type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
-        { id: 'createdBy', label: 'Stworzony przez', type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
-        { id: 'role', label: 'Rola', type: 'ENUM', minWidth: 150, sortable: true, filterable: true, enumValues: ['OWNER', 'MAINTAINER', 'VISITOR'] },
+        { id: 'firstName', label: t('firstName'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
+        { id: 'lastName', label: t('lastName'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
+        { id: 'createdOn', label: t('createdOn'), type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
+        { id: 'createdBy', label: t('createdBy'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
+        { id: 'role', label: t('role'), type: 'ENUM', minWidth: 150, sortable: true, filterable: true, enumValues: [t('owner'), t('maintainer'), t('visitor')] },
     ];
 
     const [rows, setRows] = useState<RowData[]>([]);

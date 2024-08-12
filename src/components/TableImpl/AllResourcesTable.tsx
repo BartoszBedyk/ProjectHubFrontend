@@ -8,7 +8,7 @@ import {SearchSort} from "../../commons/Search/SearchSort";
 import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
-import {Box, CircularProgress, Container, Link} from "@mui/material";
+import {Link} from "@mui/material";
 import {DownloadFileButton} from "./DownloadFileButton";
 import SecretDialog from "./SecretDialog";
 import OpenLinkButton from "./OpenLinkButton";
@@ -58,6 +58,11 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     } else {
         searchFormCriteria = [
             {
+                fieldName: 'deletedOn',
+                value: null,
+                operator: CriteriaOperator.EQUALS
+            },
+            {
                 fieldName: 'projectId',
                 value: props.searchValue,
                 operator: CriteriaOperator.EQUALS
@@ -94,18 +99,14 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     const link: string = `/project/${props.searchValue}/resources/details`;
 
     useEffect(() => {
-        api.resources.search(searchForm).then((response: SearchResponse<ResourceDto>) => {
-            setRows([]);
-            response.items.map(async (responseValue) => {
-                let userData: string = await api.userManagement.get(responseValue.createdById).then(
-                    response => {
-                        return `${response.firstName} ${response.lastName}`
-                    }
-                )
-                switch (responseValue.resourceType) {
+        api.resources.search(searchForm).then(async (response: SearchResponse<ResourceDto>) => {
+            const newRows = await Promise.all(response.items.map(async (responseValue) => {
+                let userData = await api.userManagement.get(responseValue.createdById)
+                    .then(response => `${response.firstName} ${response.lastName}`);
 
-                    case  'ATTACHMENT': {
-                        const newRow: RowData = {
+                switch (responseValue.resourceType) {
+                    case 'ATTACHMENT':
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
@@ -113,13 +114,9 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             date: responseValue.createdOn,
                             createdBy: userData,
                             action: <DownloadFileButton>{responseValue.value}</DownloadFileButton>
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-
-                    }
-                    case 'SECRET': {
-                        const newRow: RowData = {
+                        };
+                    case 'SECRET':
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
@@ -127,27 +124,22 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             date: responseValue.createdOn,
                             createdBy: userData,
                             action: <SecretDialog>{responseValue.id}</SecretDialog>
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-                    }
-                    case 'LINK': {
-                        const newRow: RowData = {
+                        };
+                    case 'LINK':
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
-                            value:
+                            value: (
                                 <Link href={responseValue.value} underline="hover" color="inherit" rel="noreferrer"
-                                      target="_blank"> {responseValue.value} </Link>,
+                                      target="_blank">{responseValue.value}</Link>
+                            ),
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
                             createdBy: userData,
                             action: <OpenLinkButton>{responseValue.value}</OpenLinkButton>
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-                    }
-                    case 'TEXT': {
-                        const newRow: RowData = {
+                        };
+                    case 'TEXT':
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
@@ -155,12 +147,9 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             date: responseValue.createdOn,
                             createdBy: userData,
                             action: <ReadTextButton>{responseValue.value}</ReadTextButton>
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-                    }
-                    default: {
-                        const newRow: RowData = {
+                        };
+                    default:
+                        return {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
@@ -168,13 +157,11 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             date: responseValue.createdOn,
                             createdBy: userData,
                             action: ''
-                        }
-                        setRows(prevRows => [...prevRows, newRow]);
-                        break;
-                    }
+                        };
                 }
-            })
-        })
+            }));
+            setRows(newRows);
+        });
     }, [type, props.searchValue, props.environmentId]);
 
 

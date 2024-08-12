@@ -94,9 +94,7 @@ const CreateProjectFormComponent: React.FC = () => {
 
         setTechnologyError(null);
         try {
-            console.log('Adding technology:', technology);
             const createdTechnology = await api.technology.create(technology);
-            console.log('Created technology:', createdTechnology);
             setForm({
                 ...form,
                 technologyList: [...form.technologyList, createdTechnology.id]
@@ -130,7 +128,6 @@ const CreateProjectFormComponent: React.FC = () => {
         setFormError(null);
         try {
             const response = await api.project.create(form);
-            console.log('Project created:', response);
             setForm({
                 name: '',
                 description: '',
@@ -153,7 +150,7 @@ const CreateProjectFormComponent: React.FC = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
                 <Box sx={{ width: 8, height: 32, backgroundColor: theme.palette.primary.main, marginRight: 2 }} />
                 <Typography variant="h5" component="div">
-                    Nowy projekt
+                    {t('newProject')}
                 </Typography>
             </Box>
             <Box
@@ -167,7 +164,7 @@ const CreateProjectFormComponent: React.FC = () => {
                     required
                     id="name"
                     name="name"
-                    label="Nazwa projektu"
+                    label={t('projectName')}
                     value={form.name}
                     onChange={handleInputChange}
                     error={!!formError}

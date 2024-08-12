@@ -7,45 +7,20 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Box, Button, CircularProgress, Container, Icon, Typography} from "@mui/material";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import {Role} from "../../api/project/project-member/response/Role";
-import AuthComponent from "../../components/authComponent";
-import NoAccessHandler from "../../components/NoAccesHandler";
 import {EnvironmentDropdown} from "../../components/environmentDropdown";
 import {api} from "../../api/AppApi";
+import {ProjectDTO} from "../../api/project/response/ProjectDTO";
+import {getUserRole} from "../../components/authComponent";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 function Resources() {
     const {t} = useTranslation("resources");
     let {projectId,environmentId, type } = useParams<{ projectId: string; environmentId:string; type: string }>();
     const navigate = useNavigate();
     const[stringType, setStringType] = useState<string>(type!);
-
-        useEffect(() => {
-            if(!environmentId) {
-                const fetchEnvironments = async () => {
-                    try {
-                        if(projectId){
-                            const response = await api.projectEnvironment.findAll(projectId)
-                            setEnvironment(response[0].id)
-                            navigate(`/project/${projectId}/${response[0].id}/resources/${stringType}`)
-                        }
-
-                    } catch (err) {
-                        console.log("No Id or environments",err);
-                    }
-                    if (projectId) {
-                        fetchEnvironments();
-                    }
-                };
-            }
-
-
-
-        }, [projectId]);
-
-
-    const [role, setRole] = useState<Role | null>(null)
-
-    AuthComponent(projectId!).then(r => setRole(r))
-
+    const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
+    const [project, setProject] = useState<ProjectDTO | null>(null);
+    const [loading, setLoading] = useState(true);
 
     switch (type) {
         case "link": {
@@ -70,27 +45,88 @@ function Resources() {
     const [environment, setEnvironment] = useState('');
 
     useEffect(() => {
-        api.projectEnvironment.findById(environmentId!).then(r=>setEnvironment(r.id))
-    }, []);
+        const fetchDetails = async () => {
+            try {
+                if (environmentId) {
+                    const environmentResponse = await api.projectEnvironment.findById(environmentId!);
+                    setEnvironment(environmentResponse.id);
+                }
+                const projectResponse = await api.project.get(projectId!);
+                setProject(projectResponse);
+
+                const role = await getUserRole(projectId!);
+                setCurrentUserRole(role);
+            } catch (error) {
+                console.error('Error fetching project details:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDetails();
+    }, [environmentId, projectId]);
 
 
     const handleCreate = () => {
         navigate(`/project/${projectId}/${environmentId}/resources/create`);
     };
+    const isAdmin = currentUserRole === Role.ADMIN;
 
-
-
-
-
-    if(role === null) {
-        return (<NoAccessHandler data={role}/>)
+    if (loading) {
+        return (
+            <CustomLayout>
+                <Container>
+                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+                        <CircularProgress/>
+                    </Box>
+                </Container>
+            </CustomLayout>
+        );
     }
 
+    if (!project) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('notFound2')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
+    if (project.deletedOn != null && !isAdmin) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('deleted')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
+
+    if (currentUserRole === null) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Container>
+                    <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                        {t('noAccess')}
+                    </Typography>
+                </Container>
+            </CustomLayout>
+        );
+    }
     return (
         <CustomLayout>
             <EnvironmentDropdown environmentId={environment!} projectId={projectId!} oldType={stringType!}></EnvironmentDropdown>
             <Box sx={{display: 'flex', justifyContent: 'flex-end', marginBottom: 2, margin: 3}}>
-                {role != Role.VISITOR && role != null && (
+                {currentUserRole != Role.VISITOR && currentUserRole != null && (
                     <>
                         <Button
                             variant="contained"

@@ -18,12 +18,14 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {api} from "../../api/AppApi";
 import {UserDto} from "../../api/user-management/response/UserDto";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
+import {getUserId} from "../../storage/AuthStorage";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 
 const UserProfile = () => {
@@ -37,7 +39,8 @@ const UserProfile = () => {
     const [error, setError] = useState<string>('');
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState(false);
-
+    const [accessDenied, setAccessDenied] = useState<boolean>(false);
+    const navigate = useNavigate();
     const {t} = useTranslation("userProfile");
 
     useEffect(() => {
@@ -46,12 +49,24 @@ const UserProfile = () => {
                 const userResponse = await api.userManagement.get(userId!);
                 setUser(userResponse);
 
-                if (userResponse.firstName !== 'admin') {
+                if (userResponse.createdById !== 'SYSTEM') {
                     const creatorResponse = await api.userManagement.get(userResponse.createdById);
                     setCreator(creatorResponse.firstName + " " + creatorResponse.lastName);
                 } else {
                     setCreator("SYSTEM");
 
+                }
+
+                const currentUserId = getUserId();
+                if (currentUserId) {
+                    const user = await api.userManagement.get(currentUserId);
+
+                    if (user.createdById !== "SYSTEM" && currentUserId !== userId) {
+                        setAccessDenied(true);
+                        return;
+                    }
+                } else {
+                    setAccessDenied(true);
                 }
             } catch (e) {
                 console.error('Error fetching user details', e);
@@ -113,7 +128,19 @@ const UserProfile = () => {
         );
     }
 
+    if (accessDenied) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <Container>
+                <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                    {t('accessDenied')}
+                </Typography>
+            </Container>
+        );
+    }
+
     if (!user) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
         return (
             <CustomLayout>
                 <Container>

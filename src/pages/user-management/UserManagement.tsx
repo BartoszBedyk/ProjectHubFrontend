@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import UsersTable from "../../components/TableImpl/UsersTable";
 import CustomLayout from "../../components/Layout/Layout";
-import {Box, Button} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import CustomSnackbar from "../../components/Alerts/CustomSnackbar";
+import { getUserId } from "../../storage/AuthStorage";
+import { api } from "../../api/AppApi";
+import {TIMEOUTS} from "../../utils/timeouts";
 
 const UserManagement = () => {
 
@@ -15,7 +18,9 @@ const UserManagement = () => {
         open: false,
         message: '',
         severity: 'success'
-    })
+    });
+    const [accessDenied, setAccessDenied] = useState<boolean>(false);
+
 
     useEffect(() => {
         if (location.state?.showSnackbarCreate) {
@@ -37,6 +42,40 @@ const UserManagement = () => {
     const handleOnClick = () => {
         navigate("/user/create");
     };
+
+    useEffect(() => {
+        const checkAccess = async () => {
+            const currentUserId = getUserId();
+            if (currentUserId) {
+                try {
+                    const user = await api.userManagement.get(currentUserId);
+                    if (user.createdById !== "SYSTEM") {
+                        setAccessDenied(true);
+                        return;
+                    }
+                } catch (error) {
+                    console.error("Error fetching user details:", error);
+                    setAccessDenied(true);
+                    return;
+                }
+            } else {
+                setAccessDenied(true);
+            }
+        };
+
+        checkAccess();
+    }, [navigate]);
+
+    if (accessDenied) {
+        setTimeout(() => { navigate("/"); }, TIMEOUTS.REDIRECT_DELAY);
+        return (
+            <CustomLayout>
+                <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+                    {t('accessDenied')}
+                </Typography>
+            </CustomLayout>
+        );
+    }
 
     return (
         <CustomLayout>

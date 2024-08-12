@@ -52,22 +52,23 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
         projectId: projectId
     });
     const [formForType, setFormForType] = useState<FormElement[]>(
-     [
-        {
-            name: '',
-            id: "",
-            defaultValue: '',
-            typeOfElement: {
-                Component: CustomLabelText,
-                props: {}
+        [
+            {
+                name: '',
+                id: "",
+                defaultValue: '',
+                typeOfElement: {
+                    Component: CustomLabelText,
+                    props: {}
+                }
             }
-        }
-         ]
+        ]
     )
     const [buttonState, setButtonState] = useState<boolean>(true)
     const [typeSetter, setTypeSetter] = useState<string>("")
     const linkToPage = `/project/${projectId}/resources/${typeSetter}`
     const navigate = useNavigate();
+    const [globalError, setGlobalError] = useState<string>('');
 
     function formTypeDeclaration(typeFromDropdown: ResourceType) {
         switch (typeFromDropdown) {
@@ -85,7 +86,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'name',
                         id: 'name',
-                        defaultValue: t('forms.name'),
+                        placeholder: t('forms.name'),
                         typeOfElement: {
                             Component: CustomTextField,
                             props: {}
@@ -103,7 +104,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'description',
                         id: 'description',
-                        defaultValue: t('forms.description'),
+                        placeholder: t('forms.description'),
                         typeOfElement: {
                             Component: CustomTextArea,
                             props: {}
@@ -138,7 +139,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'name',
                         id: 'name',
-                        defaultValue: t('forms.name'),
+                        placeholder: t('forms.name'),
                         typeOfElement: {
                             Component: CustomTextField,
                             props: {}
@@ -156,7 +157,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'description',
                         id: 'description',
-                        defaultValue: t('forms.secret'),
+                        placeholder: t('forms.secret'),
                         typeOfElement: {
                             Component: CustomTextArea,
                             props: {}
@@ -174,7 +175,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'value',
                         id: 'value',
-                        defaultValue: t('forms.value'),
+                        placeholder: t('forms.value'),
                         typeOfElement: {
                             Component: CustomTextField,
                             props: {}
@@ -198,7 +199,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'name',
                         id: 'name',
-                        defaultValue: t('forms.name'),
+                        placeholder: t('forms.name'),
                         typeOfElement: {
                             Component: CustomTextField,
                             props: {}
@@ -216,7 +217,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'description',
                         id: 'description',
-                        defaultValue: t('forms.description'),
+                        placeholder: t('forms.description'),
                         typeOfElement: {
                             Component: CustomTextArea,
                             props: {}
@@ -234,7 +235,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'value',
                         id: 'value',
-                        defaultValue: t('forms.linkValue'),
+                        placeholder: t('forms.linkValue'),
                         typeOfElement: {
                             Component: CustomTextField,
                             props: {}
@@ -258,7 +259,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'name',
                         id: 'name',
-                        defaultValue: t('forms.name'),
+                        placeholder: t('forms.name'),
                         typeOfElement: {
                             Component: CustomTextField,
                             props: {}
@@ -276,7 +277,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'description',
                         id: 'description',
-                        defaultValue: t('forms.description'),
+                        placeholder: t('forms.description'),
                         typeOfElement: {
                             Component: CustomTextArea,
                             props: {}
@@ -294,7 +295,7 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
                     {
                         name: 'value',
                         id: 'value',
-                        defaultValue: t('forms.text'),
+                        placeholder: t('forms.text'),
                         typeOfElement: {
                             Component: CustomTextArea,
                             props: {}
@@ -344,11 +345,19 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
         setForm(form as CreateResourceForm);
         api.resources.create(form, typeSetter).then(
             response => {
+                console.log(response)
                 setOpen(true);
                 setTimeout(() => {
                     navigate(linkToPage);
-                }, 1000);}
+                }, 1000);
+            }
         )
+            .catch(error => {
+                const errorMessage = error.response?.data?.errors?.name || error.response?.data?.errors?.value
+                setGlobalError(errorMessage);
+                console.error("Error during create:", errorMessage);
+                setGlobalError(prevError => `${prevError}`);
+            });
 
     }
 
@@ -360,13 +369,15 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
     }
 
 
-
-
     return (
         <div>
-            <CustomForm formElements={formElements2} buttonName={t('forms.chooseType')} handleSubmit={handleSubmit2}></CustomForm>
-            <CustomForm formElements={formForType} buttonName={t('forms.create')} handleSubmit={handleSubmit} buttonDisable={buttonState} ></CustomForm>
-            <UpdateDialog openProps={open} title={t('resources.dialogCreateTitle')} message={t('resources.dialogCreate')}></UpdateDialog>
+            <CustomForm formElements={formElements2} buttonName={t('forms.chooseType')}
+                        handleSubmit={handleSubmit2}></CustomForm>
+            <CustomForm formElements={formForType} buttonName={t('forms.create')} handleSubmit={handleSubmit}
+                        buttonDisable={buttonState}></CustomForm>
+            {globalError && <p style={{color: 'red'}}>{globalError}</p>}
+            <UpdateDialog openProps={open} title={t('resources.dialogCreateTitle')}
+                          message={t('resources.dialogCreate')}></UpdateDialog>
         </div>
     )
 }

@@ -19,8 +19,6 @@ import { TechnologyDTO } from "../../api/project/technology/response/TechnologyD
 import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-import { Role } from "../../api/project/project-member/response/Role";
-import { getUserId } from "../../storage/AuthStorage";
 import {useTheme} from "@mui/material/styles";
 
 const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
@@ -41,7 +39,6 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
     const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>([]);
     const [formError, setFormError] = useState<string | null>(null);
     const [technologyError, setTechnologyError] = useState<string | null>(null);
-    const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation('projects');
     const theme = useTheme();
@@ -59,6 +56,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
         const fetchProject = async () => {
             try {
                 const project = await api.project.get(projectId);
+
                 setForm({
                     id: project.id,
                     name: project.name,
@@ -75,21 +73,8 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
             }
         };
 
-        const fetchCurrentUserRole = async () => {
-            try {
-                const currentUserId = getUserId();
-                if (currentUserId && projectId) {
-                    const currentUserResponse = await api.projectMember.getByIds(currentUserId, projectId);
-                    setCurrentUserRole(currentUserResponse.role);
-                }
-            } catch (error) {
-                console.error('Error fetching current user role:', error);
-            }
-        };
-
         fetchTechnologies();
         fetchProject();
-        fetchCurrentUserRole();
     }, [projectId]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -162,14 +147,6 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
             setShowExisting(newAlignment);
         }
     };
-
-    if (currentUserRole !== Role.OWNER) {
-        return (
-            <Typography variant="h6" color="error" align="center" sx={{ marginTop: 3 }}>
-                {t('noAccess')}
-            </Typography>
-        );
-    }
 
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
