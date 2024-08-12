@@ -211,7 +211,10 @@
       "deleted": "Projekt został usunięty.",
       "notFound": "Nie znaleziono członka projektu.",
       "noAccess": "Brak dostępu.",
-      "ok": "Ok"
+      "ok": "Ok",
+      "memberCreatedSuccess": "Uczestnik został dodany",
+      "memberEditedSuccess": "Uczestnik został edytowany",
+      "memberDeletedSuccess": "Uczestnik został usunięty"
     },
     "environments": {
       "name": "Nazwa",

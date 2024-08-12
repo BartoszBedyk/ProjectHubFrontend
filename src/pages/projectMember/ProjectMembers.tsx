@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import { Box, Button, Container, Typography, CircularProgress } from '@mui/material';
 import CustomLayout from "../../components/Layout/Layout";
 import ProjectMembersTable from "../../components/TableImpl/ProjectMembersTable";
@@ -8,6 +8,7 @@ import { Role } from "../../api/project/project-member/response/Role";
 import { getUserRole } from "../../components/authComponent";
 import { api } from '../../api/AppApi';
 import {TIMEOUTS} from "../../utils/timeouts";
+import CustomSnackbar from "../../components/Alerts/CustomSnackbar";
 
 const ProjectMembers: React.FC = () => {
     const navigate = useNavigate();
@@ -16,6 +17,22 @@ const ProjectMembers: React.FC = () => {
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const [isProjectDeleted, setIsProjectDeleted] = useState(false);
     const [loading, setLoading] = useState(true);
+    const location = useLocation();
+    const [snackbarData, setSnackbarData] = useState<{open: boolean, message: string, severity: 'success' | 'error'}>({
+        open: false,
+        message: '',
+        severity: 'success'
+    });
+
+    useEffect(() => {
+        if (location.state?.showSnackbarDelete) {
+            setSnackbarData({open: true, message: t('memberDeletedSuccess'), severity: 'success'});
+        }
+    }, [location.state, t]);
+
+    const handleSnackbarClose = () => {
+        setSnackbarData(prev => ({...prev, open: false}));
+    };
 
     useEffect(() => {
         const fetchProjectDetails = async () => {
@@ -98,6 +115,12 @@ const ProjectMembers: React.FC = () => {
                 </Box>
             ) : null}
             <ProjectMembersTable projectId={projectId!} />
+            <CustomSnackbar
+                open={snackbarData.open}
+                onClose={handleSnackbarClose}
+                message={snackbarData.message}
+                severity={snackbarData.severity}
+            />
         </CustomLayout>
     );
 };

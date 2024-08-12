@@ -112,7 +112,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
 
         try {
             const response = await api.projectMember.update(form);
-            navigate(`/project-member/${projectId}/${response.userId}`);
+            navigate(`/project-member/${projectId}/${response.userId}`, { state: { showSnackbarEdit: true } });
         } catch (error) {
             console.error('Error updating project member:', error);
         }

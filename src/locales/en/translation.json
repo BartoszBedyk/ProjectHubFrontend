@@ -213,7 +213,10 @@
       "deleted": "Project has been deleted.",
       "notFound": "Member not found.",
       "noAccess": "No access.",
-      "ok": "Ok"
+      "ok": "Ok",
+      "memberCreatedSuccess": "Member has been added",
+      "memberEditedSuccess": "Member has been edited",
+      "memberDeletedSuccess": "Member has been deleted"
     },
     "environments": {
       "name": "Name",
