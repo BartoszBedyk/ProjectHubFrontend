@@ -264,6 +264,7 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
                                            id,
                                            label,
                                            defaultValue,
+                                           placeholder,
                                            typeOfElement: {Component, props}
                                        }, index) => {
                         const error = errors.find(err => err.id === id)?.message;
@@ -275,6 +276,7 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
                                     name={name}
                                     id={id}
                                     defaultValue={defaultValue}
+                                    placeholder={placeholder}
                                     error={error}
                                     onChange={name === "dropdown" ? handleDropdownChange : undefined}
                                     onFileUpload={name === "file" ? handleFileUpload : undefined}

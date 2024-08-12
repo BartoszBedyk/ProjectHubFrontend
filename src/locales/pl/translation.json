@@ -57,7 +57,12 @@
       "loggingTokenError": "Zaloguj się ponownie",
       "bannedUserTitle": "Użytkownik jest zablokowany.",
       "bannedUserMessage": "Wygląda na to, że Twoje konto zostało zablokowane. Nie masz dostępu do usług ProjectHub.",
-      "bannedUser": "Konto na które się logujesz jest zablokowane."
+      "bannedUser": "Konto na które się logujesz jest zablokowane.",
+      "resetPassword": "Zresetuj hasło",
+      "correctEmail": "Link został wysłany na podany adres e-mail.",
+      "errorNotEmail": "Podana wartość nie jest adresem e-mail.",
+      "errorBadEmail": "Tego adresu e-mail nie ma w systemie.",
+      "errorUnknown": "Nieznany błąd."
     },
     "resources": {
       "resourcestxt": " - zasoby projektu.",
@@ -74,7 +79,12 @@
       "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?",
       "deleted": "Projekt został usunięty.",
       "noAccess": "Brak dostępu.",
-      "attachmentDialog": "Edycja pola \"Wartość\" może spowodować nieodwracalną utratę dostępu do zasobu."
+      "attachmentDialog": "Edycja pola \"Wartość\" może spowodować nieodwracalną utratę dostępu do zasobu.",
+      "lengthNameError50": "Długość nazwy zasobu nie może być mniejsza niż 1 i dłuższa niż 50.",
+      "nullValueError": "Wartość zasobu nie może mieć wartości null.",
+      "nullNameError": "Nazwa zasobu nie może mieć wartości null.",
+      "lengthValueError200": "Długość wartości zasobu nie może być mniejsza niż 1 i dłuższa niż 200.",
+      "unknownError": "Nieznany błąd"
     },
     "projects": {
       "name": "Nazwa",
