@@ -78,6 +78,9 @@
       "dialogCreate": "The resource has been created.",
       "deleteResource": "Delete resource",
       "deleteResourceMessage": "The action of deleting a resource can only be undone by the system administrator. Do you want to delete the resource?",
+      "deleted": "Project has been deleted.",
+      "noAccess": "No access.",
+      "notFound2": "Project not found",
       "attachmentDialog" : "Editing the \"Value\" field may result in irreversible loss of access to the resource.",
       "lengthNameError50": "Length of name of the resource cannot be less than 1 and longer than 50.",
       "nullValueError": "Value of the resource cannot be null.",
@@ -114,8 +117,12 @@
       "technologyDescription": "Technology description",
       "selectedTechnologies": "Selected technologies",
       "updateProject": "Update project",
-      "noAccess": "No permission.",
-      "createEnvironment": "Create new environment"
+      "noAccess": "No access.",
+      "createEnvironment": "Create new environment",
+      "projectName": "Project name",
+      "deleted": "Project has been deleted.",
+      "deleted2": " (deleted)",
+      "newProject": "New project"
     },
     "forms": {
       "new": "New",
@@ -168,6 +175,7 @@
       "createdOn": "Creation date",
       "createdBy": "Created by",
       "isBlocked": "Blocked",
+      "accessDenied": "No access",
       "details": "Show details"
     },
     "members": {
@@ -197,10 +205,13 @@
       "createdBy": "Created by",
       "membersList": "Project members list",
       "role": "Role",
-      "noPermission": "No permission.",
+      "noPermission": "No access.",
       "environments": "Environments",
       "error": "Error",
       "cannotDeleteSelf": "Cannot delete self.",
+      "deleted": "Project has been deleted.",
+      "notFound": "Member not found.",
+      "noAccess": "No access.",
       "ok": "Ok"
     },
     "environments": {
@@ -216,7 +227,7 @@
       "newEnvironment": "New environment",
       "createEnvironment": "Create environment",
       "notFound": "Environment not found",
-      "noAccess": "You do not have access to this environment",
+      "noAccess": "No access",
       "yes": "Yes",
       "no": "No",
       "edit": "Edit",
@@ -227,6 +238,8 @@
       "cancel": "Cancel",
       "delete": "Delete",
       "emptyFieldError": "This field cannot be empty",
+      "deleted": "Project has been deleted.",
+      "notFound": "Environment not found.",
       "environmentsList": "Environments list"
     },
     "activities": {

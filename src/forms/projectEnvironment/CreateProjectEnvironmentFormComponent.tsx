@@ -11,7 +11,7 @@ import {
 import { api } from "../../api/AppApi";
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-import {CreateProjectEnvironmentForm} from "../../api/project/project-environment/form/CreateProjectEnvironmentForm";
+import { CreateProjectEnvironmentForm } from "../../api/project/project-environment/form/CreateProjectEnvironmentForm";
 
 const CreateProjectEnvironmentFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
     const [form, setForm] = useState<CreateProjectEnvironmentForm>({
@@ -45,7 +45,6 @@ const CreateProjectEnvironmentFormComponent: React.FC<{ projectId: string }> = (
         setFormError(null);
         try {
             const response = await api.projectEnvironment.create(form);
-            console.log('Environment created:', response);
             setForm({
                 name: '',
                 isEncrypted: false,
