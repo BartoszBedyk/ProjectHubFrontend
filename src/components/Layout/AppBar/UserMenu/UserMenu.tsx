@@ -6,12 +6,14 @@ import { getUserId } from "../../../../storage/AuthStorage";
 import { api } from "../../../../api/AppApi";
 import { useNavigate } from "react-router-dom";
 import logout from "../../../Login/LogoutButton";
+import {useTranslation} from "react-i18next";
 
 const UserMenu = () => {
 
     const navigate = useNavigate();
     const [user, setUser] = useState({ firstName: '', lastName: '' });
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const { t } = useTranslation('drawer');
 
     const navLinksUserMenu = useNavLinksUserMenu();
 
@@ -66,9 +68,9 @@ const UserMenu = () => {
                             textAlign="center"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                if (item.name === 'Profile') {
+                                if (item.name === t('profile')) {
                                     navigate(`/user/${userId}`);
-                                } else if (item.name === 'Logout'){
+                                } else if (item.name === t('logout')){
                                     logout();
                                 } else {
                                     navigate(item.link!);
