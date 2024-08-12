@@ -1,7 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import {useTranslation} from "react-i18next";
-import ResetPassword from "../../pages/login/resetPassword";
 import {ResetPasswordForms} from "../Login/ResetPasswordForms";
 
 type ResetPasswordDialogProps = {
