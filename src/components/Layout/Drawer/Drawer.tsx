@@ -1,23 +1,11 @@
-import {
-    Box,
-    Divider,
-    IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    useTheme
-} from "@mui/material";
+import {Box, Divider, IconButton, useTheme} from "@mui/material";
 import logo from "../../../assets/Drawer/logo.png";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import React from "react";
 import {useDrawer} from "./DrawerContext";
 import {Drawer, DrawerHeader} from "./drawerUtils";
 import Items from "./Items";
-import logout from "../../Login/LogoutButton";
 
 const CustomDrawer = () => {
 

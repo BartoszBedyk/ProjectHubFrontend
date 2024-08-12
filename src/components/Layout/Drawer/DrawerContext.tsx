@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useContext, useState} from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 interface DrawerContextProps {
     open: boolean;
@@ -17,7 +17,14 @@ export const useDrawer = () => {
 };
 
 export const DrawerProvider = ({ children }: { children: ReactNode}) => {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState<boolean>(() => {
+        const savedState = localStorage.getItem('drawerOpenState');
+        return savedState !== null ? JSON.parse(savedState) : true;
+    });
+
+    useEffect(() => {
+        localStorage.setItem('drawerOpenState', JSON.stringify(open));
+    }, [open]);
 
     const handleDrawerOpen = () => setOpen(true);
     const handleDrawerClose = () => setOpen(false);
@@ -26,5 +33,5 @@ export const DrawerProvider = ({ children }: { children: ReactNode}) => {
         <DrawerContext.Provider value={{ open, handleDrawerOpen, handleDrawerClose }}>
             {children}
         </DrawerContext.Provider>
-    )
+    );
 };
