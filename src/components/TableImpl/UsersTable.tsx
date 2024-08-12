@@ -19,6 +19,7 @@ import {useTranslation} from "react-i18next";
 
 type UsersTableProps = {
     searchValue: string;
+    onAction: (message: string, severity: 'success' | 'error') => void;
 }
 
 
@@ -61,15 +62,28 @@ const UsersTable = (props: UsersTableProps) => {
     };
 
     const handleBlockUnblock = async (userId: string, isBlocked: boolean) => {
-        if (isBlocked) {
-            await api.userManagement.unblock(userId);
-        } else {
-            await api.userManagement.block(userId);
+        try {
+            if (isBlocked) {
+                await api.userManagement.unblock(userId);
+                props.onAction(t('userUnblockedSuccess'), 'success');
+            } else {
+                await api.userManagement.block(userId);
+                props.onAction(t('userBlockedSuccess'), 'success');
+            }
+        } catch (error) {
+            props.onAction(t('userActionError'), 'error');
+            console.error('Error blocking/unblocking user:', error);
         }
     };
 
     const handleDelete = async (userId: string) => {
-        await api.userManagement.delete(userId);
+        try {
+            await api.userManagement.delete(userId);
+            props.onAction(t('userDeletedSuccess'), 'success');
+        } catch (error) {
+            props.onAction(t('userActionError'), 'error');
+            console.error('Error deleting user:', error);
+        }
     };
 
 

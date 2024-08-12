@@ -142,7 +142,8 @@
       "blockUser": "Zablokuj użytkownika",
       "unblockUser": "Odblokuj użytkownika",
       "deleteUser": "Usuń użytkownika",
-      "formError" : "Wszystkie pola danych użytkownika muszą być uzupełnione",
+      "formError" : "Wszystkie pola danych użytkownika muszą być uzupełnione!",
+      "passwordError" : "Hasło ma mniej niż 8 znaków!",
       "firstName" : "Imię",
       "lastName" : "Nazwisko",
       "email" : "Adres email",
@@ -153,7 +154,13 @@
       "createdOn": "Data utworzenia",
       "createdBy": "Utworzony przez",
       "isBlocked": "Zablokowany",
-      "details": "Pokaż szczegóły"
+      "details": "Pokaż szczegóły",
+      "userCreatedSuccess": "Użytkownik został stworzony",
+      "userEditedSuccess": "Użytkownik został edytowany",
+      "userUnblockedSuccess": "Użytkownik został odblokowany",
+      "userBlockedSuccess": "Użytkownik został zablokowany",
+      "userDeletedSuccess": "Użytkownik został usunięty",
+      "userActionError": "Coś poszło nie tak"
     },
     "members": {
       "selectUser": "Wybierz użytkownika",

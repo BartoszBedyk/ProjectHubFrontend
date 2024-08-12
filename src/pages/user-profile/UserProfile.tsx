@@ -6,19 +6,22 @@ import {
     Button,
     CircularProgress,
     Container,
-    Dialog, DialogActions,
-    DialogContent, DialogContentText,
-    DialogTitle, IconButton, InputAdornment,
-    Paper, Snackbar, TextField,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    IconButton,
+    InputAdornment,
+    Paper,
+    Snackbar,
+    TextField,
     Typography
 } from "@mui/material";
 import {useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {api} from "../../api/AppApi";
 import {UserDto} from "../../api/user-management/response/UserDto";
-import ChangeTheme from "../../components/Settings/ThemeButton";
-import LanguageButton from "../../components/Settings/LanguageButton";
-import {stylesLogin} from "../../components/Login/styles/LoginStyles";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 
@@ -174,6 +177,7 @@ const UserProfile = () => {
                         fullWidth
                         variant="outlined"
                         value={oldPassword}
+                        error={!!error}
                         onChange={(e) => setOldPassword(e.target.value)}
                         InputProps={{
                             endAdornment: (
@@ -198,6 +202,7 @@ const UserProfile = () => {
                         fullWidth
                         variant="outlined"
                         value={newPassword}
+                        error={!!error}
                         onChange={(e) => setNewPassword(e.target.value)}
                         InputProps={{
                             endAdornment: (

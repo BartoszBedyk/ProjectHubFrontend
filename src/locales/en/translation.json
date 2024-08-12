@@ -144,7 +144,8 @@
       "blockUser": "Block user",
       "unblockUser": "Unblock user",
       "deleteUser": "Delete user",
-      "formError" : "All user data fields must be filled in",
+      "formError" : "All user data fields must be filled in!",
+      "passwordError" : "Password is less than 8 characters long!",
       "firstName" : "First name",
       "lastName" : "Last name",
       "email" : "Email address",
@@ -155,7 +156,13 @@
       "createdOn": "Creation date",
       "createdBy": "Created by",
       "isBlocked": "Blocked",
-      "details": "Show details"
+      "details": "Show details",
+      "userCreatedSuccess": "User has been created",
+      "userEditedSuccess": "User has been edited",
+      "userUnblockedSuccess": "User has been unblocked",
+      "userBlockedSuccess": "User has been blocked",
+      "userDeletedSuccess": "User has been deleted",
+      "userActionError": "Something went wrong"
     },
     "members": {
       "selectUser": "Select user",
