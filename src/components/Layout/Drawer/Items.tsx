@@ -155,7 +155,7 @@ const Items: React.FC<ItemsProps> = ({open}) => {
     };
 
     const filteredNavLinks = navLinks.filter((item) => {
-        if (item.sortName === 'Main' || item.sortName === 'Resources') {
+        if (item.sortName === 'Main' || item.sortName === 'Resources' || item.sortName === 'MemberResources') {
             return !!projectId;
         }
         if (item.sortName === "User management" || item.sortName === "Activities") {
