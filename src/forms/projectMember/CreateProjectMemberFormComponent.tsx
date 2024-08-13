@@ -168,7 +168,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({ pro
                 userId: '',
                 environmentIds: []
             });
-            navigate(`/project-member/${projectId}/${response.userId}`);
+            navigate(`/project-member/${projectId}/${response.userId}`, { state: { showSnackbarCreate: true } });
         } catch (error) {
             console.error('Error creating project member:', error);
         }

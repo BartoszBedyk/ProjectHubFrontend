@@ -50,7 +50,7 @@ const CreateProjectEnvironmentFormComponent: React.FC<{ projectId: string }> = (
                 isEncrypted: false,
                 projectId: form.projectId,
             });
-            navigate(`/project-environment/${response.id}`);
+            navigate(`/project-environment/${response.id}`, { state: { showSnackbarCreate: true } });
         } catch (error) {
             console.error('Error creating environment:', error);
         }

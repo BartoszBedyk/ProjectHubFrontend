@@ -61,7 +61,7 @@ const UpdateProjectEnvironmentFormComponent: React.FC<{ environmentId: string }>
         setFormError(null);
         try {
             await api.projectEnvironment.update(form);
-            navigate(`/project-environment/${environmentId}`);
+            navigate(`/project-environment/${environmentId}`, { state: { showSnackbarEdit: true } });
         } catch (error) {
             console.error('Error updating environment:', error);
         }

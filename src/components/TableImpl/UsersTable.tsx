@@ -9,25 +9,27 @@ import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
 import {UserDto} from "../../api/user-management/response/UserDto";
-import {Container, IconButton, Tooltip, Typography} from "@mui/material";
+import {IconButton, Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button} from "@mui/material";
 import TrueIcon from '@mui/icons-material/Check';
 import FalseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import BlockIcon from '@mui/icons-material/Block';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useTranslation} from "react-i18next";
-import {getUserId} from "../../storage/AuthStorage";
 
 type UsersTableProps = {
     searchValue: string;
-}
+    onAction: (message: string, severity: 'success' | 'error') => void;
+};
 
-
-const UsersTable = (props: UsersTableProps) => {
+const UsersTable = ({ searchValue, onAction }: UsersTableProps) => {
 
     const navigate = useNavigate();
-
     const {t} = useTranslation("userManagement");
+
+    const [rows, setRows] = useState<RowData[]>([]);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [userToDelete, setUserToDelete] = useState<UserDto | null>(null);
 
     const columns: ColumnDefinition[] = [
         {id: 'firstName', label: t('firstName'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
@@ -61,105 +63,127 @@ const UsersTable = (props: UsersTableProps) => {
         sort: searchSort
     };
 
-    const handleBlockUnblock = async (userId: string, isBlocked: boolean) => {
-        if (isBlocked) {
-            await api.userManagement.unblock(userId);
-        } else {
-            await api.userManagement.block(userId);
+    const fetchUsers = async () => {
+        try {
+            const response: SearchResponse<UserDto> = await api.userManagement.search(searchForm);
+            const userRows: RowData[] = await Promise.all(response.items.map(async (user) => {
+                let createdBy = 'SYSTEM';
+                try {
+                    if (user.firstName !== 'admin') {
+                        const creator = await api.userManagement.get(user.createdById);
+                        createdBy = `${creator.firstName} ${creator.lastName}`;
+                    }
+                } catch (e) {
+                    console.error('Error fetching creator details: ', e);
+                }
+                const newRow: RowData = {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    createdOn: user.createdOn,
+                    createdBy,
+                    isBlocked: user.blocked ? <TrueIcon /> : <FalseIcon />,
+                    action0: (
+                        <Tooltip title={t('editUser')}>
+                            <IconButton onClick={() => {
+                                navigate(`/user/edit/${user.id}`);
+                            }}>
+                                <EditIcon sx={{color: '#1876D2'}} />
+                            </IconButton>
+                        </Tooltip>
+                    ),
+                    action1: (
+                        <Tooltip title={user.blocked ? t('unblockUser') : t('blockUser')}>
+                            <IconButton onClick={async () => {
+                                await handleBlockUnblock(user.id, user.blocked);
+                                await fetchUsers();
+                            }}>
+                                <BlockIcon sx={{color: '#1876D2'}} />
+                            </IconButton>
+                        </Tooltip>
+                    ),
+                    action2: (
+                        <Tooltip title={t('deleteUser')}>
+                            <IconButton onClick={() => {
+                                setUserToDelete(user);
+                                setOpenDialog(true);
+                            }}>
+                                <DeleteIcon sx={{color: '#1876D2'}}/>
+                            </IconButton>
+                        </Tooltip>
+                    )
+                };
+                return newRow;
+            }));
+            setRows(userRows);
+        } catch (e) {
+            console.error('Error fetching user details:', e);
         }
     };
 
-    const handleDelete = async (userId: string) => {
-        await api.userManagement.delete(userId);
+    useEffect(() => {
+        fetchUsers();
+    }, [searchValue]);
+
+    const handleBlockUnblock = async (userId: string, isBlocked: boolean) => {
+        try {
+            if (isBlocked) {
+                await api.userManagement.unblock(userId);
+                onAction(t('userUnblockedSuccess'), 'success');
+            } else {
+                await api.userManagement.block(userId);
+                onAction(t('userBlockedSuccess'), 'success');
+            }
+        } catch (error) {
+            onAction(t('userActionError'), 'error');
+            console.error('Error blocking/unblocking user:', error);
+        }
     };
 
-    const [accessDenied, setAccessDenied] = useState<boolean>(false);
-
-
-    const [rows, setRows] = useState<RowData[]>([]);
-
-    useEffect(() => {
-        const fetchUsers = async () => {
+    const handleDelete = async () => {
+        if (userToDelete) {
             try {
-                const currentUserId = getUserId();
-                if (currentUserId) {
-                    const user = await api.userManagement.get(currentUserId);
-                    if (user.createdById !== "SYSTEM") {
-                        setAccessDenied(true);
-                        return;
-                    }
-                }
-                const response: SearchResponse<UserDto> = await api.userManagement.search(searchForm);
-                const userRows: RowData[] = await Promise.all(response.items.map(async (user) => {
-                    let createdBy = 'SYSTEM';
-                    try {
-                        if (user.firstName !== 'admin') {
-                            const creator = await api.userManagement.get(user.createdById);
-                            createdBy = `${creator.firstName} ${creator.lastName}`;
-                        }
-                    } catch (e) {
-                        console.error('Error fetching creator details: ', e);
-                    }
-                    const newRow: RowData = {
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        email: user.email,
-                        createdOn: user.createdOn,
-                        createdBy,
-                        isBlocked: user.blocked ? <TrueIcon /> : <FalseIcon />,
-                        action0: (
-                            <Tooltip title={t('editUser')}>
-                                <IconButton onClick={() => {
-                                    navigate(`/user/edit/${user.id}`);
-                                }}>
-                                    <EditIcon sx={{color: '#1876D2'}} />
-                                </IconButton>
-                            </Tooltip>
-                        ),
-                        action1: (
-                            <Tooltip title={user.blocked ? t('unblockUser') : t('blockUser')}>
-                                <IconButton onClick={async () => {
-                                    await handleBlockUnblock(user.id, user.blocked);
-                                    fetchUsers();
-                                }}>
-                                    <BlockIcon sx={{color: '#1876D2'}} />
-                                </IconButton>
-                            </Tooltip>
-                        ),
-                        action2: (
-                            <Tooltip title={t('deleteUser')} >
-                                <IconButton onClick={async () => {
-                                    await handleDelete(user.id);
-                                    fetchUsers();
-                                }}>
-                                    <DeleteIcon sx={{color: '#1876D2'}}/>
-                                </IconButton>
-                            </Tooltip>
-                        )
-                    };
-                    return newRow;
-                }));
-                setRows(userRows);
-            } catch (e) {
-                console.error('Error fetching user details: ', e);
+                await api.userManagement.delete(userToDelete.id);
+                onAction(t('userDeletedSuccess'), 'success');
+                await fetchUsers();
+            } catch (error) {
+                onAction(t('userActionError'), 'error');
+                console.error('Error deleting user:', error);
+            } finally {
+                setOpenDialog(false);
+                setUserToDelete(null);
             }
-        };
+        }
+    };
 
-        fetchUsers();
-    }, [props.searchValue, navigate]);
-
-    if (accessDenied) {
-        return (
-            <Container>
-                <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-                    {t('accessDenied')}
-                </Typography>
-            </Container>
-        );
-    }
+    const handleDialogClose = () => {
+        setOpenDialog(false);
+        setUserToDelete(null);
+    };
 
     return (
-        <CustomTable columns={columns} rows={rows} title={t('userList')} />
+        <>
+            <CustomTable columns={columns} rows={rows} title={t('userList')} />
+            <Dialog
+                open={openDialog}
+                onClose={handleDialogClose}
+            >
+                <DialogTitle>{t('confirmDeleteTitle')}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {t('confirmDeleteMessage', { userName: `${userToDelete?.firstName} ${userToDelete?.lastName}` })}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDialogClose} color="primary">
+                        {t('cancel')}
+                    </Button>
+                    <Button onClick={handleDelete} color="error" autoFocus>
+                        {t('delete')}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
     );
 };
 

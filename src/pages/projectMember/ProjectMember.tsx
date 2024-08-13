@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate, useLocation} from 'react-router-dom';
 import {
     Box,
     Typography,
@@ -25,6 +25,7 @@ import { ProjectEnvironmentDto } from "../../api/project/project-environment/res
 import { getUserId } from "../../storage/AuthStorage";
 import {getUserRole} from "../../components/authComponent";
 import {TIMEOUTS} from "../../utils/timeouts";
+import CustomSnackbar from "../../components/Alerts/CustomSnackbar";
 
 const ProjectMemberPage: React.FC = () => {
     const { projectId, userId } = useParams<{ projectId: string; userId: string }>();
@@ -38,6 +39,25 @@ const ProjectMemberPage: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useTranslation('members');
     const [isProjectDeleted, setIsProjectDeleted] = useState(false);
+    const location = useLocation();
+    const [snackbarData, setSnackbarData] = useState<{open: boolean, message: string, severity: 'success' | 'error'}>({
+        open: false,
+        message: '',
+        severity: 'success'
+    });
+
+    useEffect(() => {
+        if (location.state?.showSnackbarCreate) {
+            setSnackbarData({open: true, message: t('memberCreatedSuccess'), severity: 'success'});
+        }
+        if (location.state?.showSnackbarEdit) {
+            setSnackbarData({open: true, message: t('memberEditedSuccess'), severity: 'success'});
+        }
+    }, [location.state, t]);
+
+    const handleSnackbarClose = () => {
+        setSnackbarData(prev => ({...prev, open: false}));
+    };
 
 
     useEffect(() => {
@@ -89,7 +109,7 @@ const ProjectMemberPage: React.FC = () => {
         }
         try {
             await api.projectMember.delete(projectId!, userId!);
-            navigate(`/project-member/${projectId}`);
+            navigate(`/project-member/${projectId}`, { state: { showSnackbarDelete: true } });
         } catch (error) {
             console.error('Error deleting project member:', error);
         }
@@ -246,6 +266,12 @@ const ProjectMemberPage: React.FC = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <CustomSnackbar
+                open={snackbarData.open}
+                onClose={handleSnackbarClose}
+                message={snackbarData.message}
+                severity={snackbarData.severity}
+            />
         </CustomLayout>
     );
 };

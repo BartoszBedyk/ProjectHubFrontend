@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import {Box, Button, CircularProgress, Container, Icon, Paper, Typography} from '@mui/material';
 import {api} from '../../api/AppApi';
 import CustomLayout from "../../components/Layout/Layout";
@@ -14,6 +14,7 @@ import {Role} from "../../api/project/project-member/response/Role";
 import {ProjectDTO} from "../../api/project/response/ProjectDTO";
 import {getUserRole} from "../../components/authComponent";
 import {TIMEOUTS} from "../../utils/timeouts";
+import CustomSnackbar from "../../components/Alerts/CustomSnackbar";
 
 const ProjectPageComponent: React.FC = () => {
     const {resourceId, projectId} = useParams<{ resourceId: string, projectId: string }>();
@@ -25,6 +26,23 @@ const ProjectPageComponent: React.FC = () => {
     const [open, setOpen] = React.useState(false);
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const [project, setProject] = useState<ProjectDTO | null>(null);
+    const location = useLocation();
+    const [snackbarData, setSnackbarData] = useState<{open: boolean, message: string, severity: 'success' | 'error'}>({
+        open: false,
+        message: '',
+        severity: 'success'
+    });
+
+    useEffect(() => {
+        if (location.state?.showSnackbarEdit) {
+            setSnackbarData({open: true, message: t('resources.resourceEditedSuccess'), severity: 'success'});
+        }
+    }, [location.state, t]);
+
+    const handleSnackbarClose = () => {
+        setSnackbarData(prev => ({...prev, open: false}));
+    };
+
 
     const openDeleteDialog = () => {
         setOpen(true)
@@ -132,7 +150,7 @@ const ProjectPageComponent: React.FC = () => {
 
     const handleDelete = () => {
         api.resources.delete(resourceId!).then(r => console.log(r))
-        navigate(`/project/${projectId}/resources/any`);
+        navigate(`/project/${projectId}/resources/any`, { state: { showSnackbarDelete: true } });
     }
 
     return (
@@ -195,6 +213,12 @@ const ProjectPageComponent: React.FC = () => {
                     </Box>
                 </Box>
             </Paper>
+            <CustomSnackbar
+                open={snackbarData.open}
+                onClose={handleSnackbarClose}
+                message={snackbarData.message}
+                severity={snackbarData.severity}
+            />
         </CustomLayout>
     );
 };
