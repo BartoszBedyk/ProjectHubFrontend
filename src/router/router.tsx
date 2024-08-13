@@ -26,6 +26,7 @@ import CreateProjectEnvironment from "../pages/projectEnvironment/CreateProjectE
 import UpdateProjectEnvironment from "../pages/projectEnvironment/UpdateProjectEnvironment";
 import ProjectEnvironment from "../pages/projectEnvironment/ProjectEnvironment";
 import Activities from "../pages/activity/Activities";
+import ResetPassword from "../pages/reset-password/ResetPassword";
 
 
 export const router = createBrowserRouter([
@@ -49,8 +50,8 @@ export const router = createBrowserRouter([
         errorElement: <Error/>
     },
     {
-        path: "/auth/reset-password",
-        element: <div>Reset password</div>,
+        path: "/auth/reset-password/:requestID",
+        element: <ResetPassword/>,
         errorElement: <Error/>
     },
 

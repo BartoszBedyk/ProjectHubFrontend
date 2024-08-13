@@ -1,7 +1,7 @@
 {
   "buttons": {
     "save": "Zapisz",
-    "secretDialog" : "Zdemaskowany sekret",
+    "secretDialog": "Zdemaskowany sekret",
     "copyTxt": "Skopiuj tekst",
     "closeTxt": "Zamknij"
   },
@@ -62,7 +62,17 @@
       "correctEmail": "Link został wysłany na podany adres e-mail.",
       "errorNotEmail": "Podana wartość nie jest adresem e-mail.",
       "errorBadEmail": "Tego adresu e-mail nie ma w systemie.",
-      "errorUnknown": "Nieznany błąd."
+      "errorUnknown": "Nieznany błąd.",
+      "errorResetBlank": "Hasło nie może być puste",
+      "errorResetLength8": "Hasło musi mieć co najmniej 8 znaków",
+      "errorResetIdLength36": "Identyfikator musi mieć 36 znaków",
+      "errorResetIdNull": "Identyfikator nie może być nullem",
+      "errorResetPasswordMatch": "Hasła muszą być takie same",
+      "errorResetNotFound": "Token resetowania nie jest już dostępny",
+      "newPassword": "Nowe hasło",
+      "newPassword2": "Powtórz nowe hasło",
+      "correctResetPassword": "Hasło zostało zmienione pomyślnie."
+
     },
     "resources": {
       "resourcestxt": " - zasoby projektu.",
@@ -72,9 +82,9 @@
       "resourcesTableTitle": "Zasoby",
       "createResource": "Utwórz nowy zasób",
       "notFound": "Nie znaleziono zasobu",
-      "dialogUpdate" : "Zasób został zaktualizowany.",
+      "dialogUpdate": "Zasób został zaktualizowany.",
       "dialogUpdateTitle": "Aktualizacja zasobu",
-      "update" : "Zaktualizuj",
+      "update": "Zaktualizuj",
       "deleteResource": "Usuń zasób",
       "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?",
       "deleted": "Projekt został usunięty.",
@@ -138,15 +148,14 @@
       "validationError": "Prosze umieść prawidłową wartość. ",
       "modifyDate": "Ostatnia edycja",
       "create": "Utwórz",
-      "linkValue" : "https://www.sensilabs.pl/",
-      "link" : "Link",
-      "text" : "Tekst",
+      "linkValue": "https://www.sensilabs.pl/",
+      "link": "Link",
+      "text": "Tekst",
       "secret": "Secret",
       "attachment": "Załącznik",
-      "chooseType" : "Wybierz typ",
-      "resourceType" : "Typ zasobu",
-      "cancel" : "Anuluj"
-
+      "chooseType": "Wybierz typ",
+      "resourceType": "Typ zasobu",
+      "cancel": "Anuluj"
     },
     "buttons": {
       "openLink": "Otwórz link ",
@@ -156,16 +165,16 @@
       "details": "Pokaż szczegóły",
       "resourcesTableTitle": "Zasoby"
     },
-    "userManagement" : {
-      "createUser" : "Stwórz użytkownika",
-      "editUser" : "Edytuj użytkownika",
+    "userManagement": {
+      "createUser": "Stwórz użytkownika",
+      "editUser": "Edytuj użytkownika",
       "blockUser": "Zablokuj użytkownika",
       "unblockUser": "Odblokuj użytkownika",
       "deleteUser": "Usuń użytkownika",
-      "formError" : "Wszystkie pola danych użytkownika muszą być uzupełnione",
-      "firstName" : "Imię",
-      "lastName" : "Nazwisko",
-      "email" : "Adres email",
+      "formError": "Wszystkie pola danych użytkownika muszą być uzupełnione",
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
+      "email": "Adres email",
       "password": "Hasło",
       "userList": "Lista użytkowników",
       "create": "Stwórz",
