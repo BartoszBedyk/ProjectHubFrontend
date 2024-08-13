@@ -133,7 +133,7 @@ const CreateProjectFormComponent: React.FC = () => {
                 description: '',
                 technologyList: []
             });
-            navigate(`/project/${response.id}`);
+            navigate(`/project/${response.id}`, { state: { showSnackbarCreate: true } });
         } catch (error) {
             console.error('Error creating project:', error);
         }

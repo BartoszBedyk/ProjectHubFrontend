@@ -1,7 +1,7 @@
 {
   "buttons": {
     "save": "Zapisz",
-    "secretDialog": "Zdemaskowany sekret",
+    "secretDialog" : "Zdemaskowany sekret",
     "copyTxt": "Skopiuj tekst",
     "closeTxt": "Zamknij"
   },
@@ -9,7 +9,8 @@
     "home": "Strona startowa",
     "project": "Projekt",
     "addProject": "Utwórz projekt",
-    "main": "Strona główna",
+    "main": "Szczegóły projektu",
+    "all": "Wszystkie",
     "resources": "Zasoby",
     "resourcesLink": "Linki",
     "resourcesDocumentation": "Dokumentacja",
@@ -82,9 +83,9 @@
       "resourcesTableTitle": "Zasoby",
       "createResource": "Utwórz nowy zasób",
       "notFound": "Nie znaleziono zasobu",
-      "dialogUpdate": "Zasób został zaktualizowany.",
+      "dialogUpdate" : "Zasób został zaktualizowany.",
       "dialogUpdateTitle": "Aktualizacja zasobu",
-      "update": "Zaktualizuj",
+      "update" : "Zaktualizuj",
       "deleteResource": "Usuń zasób",
       "deleteResourceMessage": "Czynność usunięcia zasobu może być cofnięta jedynie przez administratora systemu. Czy nadal chcesz usunać zasób?",
       "deleted": "Projekt został usunięty.",
@@ -94,7 +95,10 @@
       "nullValueError": "Wartość zasobu nie może mieć wartości null.",
       "nullNameError": "Nazwa zasobu nie może mieć wartości null.",
       "lengthValueError200": "Długość wartości zasobu nie może być mniejsza niż 1 i dłuższa niż 200.",
-      "unknownError": "Nieznany błąd"
+      "unknownError": "Nieznany błąd",
+      "resourceCreatedSuccess": "Zasób został utworzony",
+      "resourceEditedSuccess": "Zasób został edytowany",
+      "resourceDeletedSuccess": "Zasób został usunięty"
     },
     "projects": {
       "name": "Nazwa",
@@ -129,7 +133,11 @@
       "projectName": "Nazwa projektu",
       "deleted": "Projekt został usunięty.",
       "deleted2": " (usunięty)",
-      "newProject": "Nowy projekt"
+      "newProject": "Nowy projekt",
+      "projectCreatedSuccess": "Projekt został utworzony",
+      "projectEditedSuccess": "Projekt został edytowany",
+      "projectDeletedSuccess": "Projekt został usunięty",
+      "envDeletedSuccess": "Środowisko zostało usunięte"
     },
     "forms": {
       "new": "Nowe",
@@ -171,10 +179,11 @@
       "blockUser": "Zablokuj użytkownika",
       "unblockUser": "Odblokuj użytkownika",
       "deleteUser": "Usuń użytkownika",
-      "formError": "Wszystkie pola danych użytkownika muszą być uzupełnione",
-      "firstName": "Imię",
-      "lastName": "Nazwisko",
-      "email": "Adres email",
+      "formError" : "Wszystkie pola danych użytkownika muszą być uzupełnione!",
+      "passwordError" : "Hasło ma mniej niż 8 znaków!",
+      "firstName" : "Imię",
+      "lastName" : "Nazwisko",
+      "email" : "Adres email",
       "password": "Hasło",
       "userList": "Lista użytkowników",
       "create": "Stwórz",
@@ -183,7 +192,17 @@
       "createdBy": "Utworzony przez",
       "isBlocked": "Zablokowany",
       "accessDenied": "Brak dostępu",
-      "details": "Pokaż szczegóły"
+      "details": "Pokaż szczegóły",
+      "userCreatedSuccess": "Użytkownik został stworzony",
+      "userEditedSuccess": "Użytkownik został edytowany",
+      "userUnblockedSuccess": "Użytkownik został odblokowany",
+      "userBlockedSuccess": "Użytkownik został zablokowany",
+      "userDeletedSuccess": "Użytkownik został usunięty",
+      "userActionError": "Coś poszło nie tak",
+      "confirmDeleteTitle": "Potwierdź usunięcie",
+      "confirmDeleteMessage": "Czy na pewno chcesz usunąć tego użytkownika?\nTej operacji nie można cofnąć.",
+      "cancel": "Anuluj",
+      "delete": "Usuń"
     },
     "members": {
       "selectUser": "Wybierz użytkownika",
@@ -219,7 +238,10 @@
       "deleted": "Projekt został usunięty.",
       "notFound": "Nie znaleziono członka projektu.",
       "noAccess": "Brak dostępu.",
-      "ok": "Ok"
+      "ok": "Ok",
+      "memberCreatedSuccess": "Uczestnik został dodany",
+      "memberEditedSuccess": "Uczestnik został edytowany",
+      "memberDeletedSuccess": "Uczestnik został usunięty"
     },
     "environments": {
       "name": "Nazwa",
@@ -233,7 +255,6 @@
       "updateEnvironment": "Zaktualizuj środowisko",
       "newEnvironment": "Nowe środowisko",
       "createEnvironment": "Utwórz środowisko",
-      "notFound": "Środowisko nie znalezione",
       "noAccess": "Brak dostępu",
       "yes": "Tak",
       "no": "Nie",
@@ -247,7 +268,10 @@
       "emptyFieldError": "To pole nie może być puste",
       "deleted": "Projekt został usunięty.",
       "notFound": "Nie znaleziono środowiska.",
-      "environmentsList": "Lista środowisk"
+      "environmentsList": "Lista środowisk",
+      "envCreatedSuccess": "Środowisko zostało utworzone",
+      "envEditedSuccess": "Środowisko zostało edytowane",
+      "envDeletedSuccess": "Środowisko zostało usunięte"
     },
     "activities": {
       "type": "Typ",

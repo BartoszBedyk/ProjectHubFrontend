@@ -3,7 +3,7 @@ import CustomLayout from "../../components/Layout/Layout";
 import AllResourcesTable from "../../components/TableImpl/AllResourcesTable";
 import {useTranslation} from "react-i18next";
 import {ResourceType} from "../../api/resources/response/ResourceDto";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {Box, Button, CircularProgress, Container, Icon, Typography} from "@mui/material";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import {Role} from "../../api/project/project-member/response/Role";
@@ -12,6 +12,7 @@ import {api} from "../../api/AppApi";
 import {ProjectDTO} from "../../api/project/response/ProjectDTO";
 import {getUserRole} from "../../components/authComponent";
 import {TIMEOUTS} from "../../utils/timeouts";
+import CustomSnackbar from "../../components/Alerts/CustomSnackbar";
 
 function Resources() {
     const {t} = useTranslation("resources");
@@ -21,6 +22,25 @@ function Resources() {
     const [currentUserRole, setCurrentUserRole] = useState<Role | null>(null);
     const [project, setProject] = useState<ProjectDTO | null>(null);
     const [loading, setLoading] = useState(true);
+    const location = useLocation();
+    const [snackbarData, setSnackbarData] = useState<{open: boolean, message: string, severity: 'success' | 'error'}>({
+        open: false,
+        message: '',
+        severity: 'success'
+    });
+
+    useEffect(() => {
+        if (location.state?.showSnackbarCreate) {
+            setSnackbarData({open: true, message: t('resourceCreatedSuccess'), severity: 'success'});
+        }
+        if (location.state?.showSnackbarDelete) {
+            setSnackbarData({open: true, message: t('resourceDeletedSuccess'), severity: 'success'});
+        }
+    }, [location.state, t]);
+
+    const handleSnackbarClose = () => {
+        setSnackbarData(prev => ({...prev, open: false}));
+    };
 
     switch (type) {
         case "link": {
@@ -145,6 +165,12 @@ function Resources() {
 
             </Box>
             <AllResourcesTable searchValue={projectId!} resourceType={type as ResourceType} environmentId ={environmentId!}></AllResourcesTable>
+            <CustomSnackbar
+                open={snackbarData.open}
+                onClose={handleSnackbarClose}
+                message={snackbarData.message}
+                severity={snackbarData.severity}
+            />
         </CustomLayout>
 
 

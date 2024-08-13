@@ -7,7 +7,7 @@
     "project": "Project",
     "projectList": "Projects list",
     "addProject": "Create project",
-    "main": "Main",
+    "main": "Project details",
     "all": "All",
     "resources": "Resources",
     "resourcesLink": "Links",
@@ -97,7 +97,10 @@
       "nullValueError": "Value of the resource cannot be null.",
       "nullNameError": "Name of the resource cannot be null.",
       "lengthValueError200": "Length of value of the resource cannot be less than 1 and longer than 200.",
-      "unknownError": "Unknown error"
+      "unknownError": "Unknown error",
+      "resourceCreatedSuccess": "Resource has been created",
+      "resourceEditedSuccess": "Resource has been edited",
+      "resourceDeletedSuccess": "Resource has been deleted"
 
     },
     "projects": {
@@ -133,7 +136,11 @@
       "projectName": "Project name",
       "deleted": "Project has been deleted.",
       "deleted2": " (deleted)",
-      "newProject": "New project"
+      "newProject": "New project",
+      "projectCreatedSuccess": "Project has been created",
+      "projectEditedSuccess": "Project has been edited",
+      "projectDeletedSuccess": "Project has been deleted",
+      "envDeletedSuccess": "Environment has been deleted"
     },
     "forms": {
       "new": "New",
@@ -175,7 +182,8 @@
       "blockUser": "Block user",
       "unblockUser": "Unblock user",
       "deleteUser": "Delete user",
-      "formError" : "All user data fields must be filled in",
+      "formError" : "All user data fields must be filled in!",
+      "passwordError" : "Password is less than 8 characters long!",
       "firstName" : "First name",
       "lastName" : "Last name",
       "email" : "Email address",
@@ -187,7 +195,17 @@
       "createdBy": "Created by",
       "isBlocked": "Blocked",
       "accessDenied": "No access",
-      "details": "Show details"
+      "details": "Show details",
+      "userCreatedSuccess": "User has been created",
+      "userEditedSuccess": "User has been edited",
+      "userUnblockedSuccess": "User has been unblocked",
+      "userBlockedSuccess": "User has been blocked",
+      "userDeletedSuccess": "User has been deleted",
+      "userActionError": "Something went wrong",
+      "confirmDeleteTitle": "Confirm deletion",
+      "confirmDeleteMessage": "Are you sure you want to delete this user?\nThis operation cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
     },
     "members": {
       "selectUser": "Select user",
@@ -223,7 +241,10 @@
       "deleted": "Project has been deleted.",
       "notFound": "Member not found.",
       "noAccess": "No access.",
-      "ok": "Ok"
+      "ok": "Ok",
+      "memberCreatedSuccess": "Member has been added",
+      "memberEditedSuccess": "Member has been edited",
+      "memberDeletedSuccess": "Member has been deleted"
     },
     "environments": {
       "name": "Name",
@@ -251,7 +272,10 @@
       "emptyFieldError": "This field cannot be empty",
       "deleted": "Project has been deleted.",
       "notFound": "Environment not found.",
-      "environmentsList": "Environments list"
+      "environmentsList": "Environments list",
+      "envCreatedSuccess": "Environment has been created",
+      "envEditedSuccess": "Environment has been edited",
+      "envDeletedSuccess": "Environment has been deleted"
     },
     "activities": {
       "type": "Type",

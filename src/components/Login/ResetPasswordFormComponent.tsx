@@ -74,7 +74,7 @@ export const ResetPasswordFormComponent = () => {
 
             await api.loginPassAuth.resetPassword(newFormData as ResetPasswordConfirmForm).then(
                 response => {
-                    setGlobalError(t('correctResetPassword'));
+                    setGlobal(t('correctResetPassword'));
                     setTimeout(() => {
                         console.log(response)
                         navigate("/auth/login")

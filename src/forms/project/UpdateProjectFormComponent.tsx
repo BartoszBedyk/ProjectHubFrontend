@@ -136,7 +136,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
         setFormError(null);
         try {
             const response = await api.project.update(form);
-            navigate(`/project/${response.id}`);
+            navigate(`/project/${response.id}`, { state: { showSnackbarEdit: true } });
         } catch (error) {
             console.error('Error updating project:', error);
         }

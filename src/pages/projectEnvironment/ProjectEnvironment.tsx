@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate, useLocation} from 'react-router-dom';
 import {
     Box,
     Typography,
@@ -21,6 +21,7 @@ import { Role } from '../../api/project/project-member/response/Role';
 import {ProjectEnvironmentDto} from "../../api/project/project-environment/response/ProjectEnvironmentDto";
 import {getUserRole} from "../../components/authComponent";
 import {TIMEOUTS} from "../../utils/timeouts";
+import CustomSnackbar from "../../components/Alerts/CustomSnackbar";
 
 const ProjectEnvironmentPageComponent: React.FC = () => {
     const { environmentId } = useParams<{ environmentId: string }>();
@@ -32,6 +33,25 @@ const ProjectEnvironmentPageComponent: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useTranslation('environments');
     const [isProjectDeleted, setIsProjectDeleted] = useState(false);
+    const location = useLocation();
+    const [snackbarData, setSnackbarData] = useState<{open: boolean, message: string, severity: 'success' | 'error'}>({
+        open: false,
+        message: '',
+        severity: 'success'
+    });
+
+    useEffect(() => {
+        if (location.state?.showSnackbarCreate) {
+            setSnackbarData({open: true, message: t('envCreatedSuccess'), severity: 'success'});
+        }
+        if (location.state?.showSnackbarEdit) {
+            setSnackbarData({open: true, message: t('envEditedSuccess'), severity: 'success'});
+        }
+    }, [location.state, t]);
+
+    const handleSnackbarClose = () => {
+        setSnackbarData(prev => ({...prev, open: false}));
+    };
 
 
     useEffect(() => {
@@ -66,7 +86,7 @@ const ProjectEnvironmentPageComponent: React.FC = () => {
         try {
             const environmentResponse = await api.projectEnvironment.findById(environmentId!);
             await api.projectEnvironment.delete(environmentId!);
-            navigate(`/project/${environmentResponse.projectId}`);
+            navigate(`/project/${environmentResponse.projectId}`, { state: { showSnackbarEnvDelete: true }});
         } catch (error) {
             console.error('Error deleting environment:', error);
         }
@@ -187,6 +207,12 @@ const ProjectEnvironmentPageComponent: React.FC = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <CustomSnackbar
+                open={snackbarData.open}
+                onClose={handleSnackbarClose}
+                message={snackbarData.message}
+                severity={snackbarData.severity}
+            />
         </CustomLayout>
     );
 };

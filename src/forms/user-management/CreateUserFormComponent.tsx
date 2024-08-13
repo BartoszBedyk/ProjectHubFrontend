@@ -19,6 +19,7 @@ const CreateUserFormComponent: React.FC = () => {
     const {t} = useTranslation("userManagement");
 
     const [formError, setFormError] = useState<string | null>(null);
+    const [passwordError, setPasswordError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
@@ -30,12 +31,17 @@ const CreateUserFormComponent: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+
         if (form.firstName === '' || form.lastName === '' || form.email === '' || form.password === '') {
             setFormError(t('formError'));
             return;
         }
 
-        setFormError(null);
+        if (form.password.length < 8) {
+            setFormError(null)
+            setPasswordError(t('passwordError'));
+            return;
+        }
 
         try {
             const response = await api.loginPassAuth.register(form);
@@ -46,7 +52,8 @@ const CreateUserFormComponent: React.FC = () => {
                 email: '',
                 password: '',
             });
-            navigate('/user');
+            navigate('/user', { state: { showSnackbarCreate: true } });
+
         } catch (e) {
             console.error('Error creating user:', e);
         }
@@ -71,6 +78,11 @@ const CreateUserFormComponent: React.FC = () => {
                 noValidate
                 autoComplete='off'
             >
+                {formError && (
+                    <Typography color="error" sx={{ mb: 1, mt: 1 }}>
+                        {t(formError)}
+                    </Typography>
+                )}
                 <TextField
                     required
                     type='text'
@@ -101,6 +113,11 @@ const CreateUserFormComponent: React.FC = () => {
                     onChange={handleInputChange}
                     error={!!formError}
                 />
+                {passwordError && (
+                    <Typography color="error" sx={{ mb: 1, mt: 1 }}>
+                        {t(passwordError)}
+                    </Typography>
+                )}
                 <TextField
                     required
                     type={showPassword ? 'text' : 'password'}
@@ -109,7 +126,7 @@ const CreateUserFormComponent: React.FC = () => {
                     label={t('password')}
                     value={form.password}
                     onChange={handleInputChange}
-                    error={!!formError}
+                    error={!!passwordError}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">

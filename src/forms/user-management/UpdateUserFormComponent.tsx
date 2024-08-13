@@ -53,7 +53,7 @@ const UpdateUserFormComponent: React.FC<{userId: string}> = ({userId}) => {
 
         try {
             const response = await api.userManagement.update(form);
-            navigate('/user');
+            navigate('/user', { state: { showSnackbarEdit: true } });
         } catch (e) {
             console.error('Error updating user:', e);
         }
