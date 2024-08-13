@@ -90,13 +90,14 @@ const useNavLinks = (): NavLink[] => {
                     icon: LockIcon,
                     link: "/project/:projectId/resources/secret",
                 },
-                {
-                    name: t('resourcesMembers'),
-                    sortName: "MemberResources",
-                    icon: GroupIcon,
-                    link: "/project/:projectId/resources/members",
-                },
+
             ]
+        },
+        {
+            name: t('resourcesMembers'),
+            sortName: "MemberResources",
+            icon: GroupIcon,
+            link: "/project/:projectId/resources/members",
         },
         {
             name: t('userManagement'),

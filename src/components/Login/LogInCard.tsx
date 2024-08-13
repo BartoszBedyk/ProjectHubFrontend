@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Button,
@@ -6,22 +6,25 @@ import {
     CardContent,
     Checkbox,
     FormControl,
-    FormControlLabel,
+    FormControlLabel, IconButton, InputAdornment,
     TextField,
     Typography,
 } from "@mui/material";
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import LockSensilabsColor from '../../assets/Login/SensilabsLock.png';
-import { api } from "../../api/AppApi";
-import { LoginForm } from "../../api/login-pass-auth/form/LoginForm";
-import { getToken, setToken } from "../../storage/AuthStorage";
+import {api} from "../../api/AppApi";
+import {LoginForm} from "../../api/login-pass-auth/form/LoginForm";
+import {getToken, setToken} from "../../storage/AuthStorage";
 import secureLocalStorage from "react-secure-storage";
-import { useNavigate } from "react-router-dom";
-import { stylesLogin } from "./styles/LoginStyles";
+import {useNavigate} from "react-router-dom";
+import {stylesLogin} from "./styles/LoginStyles";
 import {UpdateDialog} from "../dialogs/UpdateDialog";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import ResetPasswordDialog from "../dialogs/ResetPasswordDialog";
 
 export const LogInCard = () => {
-    const { t } = useTranslation("login");
+    const {t} = useTranslation("login");
     const linkToHomePage = "/";
     const navigate = useNavigate();
 
@@ -31,11 +34,14 @@ export const LogInCard = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [isBlocked, setIsBlocked] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [resetOpen, setResetOpen] = useState(false)
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         setLoading(true);
     };
+
 
     useEffect(() => {
         if (loading) {
@@ -67,7 +73,7 @@ export const LogInCard = () => {
             }
 
 
-            const form: LoginForm = { email: username, password: password };
+            const form: LoginForm = {email: username, password: password};
             api.loginPassAuth.login(form)
                 .then(data => {
                     setToken(data.token);
@@ -78,9 +84,9 @@ export const LogInCard = () => {
                     navigate(linkToHomePage);
                 })
                 .catch((error) => {
-                    console.log("Error: ",  error.response.data.message);
+                    console.log("Error: ", error.response.data.message);
                     setErrorMessage(t("loggingError"));
-                    if(error.response.data.message==='User is blocked') {
+                    if (error.response.data.message === 'User is blocked') {
                         setIsBlocked(true)
                         setErrorMessage(t('bannedUser'))
                     }
@@ -91,15 +97,33 @@ export const LogInCard = () => {
         }
     }, [loading]);
 
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const toggleResetPassword = () => {
+        setResetOpen(true);
+    };
+
+    const handleResetDialogClose = () => {
+        setResetOpen(false);
+    };
+
+    useEffect(() => {
+        console.log("reset open state ", resetOpen);
+    }, [resetOpen]);
+
+
     return (
-        <Card variant={"outlined"} sx={{ "--Card-radius": "0px" }}>
+        <Card variant={"outlined"} sx={{"--Card-radius": "0px"}}>
             <CardContent
-                sx={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "30px 25px" }}>
+                sx={{display: "flex", flexDirection: "column", alignItems: "center", padding: "30px 25px"}}>
                 <Box
                     component="img"
                     sx={stylesLogin.lockIconProps}
                     src={LockSensilabsColor}
                 />
+                <ResetPasswordDialog open={resetOpen} onClose={handleResetDialogClose} />
                 <UpdateDialog openProps={isBlocked} title={t('bannedUserTitle')} message={t('bannedUserMessage')}/>
                 <Typography variant="h4" component="p">{t("login")}</Typography>
                 <span style={stylesLogin.errorProps}>{errorMessage}</span>
@@ -123,13 +147,26 @@ export const LogInCard = () => {
                             autoComplete="on"
                             onChange={(e) => setPassword(e.target.value)}
                             sx={stylesLogin.textFields}
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={toggleShowPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
 
                         <FormControlLabel
                             id="credentialsAllowance"
                             control={<Checkbox checked={saveCredentials}
-                                               onChange={(e) => setSaveCredentials(e.target.checked)} />}
+                                               onChange={(e) => setSaveCredentials(e.target.checked)}/>}
                             label={t("loginCred")}
                             sx={stylesLogin.formContainer}
                         />
@@ -145,7 +182,9 @@ export const LogInCard = () => {
                     </FormControl>
                 </form>
 
-                <Typography variant="body2" component="p">{t("loginLink1")} <b>{t("loginLink1b")}</b></Typography>
+                <Typography variant="body2" component="p">{t("loginLink1")} <Button
+                    style={{font: "inherit", color: "inherit", fontSize: "inherit", padding: '0'}}
+                    onClick={toggleResetPassword}><b>{t("loginLink1b")}</b></Button></Typography>
                 <Typography variant="body2" component="p">{t("loginLink2")} <b>{t("loginLink2b")}</b></Typography>
             </CardContent>
         </Card>

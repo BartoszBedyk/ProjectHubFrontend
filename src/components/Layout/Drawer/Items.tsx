@@ -4,6 +4,9 @@ import {ExpandLess, ExpandMore} from "@mui/icons-material";
 import {Link, useParams} from "react-router-dom";
 import useNavLinks, {NavLink} from "./navLinks";
 import {api} from "../../../api/AppApi";
+import {getUserId} from "../../../storage/AuthStorage";
+import {ProjectEnvironmentDto} from "../../../api/project/project-environment/response/ProjectEnvironmentDto";
+import {ProjectMemberDto} from "../../../api/project/project-member/response/ProjectMemberDto";
 
 interface ItemsProps {
     open: boolean;
@@ -14,13 +17,17 @@ const Items: React.FC<ItemsProps> = ({open}) => {
     const [envId, setEnvId] = useState<string>()
     const navLinks = useNavLinks();
     const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
-    const { projectId: paramProjectId, environmentId } = useParams<{ projectId?: string; environmentId?: string }>();
+    const {projectId: paramProjectId, environmentId} = useParams<{ projectId?: string; environmentId?: string }>();
     const [projectId, setProjectId] = useState<string | undefined>(paramProjectId);
+
+    const [environments, setEnvironments] = useState<ProjectEnvironmentDto[]>([]);
+    const [member, setMember] = useState<ProjectMemberDto>();
 
     useEffect(() => {
         const fetchProjectId = async () => {
             if (environmentId) {
                 try {
+                    setEnvId(environmentId)
                     const environment = await api.projectEnvironment.findById(environmentId);
                     setProjectId(environment.projectId);
                 } catch (error) {
@@ -39,8 +46,6 @@ const Items: React.FC<ItemsProps> = ({open}) => {
     }, [open]);
 
 
-
-
     const handleClick = (name: string) => {
         setOpenItems((prevOpenItems) => ({
             ...prevOpenItems,
@@ -50,13 +55,28 @@ const Items: React.FC<ItemsProps> = ({open}) => {
 
 
     useEffect(() => {
-        if(projectId){
-            api.projectEnvironment.findAll(projectId!).then(result => {
-                setEnvId(result[0].id)
-            })
+        const fetchEnvironments = async () => {
+            if(environmentId) {
+                setEnvId(environmentId);
+                return;
+            }
+            if (projectId && !environmentId) {
+                const response = await api.projectEnvironment.findAll(projectId!)
+                setEnvironments(response);
+                const responseMember = await api.projectMember.getByIds(getUserId()!, projectId!);
+                setMember(responseMember);
+                const memberEnvs = responseMember?.environmentIds;
+                const commonEnvs = response.filter(env => memberEnvs.includes(env.id));
+                setEnvironments(commonEnvs);
+
+                setEnvId(commonEnvs[0].id);
+
+            }
         }
+        fetchEnvironments()
 
     }, [projectId, envId]);
+
 
     const isActive = (name: string) => openItems[name];
 
@@ -139,7 +159,7 @@ const Items: React.FC<ItemsProps> = ({open}) => {
     };
 
     const filteredNavLinks = navLinks.filter((item) => {
-        if (item.sortName === 'Main' || item.sortName === 'Resources') {
+        if (item.sortName === 'Main' || item.sortName === 'Resources' || item.sortName === 'MemberResources') {
             return !!projectId;
         }
         if (item.sortName === "User management" || item.sortName === "Activities") {

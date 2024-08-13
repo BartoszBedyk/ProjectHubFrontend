@@ -3,6 +3,8 @@ import { useState, useEffect, SetStateAction } from "react";
 import { api } from "../api/AppApi";
 import {useNavigate, useParams} from "react-router-dom";
 import { ProjectEnvironmentDto } from "../api/project/project-environment/response/ProjectEnvironmentDto";
+import {ProjectMemberDto} from "../api/project/project-member/response/ProjectMemberDto";
+import {getUserId} from "../storage/AuthStorage";
 
 interface Props {
     environmentId: string;
@@ -13,18 +15,25 @@ interface Props {
 const EnvironmentDropdown = ({ environmentId, projectId, oldType }: Props) => {
     const [environment, setEnvironment] = useState<string>('');
     const [environments, setEnvironments] = useState<ProjectEnvironmentDto[]>([]);
+    const [member, setMember] = useState<ProjectMemberDto>();
     const navigate = useNavigate();
     const {type} = useParams<string>();
     if(type) oldType = type
+
     useEffect(() => {
         const fetchEnvironments = async () => {
             try {
                 const response = await api.projectEnvironment.findAll(projectId!);
                 setEnvironments(response);
+                const responseMember = await api.projectMember.getByIds(getUserId()!, projectId!);
+                setMember(responseMember);
+                const memberEnvs = responseMember?.environmentIds;
+                const commonEnvs = response.filter(env => memberEnvs.includes(env.id));
+                setEnvironments(commonEnvs);
 
-                if (response.length > 0 && !environmentId) {
-                    navigate(`/project/${projectId}/${response[0].id}/resources/${oldType}`);
-                    setEnvironment(response[0].id);
+                if (!environmentId) {
+                    navigate(`/project/${projectId}/${commonEnvs[0].id}/resources/${oldType}`);
+                    setEnvironment(commonEnvs[0].id);
 
                 }
             } catch (err) {

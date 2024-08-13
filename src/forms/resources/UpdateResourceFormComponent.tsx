@@ -125,9 +125,23 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
                 }, 1000);
             })
             .catch(error => {
-                const errorMessage = error.response?.data?.errors?.name || error.response?.data?.errors?.value
-                setGlobalError(errorMessage);
-                console.error("Error during update:", errorMessage);
+                switch (error.response?.data?.errors?.name || error.response?.data?.errors?.value) {
+                    case "Length of name of the resource cannot be less than 1 and longer than 50.":
+                        setGlobalError(t('resources.lengthNameError50'));
+                        break;
+                    case "Value of the resource cannot be null.":
+                        setGlobalError(t('resources.nullValueError'));
+                        break;
+                    case "Name of the resource cannot be null.":
+                        setGlobalError(t('resources.nullNameError'));
+                        break;
+                    case "Length of value of the resource cannot be less than 1 and longer than 200.":
+                        setGlobalError(t('resources.lengthValueError200'));
+                        break;
+                    default:
+                        setGlobalError(t('resources.unknownError'));
+                        break;
+                }
                 setGlobalError(prevError => `${prevError}`);
             });
     };

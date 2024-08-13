@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import {
+    Avatar,
+    Box,
+    IconButton,
+    ListItemButton,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Tooltip,
+    Typography
+} from "@mui/material";
 import userImg from "../../../../assets/user-profile-image-test.png";
 import useNavLinksUserMenu from "./navLinksUserMenu";
 import { getUserId } from "../../../../storage/AuthStorage";
@@ -63,9 +73,8 @@ const UserMenu = () => {
                 onClose={handleCloseUserMenu}
             >
                 {navLinksUserMenu.map((item) => (
-                    <MenuItem key={item.name} onClick={handleCloseUserMenu}>
-                        <Typography
-                            textAlign="center"
+                    <MenuItem key={item.name} onClick={handleCloseUserMenu} style={{margin:"0", padding:"0"}}>
+                        <ListItemButton
                             onClick={(e) => {
                                 e.stopPropagation();
                                 if (item.name === t('profile')) {
@@ -76,10 +85,12 @@ const UserMenu = () => {
                                     navigate(item.link!);
                                 }
                             }}
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer",  }}
                         >
                             {item.name}
-                        </Typography>
+                        </ListItemButton>
+
+
                     </MenuItem>
                 ))}
             </Menu>
