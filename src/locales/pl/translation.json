@@ -63,7 +63,17 @@
       "correctEmail": "Link został wysłany na podany adres e-mail.",
       "errorNotEmail": "Podana wartość nie jest adresem e-mail.",
       "errorBadEmail": "Tego adresu e-mail nie ma w systemie.",
-      "errorUnknown": "Nieznany błąd."
+      "errorUnknown": "Nieznany błąd.",
+      "errorResetBlank": "Hasło nie może być puste",
+      "errorResetLength8": "Hasło musi mieć co najmniej 8 znaków",
+      "errorResetIdLength36": "Identyfikator musi mieć 36 znaków",
+      "errorResetIdNull": "Identyfikator nie może być nullem",
+      "errorResetPasswordMatch": "Hasła muszą być takie same",
+      "errorResetNotFound": "Token resetowania nie jest już dostępny",
+      "newPassword": "Nowe hasło",
+      "newPassword2": "Powtórz nowe hasło",
+      "correctResetPassword": "Hasło zostało zmienione pomyślnie."
+
     },
     "resources": {
       "resourcestxt": " - zasoby projektu.",
@@ -146,15 +156,14 @@
       "validationError": "Prosze umieść prawidłową wartość. ",
       "modifyDate": "Ostatnia edycja",
       "create": "Utwórz",
-      "linkValue" : "https://www.sensilabs.pl/",
-      "link" : "Link",
-      "text" : "Tekst",
+      "linkValue": "https://www.sensilabs.pl/",
+      "link": "Link",
+      "text": "Tekst",
       "secret": "Secret",
       "attachment": "Załącznik",
-      "chooseType" : "Wybierz typ",
-      "resourceType" : "Typ zasobu",
-      "cancel" : "Anuluj"
-
+      "chooseType": "Wybierz typ",
+      "resourceType": "Typ zasobu",
+      "cancel": "Anuluj"
     },
     "buttons": {
       "openLink": "Otwórz link ",
@@ -164,9 +173,9 @@
       "details": "Pokaż szczegóły",
       "resourcesTableTitle": "Zasoby"
     },
-    "userManagement" : {
-      "createUser" : "Stwórz użytkownika",
-      "editUser" : "Edytuj użytkownika",
+    "userManagement": {
+      "createUser": "Stwórz użytkownika",
+      "editUser": "Edytuj użytkownika",
       "blockUser": "Zablokuj użytkownika",
       "unblockUser": "Odblokuj użytkownika",
       "deleteUser": "Usuń użytkownika",
@@ -246,7 +255,6 @@
       "updateEnvironment": "Zaktualizuj środowisko",
       "newEnvironment": "Nowe środowisko",
       "createEnvironment": "Utwórz środowisko",
-      "notFound": "Środowisko nie znalezione",
       "noAccess": "Brak dostępu",
       "yes": "Tak",
       "no": "Nie",

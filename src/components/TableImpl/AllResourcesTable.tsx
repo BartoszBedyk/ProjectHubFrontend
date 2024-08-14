@@ -94,7 +94,6 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     };
 
     const [rows, setRows] = useState<RowData[]>([
-        {id: 'id', value: '1', name: 'nazwa byczku'},
     ]);
     const link: string = `/project/${props.searchValue}/resources/details`;
 
@@ -102,7 +101,10 @@ const AllResourcesTable = (props: AllResourcesProps) => {
         api.resources.search(searchForm).then(async (response: SearchResponse<ResourceDto>) => {
             const newRows = await Promise.all(response.items.map(async (responseValue) => {
                 let userData = await api.userManagement.get(responseValue.createdById)
-                    .then(response => `${response.firstName} ${response.lastName}`);
+                    .then(response => `${response.firstName} ${response.lastName}`)
+                    .catch(error => console.error(error));
+
+
 
                 switch (responseValue.resourceType) {
                     case 'ATTACHMENT':
@@ -112,7 +114,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "unknown" ,
                             action: <DownloadFileButton>{responseValue.value}</DownloadFileButton>
                         };
                     case 'SECRET':
@@ -122,7 +124,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "unknown" ,
                             action: <SecretDialog>{responseValue.id}</SecretDialog>
                         };
                     case 'LINK':
@@ -135,7 +137,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             ),
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "unknown" ,
                             action: <OpenLinkButton>{responseValue.value}</OpenLinkButton>
                         };
                     case 'TEXT':
@@ -145,7 +147,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "unknown" ,
                             action: <ReadTextButton>{responseValue.value}</ReadTextButton>
                         };
                     default:
@@ -155,7 +157,7 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             value: responseValue.value,
                             type: responseValue.resourceType,
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "unknown" ,
                             action: ''
                         };
                 }
