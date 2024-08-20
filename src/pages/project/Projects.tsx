@@ -43,11 +43,7 @@ const Projects: React.FC = () => {
                     onClick={handleCreateProject}
                     title={t('createProject')}
                 >
-                    <Icon
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <NoteAddIcon></NoteAddIcon>
-                    </Icon>
+                    {t('createProject')}
                 </Button>
             </Box>
             <ProjectsTable searchValue="" />

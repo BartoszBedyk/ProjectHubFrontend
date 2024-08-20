@@ -53,65 +53,158 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
 
     const linkToPage = `/project/${projectId}/resources/details/${resourceId}`;
 
-    const formElements: FormElement[] = [
-        {
-            name: 'nameLabel',
-            id: "nameLabel",
-            defaultValue: t('forms.name'),
-            typeOfElement: {
-                Component: CustomLabelText,
-                props: {},
-            },
-        },
-        {
-            name: 'name',
-            id: 'name',
-            defaultValue: form.name,
-            placeholder: form.name,
-            typeOfElement: {
-                Component: CustomTextField,
-                props: {},
-            },
-        },
-        {
-            name: 'valueLabel',
-            id: "valueLabel",
-            defaultValue: t('forms.value'),
-            typeOfElement: {
-                Component: CustomLabelText,
-                props: {},
-            },
-        },
-        {
-            name: 'value',
-            id: 'value',
-            defaultValue: form.value,
-            placeholder: form.value,
-            typeOfElement: {
-                Component: CustomTextField,
-                props: {},
-            },
-        },
-        {
-            name: 'descriptionLabel',
-            id: "descriptionLabel",
-            defaultValue: t('forms.description'),
-            typeOfElement: {
-                Component: CustomLabelText,
-                props: {},
-            },
-        },
-        {
-            name: 'description',
-            id: 'description',
-            defaultValue: form.description,
-            placeholder: form.description,
-            typeOfElement: {
-                Component: CustomTextArea,
-                props: {},
-            },
-        },
-    ];
+    const [formForType, setFormForType] = useState<FormElement[]>(
+        [
+            {
+                name: '',
+                id: "",
+                defaultValue: '',
+                typeOfElement: {
+                    Component: CustomLabelText,
+                    props: {}
+                }
+            }
+        ]
+    )
+
+
+    function formTypeDeclaration(type: ResourceType) {
+        switch (type) {
+            case  'TEXT': {
+                const formElements: FormElement[] = [
+                    {
+                        name: 'nameLabel',
+                        id: "nameLabel",
+                        defaultValue: t('forms.name'),
+                        typeOfElement: {
+                            Component: CustomLabelText,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'name',
+                        id: 'name',
+                        defaultValue: form.name,
+                        placeholder: form.name,
+                        typeOfElement: {
+                            Component: CustomTextField,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'valueLabel',
+                        id: "valueLabel",
+                        defaultValue: t('forms.value'),
+                        typeOfElement: {
+                            Component: CustomLabelText,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'value',
+                        id: 'value',
+                        defaultValue: form.value,
+                        placeholder: form.value,
+                        typeOfElement: {
+                            Component: CustomTextArea,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'descriptionLabel',
+                        id: "descriptionLabel",
+                        defaultValue: t('forms.description'),
+                        typeOfElement: {
+                            Component: CustomLabelText,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'description',
+                        id: 'description',
+                        defaultValue: form.description,
+                        placeholder: form.description,
+                        typeOfElement: {
+                            Component: CustomTextArea,
+                            props: {},
+                        },
+                    },
+                ];
+                setFormForType(formElements)
+                break;
+            }
+            default:{
+
+                const formElements: FormElement[] = [
+                    {
+                        name: 'nameLabel',
+                        id: "nameLabel",
+                        defaultValue: t('forms.name'),
+                        typeOfElement: {
+                            Component: CustomLabelText,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'name',
+                        id: 'name',
+                        defaultValue: form.name,
+                        placeholder: form.name,
+                        typeOfElement: {
+                            Component: CustomTextField,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'valueLabel',
+                        id: "valueLabel",
+                        defaultValue: t('forms.value'),
+                        typeOfElement: {
+                            Component: CustomLabelText,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'value',
+                        id: 'value',
+                        defaultValue: form.value,
+                        placeholder: form.value,
+                        typeOfElement: {
+                            Component: CustomTextField,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'descriptionLabel',
+                        id: "descriptionLabel",
+                        defaultValue: t('forms.description'),
+                        typeOfElement: {
+                            Component: CustomLabelText,
+                            props: {},
+                        },
+                    },
+                    {
+                        name: 'description',
+                        id: 'description',
+                        defaultValue: form.description,
+                        placeholder: form.description,
+                        typeOfElement: {
+                            Component: CustomTextArea,
+                            props: {},
+                        },
+                    },
+                ];
+                setFormForType(formElements)
+                break;
+
+
+            }
+        }
+    }
+
+    useEffect(() => {
+        formTypeDeclaration(type!);
+    }, [type]);
 
     const handleSubmit = (formData: Record<string, any>) => {
         setGlobalError('');
@@ -154,7 +247,7 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
 
     return (
         <div>
-            <CustomForm formElements={formElements} buttonName={t('resources.update')} handleSubmit={handleSubmit}
+            <CustomForm formElements={formForType} buttonName={t('resources.update')} handleSubmit={handleSubmit}
                         id={resourceId}/>
             {globalError && <p style={{color: 'red'}}>{globalError}</p>}
             {
@@ -162,8 +255,6 @@ export function UpdateResourceFormComponent({resourceId, projectId}: updateProps
                     <p>{t('resources.attachmentDialog')}</p>
                 )
             }
-            <UpdateDialog openProps={open} title={t('resources.dialogUpdateTitle')}
-                          message={t('resources.dialogUpdate')}/>
         </div>
     );
 }

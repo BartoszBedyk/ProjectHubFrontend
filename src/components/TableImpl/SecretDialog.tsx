@@ -46,7 +46,7 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
 
     return (
         <React.Fragment>
-            <Button  variant="contained"
+            <Button
                      size="medium"
                      onClick={handleClickOpen}
                      title={t('readSecret')}
