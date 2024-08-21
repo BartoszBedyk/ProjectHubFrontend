@@ -284,13 +284,15 @@ export const CustomForm: React.FC<UpdateFormProps> = ({formElements, buttonName,
                             </div>
                         );
                     })}
-                    <Button sx={{marginTop: 2}} variant="contained" type="submit" disabled={buttonDisable}>
-                        {buttonName}
-                    </Button>
+                    <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <Button sx={{marginTop: 2}} variant="contained" type="submit" disabled={buttonDisable}>
+                            {buttonName}
+                        </Button>
+                    </div>
                 </form>
             </FormControl>
         </Paper>
-    );
+);
 };
 
 export default CustomForm;

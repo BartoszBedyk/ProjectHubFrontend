@@ -3,7 +3,9 @@
     "save": "Zapisz",
     "secretDialog" : "Zdemaskowany sekret",
     "copyTxt": "Skopiuj tekst",
-    "closeTxt": "Zamknij"
+    "closeTxt": "Zamknij",
+    "text": "Dokument",
+    "creationDate": "Utworzono"
   },
   "drawer": {
     "home": "Strona startowa",
@@ -40,7 +42,7 @@
     "clear": "Wyczyść",
     "apply": "Zastosuj",
     "from": "od",
-    "to": "to"
+    "to": "do"
   },
   "pages": {
     "home": {
@@ -109,7 +111,7 @@
       "projectsTableTitle": "Projekty",
       "projectDetails": "Szczegłóy projektu",
       "open": "Otwórz",
-      "createProject": "Utwórz nowy projekt",
+      "createProject": "Utwórz projekt",
       "notFound": "Nie znaleziono projektu",
       "edit": "Edytuj projekt",
       "deleteProject": "Usuń projekt",
@@ -129,7 +131,7 @@
       "selectedTechnologies": "Wybrane technologie",
       "updateProject": "Zaktualizuj projekt",
       "noAccess": "Brak dostępu.",
-      "createEnvironment": "Nowe środowisko",
+      "createEnvironment": "Dodaj środowisko",
       "projectName": "Nazwa projektu",
       "deleted": "Projekt został usunięty.",
       "deleted2": " (usunięty)",
@@ -171,7 +173,12 @@
       "readSecret": "Odszyfruj sekret",
       "readText": "Odczytaj tekst",
       "details": "Pokaż szczegóły",
-      "resourcesTableTitle": "Zasoby"
+      "resourcesTableTitle": "Zasoby",
+      "copy": "Skopiuj",
+      "cancel": "Anuluj",
+      "link": "Szczegóły linku",
+      "text": "Dokument",
+      "creationDate": "Utworzono"
     },
     "userManagement": {
       "createUser": "Stwórz użytkownika",
@@ -215,11 +222,11 @@
       "visitor": "VISITOR",
       "selectEnvironments": "Wybierz środowiska",
       "selectedEnvironments": "Wybrane środowiska",
-      "createProjectMember": "Utwórz uczestnika projektu",
+      "createProjectMember": "Dodaj uczestnika",
       "emptyFieldError": "To pole nie może być puste",
       "editProjectMember": "Edytuj uczestnika projektu",
       "projectMemberName": "Nazwa uczestnika projektu",
-      "updateProjectMember": "Zaktualizuj uczestnika projektu",
+      "updateProjectMember": "Edytuj uczestnika",
       "addMember": "Dodaj uczestnika",
       "editMember": "Edytuj uczestnika",
       "deleteMember": "Usuń uczestnika",
@@ -254,7 +261,7 @@
       "encrypted": "Zaszyfrowane",
       "updateEnvironment": "Zaktualizuj środowisko",
       "newEnvironment": "Nowe środowisko",
-      "createEnvironment": "Utwórz środowisko",
+      "createEnvironment": "Dodaj środowisko",
       "noAccess": "Brak dostępu",
       "yes": "Tak",
       "no": "Nie",
@@ -300,6 +307,13 @@
       "badOldPassword": "Wpisane przez Ciebie obecne hasło jest niepoprawne!",
       "passwordTooShort": "Nowe hasło ma mniej niż 8 znaków!",
       "passwordChangeSuccess": "Hasło zostało zmienione!"
+    },
+    "enum": {
+      "link": "Link",
+      "attachment": "Załącznik",
+      "secret": "Sekret",
+      "text": "Tekst"
+
     }
   }
 }

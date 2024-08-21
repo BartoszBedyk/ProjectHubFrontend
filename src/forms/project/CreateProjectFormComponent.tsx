@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Box,
     Button,
@@ -13,13 +13,13 @@ import {
     ToggleButton,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CreateProjectForm } from "../../api/project/form/CreateProjectForm";
-import { api } from "../../api/AppApi";
-import { TechnologyDTO } from "../../api/project/technology/response/TechnologyDTO";
-import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from "react-i18next";
-import { useTheme } from '@mui/material/styles';
+import {CreateProjectForm} from "../../api/project/form/CreateProjectForm";
+import {api} from "../../api/AppApi";
+import {TechnologyDTO} from "../../api/project/technology/response/TechnologyDTO";
+import {CreateTechnologyForm} from "../../api/project/technology/form/CreateTechnologyForm";
+import {useNavigate} from 'react-router-dom';
+import {useTranslation} from "react-i18next";
+import {useTheme} from '@mui/material/styles';
 
 const CreateProjectFormComponent: React.FC = () => {
     const [form, setForm] = useState<CreateProjectForm>({
@@ -39,7 +39,7 @@ const CreateProjectFormComponent: React.FC = () => {
     const [formError, setFormError] = useState<string | null>(null);
     const [technologyError, setTechnologyError] = useState<string | null>(null);
     const navigate = useNavigate();
-    const { t } = useTranslation('projects');
+    const {t} = useTranslation('projects');
     const theme = useTheme();
 
     useEffect(() => {
@@ -77,13 +77,13 @@ const CreateProjectFormComponent: React.FC = () => {
     }, [form.technologyList]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
+        const {name, value} = e.target;
+        setForm({...form, [name]: value});
     };
 
     const handleTechnologyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setTechnology({ ...technology, [name]: value });
+        const {name, value} = e.target;
+        setTechnology({...technology, [name]: value});
     };
 
     const addTechnology = async () => {
@@ -99,7 +99,7 @@ const CreateProjectFormComponent: React.FC = () => {
                 ...form,
                 technologyList: [...form.technologyList, createdTechnology.id]
             });
-            setTechnology({ name: '', description: '' });
+            setTechnology({name: '', description: ''});
         } catch (error) {
             console.error('Error creating technology:', error);
         }
@@ -114,7 +114,7 @@ const CreateProjectFormComponent: React.FC = () => {
 
     const removeTechnology = (index: number) => {
         const newTechnologyList = form.technologyList.filter((_, i) => i !== index);
-        setForm({ ...form, technologyList: newTechnologyList });
+        setForm({...form, technologyList: newTechnologyList});
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -133,7 +133,7 @@ const CreateProjectFormComponent: React.FC = () => {
                 description: '',
                 technologyList: []
             });
-            navigate(`/project/${response.id}`, { state: { showSnackbarCreate: true } });
+            navigate(`/project/${response.id}`, {state: {showSnackbarCreate: true}});
         } catch (error) {
             console.error('Error creating project:', error);
         }
@@ -146,9 +146,9 @@ const CreateProjectFormComponent: React.FC = () => {
     };
 
     return (
-        <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
-                <Box sx={{ width: 8, height: 32, backgroundColor: theme.palette.primary.main, marginRight: 2 }} />
+        <Paper sx={{width: 'auto', mb: 2, margin: 3}}>
+            <Box sx={{display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2}}>
+                <Box sx={{width: 8, height: 32, backgroundColor: theme.palette.primary.main, marginRight: 2}}/>
                 <Typography variant="h5" component="div">
                     {t('newProject')}
                 </Typography>
@@ -156,7 +156,7 @@ const CreateProjectFormComponent: React.FC = () => {
             <Box
                 component="form"
                 onSubmit={handleSubmit}
-                sx={{ '& .MuiTextField-root': { m: 1, width: '100%' }, padding: 3 }}
+                sx={{'& .MuiTextField-root': {m: 1, width: '100%'}, padding: 3}}
                 noValidate
                 autoComplete="off"
             >
@@ -181,11 +181,11 @@ const CreateProjectFormComponent: React.FC = () => {
                     error={!!formError}
                 />
                 {formError && (
-                    <Typography color="error" sx={{ marginTop: 2 }}>
+                    <Typography color="error" sx={{marginTop: 2}}>
                         {formError}
                     </Typography>
                 )}
-                <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
+                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
                     {t('addTechnology')}
                 </Typography>
                 <ToggleButtonGroup
@@ -193,13 +193,15 @@ const CreateProjectFormComponent: React.FC = () => {
                     exclusive
                     onChange={handleToggleChange}
                     aria-label="technology type"
-                    sx={{ mb: 2, borderRadius: 1 }}
+                    sx={{mb: 2, borderRadius: 1}}
                     size="small"
                 >
-                    <ToggleButton value="new" aria-label="new technology" sx={{ '&.Mui-selected': { backgroundColor: theme.palette.primary.main, color: '#fff' } }}>
+                    <ToggleButton value="new" aria-label="new technology"
+                                  sx={{'&.Mui-selected': {backgroundColor: theme.palette.primary.main, color: '#fff'}}}>
                         {t('new')}
                     </ToggleButton>
-                    <ToggleButton value="existing" aria-label="existing technology" sx={{ '&.Mui-selected': { backgroundColor: theme.palette.primary.main, color: '#fff' } }}>
+                    <ToggleButton value="existing" aria-label="existing technology"
+                                  sx={{'&.Mui-selected': {backgroundColor: theme.palette.primary.main, color: '#fff'}}}>
                         {t('exists')}
                     </ToggleButton>
                 </ToggleButtonGroup>
@@ -222,11 +224,11 @@ const CreateProjectFormComponent: React.FC = () => {
                             error={!!technologyError}
                         />
                         {technologyError && (
-                            <Typography color="error" sx={{ marginTop: 2 }}>
+                            <Typography color="error" sx={{marginTop: 2}}>
                                 {technologyError}
                             </Typography>
                         )}
-                        <Button variant="contained" color="primary" onClick={addTechnology} sx={{ mt: 2 }}>
+                        <Button variant="contained" color="primary" onClick={addTechnology} sx={{mt: 2}}>
                             {t('addTechnology')}
                         </Button>
                     </>
@@ -252,7 +254,7 @@ const CreateProjectFormComponent: React.FC = () => {
                         ))}
                     </List>
                 )}
-                <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
+                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
                     {t('selectedTechnologies')}
                 </Typography>
                 <List>
@@ -261,10 +263,10 @@ const CreateProjectFormComponent: React.FC = () => {
                             key={index}
                             secondaryAction={
                                 <IconButton edge="end" aria-label="delete" onClick={() => removeTechnology(index)}>
-                                    <DeleteIcon />
+                                    <DeleteIcon/>
                                 </IconButton>
                             }
-                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main} }}
+                            sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
                         >
                             <ListItemText
                                 primary={tech.name}
@@ -273,9 +275,11 @@ const CreateProjectFormComponent: React.FC = () => {
                         </ListItem>
                     ))}
                 </List>
-                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    {t('createProject')}
-                </Button>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <Button type="submit" variant="contained" color="primary" sx={{mt: 2}}>
+                        {t('createProject')}
+                    </Button>
+                </div>
             </Box>
         </Paper>
     );

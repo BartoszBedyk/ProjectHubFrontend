@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Box,
     Button,
@@ -15,16 +15,16 @@ import {
     SelectChangeEvent
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { api } from "../../api/AppApi";
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Role } from "../../api/project/project-member/response/Role";
-import { UpdateProjectMemberForm } from "../../api/project/project-member/form/UpdateProjectMemberForm";
-import { ProjectEnvironmentDto } from "../../api/project/project-environment/response/ProjectEnvironmentDto";
-import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
+import {api} from "../../api/AppApi";
+import {useNavigate} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {Role} from "../../api/project/project-member/response/Role";
+import {UpdateProjectMemberForm} from "../../api/project/project-member/form/UpdateProjectMemberForm";
+import {ProjectEnvironmentDto} from "../../api/project/project-environment/response/ProjectEnvironmentDto";
+import {ProjectMemberDto} from "../../api/project/project-member/response/ProjectMemberDto";
 import {useTheme} from "@mui/material/styles";
 
-const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: string }> = ({ projectId, userId }) => {
+const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: string }> = ({projectId, userId}) => {
     const [form, setForm] = useState<UpdateProjectMemberForm>({
         userId: '',
         projectId: '',
@@ -37,7 +37,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
     const [projectMember, setProjectMember] = useState<ProjectMemberDto | null>(null);
     const [formError, setFormError] = useState<string | null>(null);
     const navigate = useNavigate();
-    const { t } = useTranslation('members');
+    const {t} = useTranslation('members');
     const theme = useTheme();
 
     useEffect(() => {
@@ -83,7 +83,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
     }, [projectId, userId]);
 
     const handleRoleChange = (event: SelectChangeEvent<Role>) => {
-        setForm({ ...form, role: event.target.value as Role });
+        setForm({...form, role: event.target.value as Role});
     };
 
     const addExistingEnvironment = (env: ProjectEnvironmentDto) => {
@@ -98,7 +98,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
 
     const removeEnvironment = (index: number) => {
         const newEnvironmentIds = form.environmentIds.filter((_, i) => i !== index);
-        setForm({ ...form, environmentIds: newEnvironmentIds });
+        setForm({...form, environmentIds: newEnvironmentIds});
         setSelectedEnvironments((prev) => prev.filter((_, i) => i !== index));
     };
 
@@ -112,22 +112,22 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
 
         try {
             const response = await api.projectMember.update(form);
-            navigate(`/project-member/${projectId}/${response.userId}`, { state: { showSnackbarEdit: true } });
+            navigate(`/project-member/${projectId}/${response.userId}`, {state: {showSnackbarEdit: true}});
         } catch (error) {
             console.error('Error updating project member:', error);
         }
     };
 
     return (
-        <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
-                <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
+        <Paper sx={{width: 'auto', mb: 2, margin: 3}}>
+            <Box sx={{display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2}}>
+                <Box sx={{width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2}}/>
                 <Typography variant="h5" component="div">
                     {t('editProjectMember')}
                 </Typography>
             </Box>
             {projectMember && (
-                <Box sx={{ padding: 3 }}>
+                <Box sx={{padding: 3}}>
                     <Typography variant="h6" component="div">
                         {t('projectMemberName')}: {projectMember.firstName} {projectMember.lastName}
                     </Typography>
@@ -136,11 +136,11 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
             <Box
                 component="form"
                 onSubmit={handleSubmit}
-                sx={{ '& .MuiTextField-root': { m: 1, width: '100%' }, padding: 3 }}
+                sx={{'& .MuiTextField-root': {m: 1, width: '100%'}, padding: 3}}
                 noValidate
                 autoComplete="off"
             >
-                <FormControl fullWidth sx={{ mt: 2 }}>
+                <FormControl fullWidth sx={{mt: 2}}>
                     <InputLabel id="role-select-label">{t('selectRole')}</InputLabel>
                     <Select
                         labelId="role-select-label"
@@ -155,11 +155,11 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                     </Select>
                 </FormControl>
                 {formError && (
-                    <Typography color="error" sx={{ marginTop: 2 }}>
+                    <Typography color="error" sx={{marginTop: 2}}>
                         {formError}
                     </Typography>
                 )}
-                <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
+                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
                     {t('selectEnvironments')}
                 </Typography>
                 <List>
@@ -167,13 +167,16 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                         <ListItem
                             key={env.id}
                             onClick={() => addExistingEnvironment(env)}
-                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main, cursor: 'pointer' } }}
+                            sx={{
+                                mb: 1,
+                                '&:hover': {backgroundColor: theme.palette.customHover.main, cursor: 'pointer'}
+                            }}
                         >
-                            <ListItemText primary={env.name} />
+                            <ListItemText primary={env.name}/>
                         </ListItem>
                     ))}
                 </List>
-                <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
+                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
                     {t('selectedEnvironments')}
                 </Typography>
                 <List>
@@ -182,18 +185,20 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                             key={env.id}
                             secondaryAction={
                                 <IconButton edge="end" aria-label="delete" onClick={() => removeEnvironment(index)}>
-                                    <DeleteIcon />
+                                    <DeleteIcon/>
                                 </IconButton>
                             }
-                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main } }}
+                            sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
                         >
-                            <ListItemText primary={env.name} />
+                            <ListItemText primary={env.name}/>
                         </ListItem>
                     ))}
                 </List>
-                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    {t('updateProjectMember')}
-                </Button>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <Button type="submit" variant="contained" color="primary" sx={{mt: 2}}>
+                        {t('updateProjectMember')}
+                    </Button>
+                </div>
             </Box>
         </Paper>
     );

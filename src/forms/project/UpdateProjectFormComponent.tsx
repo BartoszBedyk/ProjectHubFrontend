@@ -159,7 +159,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
             <Box
                 component="form"
                 onSubmit={handleSubmit}
-                sx={{ '& .MuiTextField-root': { m: 1, width: '100%' }, padding: 3 }}
+                sx={{'& .MuiTextField-root': {m: 1, width: '100%'}, padding: 3}}
                 noValidate
                 autoComplete="off"
             >
@@ -184,11 +184,11 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     error={!!formError}
                 />
                 {formError && (
-                    <Typography color="error" sx={{ marginTop: 2 }}>
+                    <Typography color="error" sx={{marginTop: 2}}>
                         {formError}
                     </Typography>
                 )}
-                <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
+                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
                     {t('addTechnology')}
                 </Typography>
                 <ToggleButtonGroup
@@ -196,13 +196,15 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     exclusive
                     onChange={handleToggleChange}
                     aria-label="technology type"
-                    sx={{ mb: 2, borderRadius: 1 }}
+                    sx={{mb: 2, borderRadius: 1}}
                     size="small"
                 >
-                    <ToggleButton value="new" aria-label="new technology" sx={{ '&.Mui-selected': { backgroundColor: '#1976d2', color: '#fff' } }}>
+                    <ToggleButton value="new" aria-label="new technology"
+                                  sx={{'&.Mui-selected': {backgroundColor: '#1976d2', color: '#fff'}}}>
                         {t('new')}
                     </ToggleButton>
-                    <ToggleButton value="existing" aria-label="existing technology" sx={{ '&.Mui-selected': { backgroundColor: '#1976d2', color: '#fff' } }}>
+                    <ToggleButton value="existing" aria-label="existing technology"
+                                  sx={{'&.Mui-selected': {backgroundColor: '#1976d2', color: '#fff'}}}>
                         {t('exists')}
                     </ToggleButton>
                 </ToggleButtonGroup>
@@ -225,11 +227,11 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                             error={!!technologyError}
                         />
                         {technologyError && (
-                            <Typography color="error" sx={{ marginTop: 2 }}>
+                            <Typography color="error" sx={{marginTop: 2}}>
                                 {technologyError}
                             </Typography>
                         )}
-                        <Button variant="contained" color="primary" onClick={addTechnology} sx={{ mt: 2 }}>
+                        <Button variant="contained" color="primary" onClick={addTechnology} sx={{mt: 2}}>
                             {t('addTechnology')}
                         </Button>
                     </>
@@ -239,7 +241,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                             <ListItem
                                 key={tech.id}
                                 onClick={() => addExistingTechnology(tech)}
-                                sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main } }}
+                                sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
                             >
                                 <ListItemText
                                     primary={tech.name}
@@ -249,7 +251,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                         ))}
                     </List>
                 )}
-                <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
+                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
                     {t('selectedTechnologies')}
                 </Typography>
                 <List>
@@ -258,10 +260,10 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                             key={tech.id}
                             secondaryAction={
                                 <IconButton edge="end" aria-label="delete" onClick={() => removeTechnology(index)}>
-                                    <DeleteIcon />
+                                    <DeleteIcon/>
                                 </IconButton>
                             }
-                            sx={{ mb: 1, '&:hover': { backgroundColor: theme.palette.customHover.main} }}
+                            sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
                         >
                             <ListItemText
                                 primary={tech.name}
@@ -270,9 +272,16 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                         </ListItem>
                     ))}
                 </List>
-                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    {t('updateProject')}
-                </Button>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        sx={{mt: 2}}
+                    >
+                        {t('edit')}
+                    </Button>
+                </div>
             </Box>
         </Paper>
     );

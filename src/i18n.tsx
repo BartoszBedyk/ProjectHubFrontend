@@ -20,7 +20,7 @@ export const languageResources ={
         userManagement: translationEnglish.pages.userManagement,
         environments: translationEnglish.pages.environments,
         activity: translationEnglish.pages.activities,
-        userProfile: translationEnglish.pages.userProfile
+        userProfile: translationEnglish.pages.userProfile,
     },
     pl: {
         login: translationPolish.pages.login,
@@ -36,7 +36,7 @@ export const languageResources ={
         userManagement: translationPolish.pages.userManagement,
         environments: translationPolish.pages.environments,
         activity: translationPolish.pages.activities,
-        userProfile: translationPolish.pages.userProfile
+        userProfile: translationPolish.pages.userProfile,
     }
 }
 const options = {

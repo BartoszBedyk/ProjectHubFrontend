@@ -392,8 +392,6 @@ export function CreateResourceFormComponent({projectId, environmentId}: createRe
             <CustomForm formElements={formForType} buttonName={t('forms.create')} handleSubmit={handleSubmit}
                         buttonDisable={buttonState}></CustomForm>
             {globalError && <p style={{color: 'red'}}>{globalError}</p>}
-            <UpdateDialog openProps={open} title={t('resources.dialogCreateTitle')}
-                          message={t('resources.dialogCreate')}></UpdateDialog>
         </div>
     )
 }
