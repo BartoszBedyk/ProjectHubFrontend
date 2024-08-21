@@ -154,13 +154,10 @@ function Resources() {
                             variant="contained"
                             color="primary"
                             onClick={handleCreate}
-                            title={t('createProject')}
+                            title={t('createResource')}
                         >
-                            <Icon
-                                style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                            >
-                                <LibraryAddIcon></LibraryAddIcon>
-                            </Icon>
+                                {t('createResource')}
+
                         </Button>
                     </>
                 )}

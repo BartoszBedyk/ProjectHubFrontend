@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ResetPasswordForms } from "../Login/ResetPasswordForms";
 
@@ -31,8 +31,10 @@ const ResetPasswordDialog = ({ open, onClose }: ResetPasswordDialogProps) => {
     };
 
     return (
-        <Dialog open={open} onClose={closeResetDialog} sx={{ margin: "0", padding: "0" }}>
-            <ResetPasswordForms onError={handleError} />
+        <Dialog open={open} onClose={closeResetDialog} >
+            <Paper sx={{ p: 4 }}>
+                <ResetPasswordForms onError={handleError} />
+            </Paper>
         </Dialog>
     );
 };

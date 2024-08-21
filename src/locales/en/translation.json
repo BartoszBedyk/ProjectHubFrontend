@@ -1,6 +1,11 @@
 {
   "buttons": {
-    "save": "Save"
+    "save": "Save",
+    "secretDialog" : "Unmasked Secret",
+    "copyTxt": "Copy text",
+    "closeTxt": "Close",
+    "text": "Document",
+    "creationDate": "Created on"
   },
   "drawer": {
     "home": "Home",
@@ -112,7 +117,7 @@
       "projectsTableTitle": "Projects",
       "projectDetails": "Project details",
       "open": "Open",
-      "createProject": "Create a new project",
+      "createProject": "Create project",
       "notFound": "Project not found",
       "edit": "Edit Project",
       "deleteProject": "Delete Project",
@@ -132,7 +137,7 @@
       "selectedTechnologies": "Selected technologies",
       "updateProject": "Update project",
       "noAccess": "No access.",
-      "createEnvironment": "Create new environment",
+      "createEnvironment": "Create environment",
       "projectName": "Project name",
       "deleted": "Project has been deleted.",
       "deleted2": " (deleted)",
@@ -174,7 +179,13 @@
       "readSecret": "Decrypt secret",
       "readText": "Read text",
       "details": "Show details",
-      "resourcesTableTitle": "Resources"
+      "resourcesTableTitle": "Resources",
+      "copy": "Copy",
+      "cancel": "Cancel",
+      "link": "Link details",
+      "unmaskedSecret": "Unmasked Secret",
+      "text": "Document",
+      "creationDate": "Created on"
     },
     "userManagement" : {
       "createUser" : "Create user",
@@ -220,11 +231,11 @@
       "visitor": "VISITOR",
       "selectEnvironments": "Select environments",
       "selectedEnvironments": "Selected environments",
-      "createProjectMember": "Create project member",
+      "createProjectMember": "Add member",
       "emptyFieldError": "This field cannot be empty",
       "editProjectMember": "Edit project member",
       "projectMemberName": "Project member name",
-      "updateProjectMember": "Update project member",
+      "updateProjectMember": "Update member",
       "addMember": "Add member",
       "editMember": "Edit member",
       "deleteMember": "Delete member",
@@ -260,7 +271,6 @@
       "updateEnvironment": "Update environment",
       "newEnvironment": "New environment",
       "createEnvironment": "Create environment",
-      "notFound": "Environment not found",
       "noAccess": "No access",
       "yes": "Yes",
       "no": "No",
@@ -306,6 +316,12 @@
       "badOldPassword": "The current password you entered is incorrect!",
       "passwordTooShort": "The new password is less than 8 characters long!",
       "passwordChangeSuccess": "Password has been changed!"
+    },
+    "enum": {
+      "link": "Link",
+      "attachment": "Attachment",
+      "secret": "Secret",
+      "text": "Text"
     }
   }
 }

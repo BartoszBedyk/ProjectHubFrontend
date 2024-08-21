@@ -208,19 +208,20 @@ const ProjectPageComponent: React.FC = () => {
                     </Box>
                 </Box>
             </Paper>
-            <ProjectEnvironmentsTable projectId={projectId!}/>
             {(isOwner || isAdmin) && (
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, marginRight: 3 }}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleCreateEnvironment}
-                        title={t('createProject')}
-                    >
-                        {t('createEnvironment')}
-                    </Button>
-                </Box>
-            )}
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3, marginRight: 3 }}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleCreateEnvironment}
+                    title={t('createProject')}
+                >
+                    {t('createEnvironment')}
+                </Button>
+            </Box>
+        )}
+            <ProjectEnvironmentsTable projectId={projectId!}/>
+
             <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
                 <DialogTitle>{t('confirmDeletion')}</DialogTitle>
                 <DialogContent>

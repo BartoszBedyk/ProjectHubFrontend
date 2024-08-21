@@ -185,7 +185,6 @@ export const LogInCard = () => {
                 <Typography variant="body2" component="p">{t("loginLink1")} <Button
                     style={{font: "inherit", color: "inherit", fontSize: "inherit", padding: '0'}}
                     onClick={toggleResetPassword}><b>{t("loginLink1b")}</b></Button></Typography>
-                <Typography variant="body2" component="p">{t("loginLink2")} <b>{t("loginLink2b")}</b></Typography>
             </CardContent>
         </Card>
     );
