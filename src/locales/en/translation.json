@@ -42,6 +42,19 @@
   },
   "pages": {
     "home": {
+      "welcome": "Welcome to the home page!",
+      "check_projects": "Check your all projects by clicking below.",
+      "view_projects": "View projects",
+      "no_projects": "You have no projects yet.",
+      "create_project": "Create a new project",
+      "your_projects": "Your recent projects",
+      "no_resources": "You have no resources to display.",
+      "last_modified": "Last modified",
+      "last_modified_resources": "Last modified resources",
+      "created_on": "Created on",
+      "your_role": "Your role",
+      "project_description": "Project description",
+      "resource_type": "Resource type"
     },
     "login": {
       "login": "Login",
@@ -113,7 +126,14 @@
       "delete": "Delete",
       "technologyError": "All technology fields must be filled",
       "emptyFieldError": "All project fields must be filled",
+      "projectNameError": "Project name is required.",
+      "projectDescriptionError": "Project description is required.",
+      "technologyListError": "At least one technology must be selected.",
+      "technologyNameError": "Technology name is required.",
+      "technologyDescriptionError": "Technology description is required.",
+      "chooseTechnology": "Choose technology",
       "addTechnology": "Add technologies",
+      "searchTechnology": "Search",
       "new": "New",
       "exists": "Existing",
       "technologyName": "Technology name",
@@ -293,6 +313,13 @@
       "badOldPassword": "The current password you entered is incorrect!",
       "passwordTooShort": "The new password is less than 8 characters long!",
       "passwordChangeSuccess": "Password has been changed!"
+    }
+  },
+  "enums": {
+    "roles": {
+      "OWNER": "Owner",
+      "MAINTAINER": "Maintainer",
+      "VISITOR": "Visitor"
     }
   }
 }

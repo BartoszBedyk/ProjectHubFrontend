@@ -45,6 +45,7 @@ const ProjectMemberPage: React.FC = () => {
         message: '',
         severity: 'success'
     });
+    const { t: t2 } = useTranslation('roles');
 
     useEffect(() => {
         if (location.state?.showSnackbarCreate) {
@@ -195,7 +196,7 @@ const ProjectMemberPage: React.FC = () => {
                         {t('role')}
                     </Typography>
                     <Typography variant="body1" color="textSecondary">
-                        {projectMember.role}
+                        {t2(projectMember.role)}
                     </Typography>
 
                     {environments.length > 0 && (

@@ -40,10 +40,23 @@
     "clear": "Wyczyść",
     "apply": "Zastosuj",
     "from": "od",
-    "to": "to"
+    "to": "do"
   },
   "pages": {
     "home": {
+      "welcome": "Witaj na stronie głównej!",
+      "check_projects": "Sprawdź swoje wszystkie projekty, klikając poniżej.",
+      "view_projects": "Zobacz projekty",
+      "no_projects": "Nie masz jeszcze żadnych projektów.",
+      "create_project": "Utwórz nowy projekt",
+      "your_projects": "Twoje ostatnie projekty",
+      "no_resources": "Nie masz jeszcze żadnych zasobów do wyświetlenia.",
+      "last_modified_resources": "Ostatnio edytowane zasoby",
+      "last_modified": "Data ostatniej edycji: ",
+      "created_on": "Utworzono",
+      "your_role": "Twoja rola",
+      "project_description": "Opis projektu",
+      "resource_type": "Typ zasobu"
     },
     "login": {
       "login": "Zaloguj",
@@ -111,9 +124,16 @@
       "delete": "Usuń",
       "technologyError": "Wszystkie pola technologii muszą być wypełnione",
       "emptyFieldError": "Wszystkie pola projektu muszą być wypełnione",
+      "projectNameError": "Nazwa projektu jest wymagana.",
+      "projectDescriptionError": "Opis projektu jest wymagany.",
+      "technologyListError": "Minimum jedna technologia musi być wybrana.",
+      "technologyNameError": "Nazwa technologii jest wymagana.",
+      "technologyDescriptionError": "Opis technologii jest wymagany.",
+      "chooseTechnology": "Wybierz technologie",
+      "searchTechnology": "Szukaj",
       "addTechnology": "Dodaj technologie",
-      "new": "Nowe",
-      "exists": "Istniejące",
+      "new": "Wybierz nową",
+      "exists": "Szukaj",
       "technologyName": "Nazwa technologii",
       "technologyDescription": "Opis technologii",
       "selectedTechnologies": "Wybrane technologie",
@@ -220,7 +240,7 @@
       "memberNotFound": "Nie znaleziono uczestnika projektu",
       "createdOn": "Utworzono",
       "createdBy": "Utworzony przez",
-      "membersList": "Lista uczestników projektu",
+      "membersList": "Lista członków",
       "role": "Rola",
       "noPermission": "Brak dostępu",
       "environments": "Środowiska",
@@ -292,6 +312,13 @@
       "badOldPassword": "Wpisane przez Ciebie obecne hasło jest niepoprawne!",
       "passwordTooShort": "Nowe hasło ma mniej niż 8 znaków!",
       "passwordChangeSuccess": "Hasło zostało zmienione!"
+    }
+  },
+  "enums": {
+    "roles": {
+      "OWNER": "Właściciel",
+      "MAINTAINER": "Utrzymujący",
+      "VISITOR": "Odwiedzający"
     }
   }
 }

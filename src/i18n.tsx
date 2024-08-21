@@ -20,7 +20,9 @@ export const languageResources ={
         userManagement: translationEnglish.pages.userManagement,
         environments: translationEnglish.pages.environments,
         activity: translationEnglish.pages.activities,
-        userProfile: translationEnglish.pages.userProfile
+        userProfile: translationEnglish.pages.userProfile,
+        home: translationEnglish.pages.home,
+        roles: translationEnglish.enums.roles
     },
     pl: {
         login: translationPolish.pages.login,
@@ -36,11 +38,13 @@ export const languageResources ={
         userManagement: translationPolish.pages.userManagement,
         environments: translationPolish.pages.environments,
         activity: translationPolish.pages.activities,
-        userProfile: translationPolish.pages.userProfile
+        userProfile: translationPolish.pages.userProfile,
+        home: translationPolish.pages.home,
+        roles: translationPolish.enums.roles
     }
 }
 const options = {
-    order: ['querystring', 'navigator'],
+    order: ['querystring', 'localStorage', 'navigator'],
     lookupQuerystring: 'lng'
 }
 

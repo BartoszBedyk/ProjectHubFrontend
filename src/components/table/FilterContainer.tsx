@@ -7,11 +7,12 @@ import {
     Popover,
     Typography,
     MenuItem,
+    Chip,
 } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ClearIcon from '@mui/icons-material/Clear';
 import { ColumnDefinition, ColumnType } from './CustomTable';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 interface FilterContainerProps {
     columns: ColumnDefinition[];
@@ -27,7 +28,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
     const [filters, setFilters] = useState<Record<string, { operator: string; value: string }>>({});
     const [dateRangeFilters, setDateRangeFilters] = useState<Record<string, { start: string; end: string }>>({});
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-    const {t} = useTranslation('table')
+    const { t } = useTranslation('table');
 
     const handleFilterIconClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -47,18 +48,6 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
         }
 
         setFilters(newFilters);
-    };
-
-    const handleApply = () => {
-        onFilterChange(filters);
-        handlePopoverClose();
-    };
-
-    const handleClear = () => {
-        setFilters({});
-        setDateRangeFilters({});
-        onClearFilters();
-        handlePopoverClose();
     };
 
     const handleDateRangeChange = (columnId: string, valueStart: string, valueEnd: string) => {
@@ -83,6 +72,45 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
         }));
     };
 
+    const handleApply = () => {
+        onFilterChange(filters);
+        handlePopoverClose();
+    };
+
+    const handleClear = () => {
+        setFilters({});
+        setDateRangeFilters({});
+        onClearFilters();
+        handlePopoverClose();
+    };
+
+    const handleRemoveFilter = (filterKey: string) => {
+        const newFilters = { ...filters };
+        const columnId = filterKey.split('_')[0];
+
+        delete newFilters[filterKey];
+        setFilters(newFilters);
+
+        if (filterKey.endsWith('_start') || filterKey.endsWith('_end')) {
+            setDateRangeFilters((prev) => {
+                const newDateRangeFilters = { ...prev };
+                const startExists = Boolean(newFilters[`${columnId}_start`]);
+                const endExists = Boolean(newFilters[`${columnId}_end`]);
+
+                if (!startExists && !endExists) {
+                    delete newDateRangeFilters[columnId];
+                } else {
+                    newDateRangeFilters[columnId] = {
+                        start: newFilters[`${columnId}_start`] ? newFilters[`${columnId}_start`].value : '',
+                        end: newFilters[`${columnId}_end`] ? newFilters[`${columnId}_end`].value : '',
+                    };
+                }
+
+                return newDateRangeFilters;
+            });
+        }
+    };
+
     const renderInputField = (column: ColumnDefinition) => {
         const filterValue = filters[column.id]?.value || '';
         const operator = column.operator || getOperatorForType(column.type);
@@ -91,7 +119,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
             return (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <TextField
-                        label={`${column.label} ${t('from')} `}
+                        label={`${column.label} ${t('from')}`}
                         type="date"
                         variant="outlined"
                         size="small"
@@ -188,9 +216,21 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                 onClose={handlePopoverClose}
                 anchorOrigin={{
                     vertical: 'bottom',
-                    horizontal: 'left',
+                    horizontal: 'right',
                 }}
-                sx={{ '& .MuiPaper-root': { borderRadius: 2, p: 2, minWidth: 350 } }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                sx={{
+                    '& .MuiPaper-root': {
+                        borderRadius: 2,
+                        p: 2,
+                        minWidth: 350,
+                        width: 350,
+                        position: 'absolute',
+                    },
+                }}
             >
                 <Box sx={{ p: 2 }}>
                     <Typography variant="h6" sx={{ mb: 2 }}>{t('filters')}</Typography>
@@ -199,12 +239,35 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                             {renderInputField(column)}
                         </Box>
                     ))}
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2}}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                        {Object.entries(filters).map(([key, filter]) => {
+                            const columnId = key.split('_')[0];
+                            const column = columns.find(col => col.id === columnId);
+                            const label = column ? column.label : key;
+                            let displayLabel = label;
+
+                            if (key.endsWith('_start')) {
+                                displayLabel = `${label} ${t('from')}`;
+                            } else if (key.endsWith('_end')) {
+                                displayLabel = `${label} ${t('to')}`;
+                            }
+
+                            return (
+                                <Chip
+                                    key={key}
+                                    label={`${displayLabel}: ${filter.value}`}
+                                    onDelete={() => handleRemoveFilter(key)}
+                                    sx={{ mb: 1 }}
+                                />
+                            );
+                        })}
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
                         <Button
                             variant="contained"
                             color="primary"
                             onClick={handleApply}
-                            sx={{width: '40%'}}
+                            sx={{ width: '40%' }}
                         >
                             {t('apply')}
                         </Button>
@@ -213,7 +276,7 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
                             color="secondary"
                             onClick={handleClear}
                             startIcon={<ClearIcon />}
-                            sx={{width: '40%'}}
+                            sx={{ width: '40%' }}
                         >
                             {t('clear')}
                         </Button>
@@ -225,4 +288,3 @@ const FilterContainer: React.FC<FilterContainerProps> = ({
 };
 
 export default FilterContainer;
-
