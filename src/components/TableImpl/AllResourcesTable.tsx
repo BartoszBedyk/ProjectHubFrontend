@@ -16,6 +16,7 @@ import ReadTextButton from "./ReadTextButton";
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 
+
 type AllResourcesProps = {
     searchValue: string,
     resourceType?: ResourceType
@@ -34,6 +35,23 @@ const AllResourcesTable = (props: AllResourcesProps) => {
         {id: 'createdBy', label: t('forms.createdBy'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
         {id: 'action', label: '', type: 'TEXT', minWidth: 100, sortable: false, filterable: false},
     ];
+
+
+     function getEnumString(type: ResourceType): string{
+            switch (type) {
+                case ResourceType.attachment:
+                    return t('enum.attachment')
+                case ResourceType.text:
+                    return t('enum.text')
+                case ResourceType.link:
+                    return t('enum.link')
+                case ResourceType.secret:
+                    return t('enum.secret')
+                default:
+                    return 'Unknown type';
+            }
+        }
+
 
     let searchFormCriteria: SearchFormCriteria[]
     if (!props.resourceType) {
@@ -94,15 +112,21 @@ const AllResourcesTable = (props: AllResourcesProps) => {
     };
 
     const [rows, setRows] = useState<RowData[]>([
-        {id: 'id', value: '1', name: 'nazwa byczku'},
     ]);
     const link: string = `/project/${props.searchValue}/resources/details`;
+
+    function truncateString(str: string): string {
+        return str.length > 10 ? str.substring(0, 10) + "..." : str;
+    }
 
     useEffect(() => {
         api.resources.search(searchForm).then(async (response: SearchResponse<ResourceDto>) => {
             const newRows = await Promise.all(response.items.map(async (responseValue) => {
                 let userData = await api.userManagement.get(responseValue.createdById)
-                    .then(response => `${response.firstName} ${response.lastName}`);
+                    .then(response => `${response.firstName} ${response.lastName}`)
+                    .catch(error => console.error(error));
+
+
 
                 switch (responseValue.resourceType) {
                     case 'ATTACHMENT':
@@ -110,9 +134,9 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
-                            type: responseValue.resourceType,
+                            type: getEnumString(responseValue.resourceType),
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "Deleted User" ,
                             action: <DownloadFileButton>{responseValue.value}</DownloadFileButton>
                         };
                     case 'SECRET':
@@ -120,9 +144,9 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
-                            type: responseValue.resourceType,
+                            type: getEnumString(responseValue.resourceType),
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "Deleted User" ,
                             action: <SecretDialog>{responseValue.id}</SecretDialog>
                         };
                     case 'LINK':
@@ -133,29 +157,29 @@ const AllResourcesTable = (props: AllResourcesProps) => {
                                 <Link href={responseValue.value} underline="hover" color="inherit" rel="noreferrer"
                                       target="_blank">{responseValue.value}</Link>
                             ),
-                            type: responseValue.resourceType,
+                            type: getEnumString(responseValue.resourceType),
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "Deleted User" ,
                             action: <OpenLinkButton>{responseValue.value}</OpenLinkButton>
                         };
                     case 'TEXT':
                         return {
                             id: responseValue.id,
                             name: responseValue.name,
-                            value: responseValue.value,
-                            type: responseValue.resourceType,
+                            value: truncateString(responseValue.value),
+                            type: getEnumString(responseValue.resourceType),
                             date: responseValue.createdOn,
-                            createdBy: userData,
-                            action: <ReadTextButton>{responseValue.value}</ReadTextButton>
+                            createdBy: userData? userData : "Deleted User" ,
+                            action: <ReadTextButton>{responseValue.id}</ReadTextButton>
                         };
                     default:
                         return {
                             id: responseValue.id,
                             name: responseValue.name,
                             value: responseValue.value,
-                            type: responseValue.resourceType,
+                            type: getEnumString(responseValue.resourceType),
                             date: responseValue.createdOn,
-                            createdBy: userData,
+                            createdBy: userData? userData : "Deleted User" ,
                             action: ''
                         };
                 }

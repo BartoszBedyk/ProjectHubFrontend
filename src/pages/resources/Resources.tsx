@@ -144,7 +144,9 @@ function Resources() {
     }
     return (
         <CustomLayout>
-            <EnvironmentDropdown environmentId={environment!} projectId={projectId!} oldType={stringType!}></EnvironmentDropdown>
+            <Box sx={{mt: 1}}>
+                <EnvironmentDropdown environmentId={environment!} projectId={projectId!} oldType={stringType!}></EnvironmentDropdown>
+            </Box>
             <Box sx={{display: 'flex', justifyContent: 'flex-end', marginBottom: 2, margin: 3}}>
                 {currentUserRole != Role.VISITOR && currentUserRole != null && (
                     <>
@@ -152,13 +154,10 @@ function Resources() {
                             variant="contained"
                             color="primary"
                             onClick={handleCreate}
-                            title={t('createProject')}
+                            title={t('createResource')}
                         >
-                            <Icon
-                                style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                            >
-                                <LibraryAddIcon></LibraryAddIcon>
-                            </Icon>
+                                {t('createResource')}
+
                         </Button>
                     </>
                 )}

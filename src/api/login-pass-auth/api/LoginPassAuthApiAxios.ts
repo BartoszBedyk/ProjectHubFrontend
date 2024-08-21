@@ -13,18 +13,22 @@ export class LoginPassAuthApiAxios implements LoginPassAuthApi {
     }
     register(form: CreateUserWithPasswordForm): Promise<void> {
         return axiosInstance.post('/auth/register', form)
-            .then(() => {});
+            .then(() => {})
+            .catch(error => console.error(error));
     }
     resetPasswordRequest(form: ResetPasswordForm): Promise<void> {
         return axiosInstance.post('/auth/reset-password-request', form)
-            .then(() => {});
+            .then(() => {})
+
     }
     resetPassword(form: ResetPasswordConfirmForm): Promise<void> {
         return axiosInstance.put('/auth/reset-password', form)
             .then(() => {});
     }
 
-    async logout() {
-        const response = await axiosInstance.post('/auth/logout');
+    logout(): Promise<void> {
+        return axiosInstance.post('/auth/logout')
+            .then(() => {})
+            .catch(error => console.error(error));
     };
 }

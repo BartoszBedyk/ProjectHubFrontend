@@ -240,7 +240,11 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
                                     }}
                                 >
                                     {columns.map((column) => (
-                                        <TableCell key={column.id} align={column.align}>
+                                        <TableCell
+                                            key={column.id}
+                                            align={column.align}
+                                            onClick={column.id !== 'action' ? () => handleNavigate(row.id) : undefined}
+                                        >
                                             {renderCellValue(column, row[column.id])}
                                         </TableCell>
                                     ))}

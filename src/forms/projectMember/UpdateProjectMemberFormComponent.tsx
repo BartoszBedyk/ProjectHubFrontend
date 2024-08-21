@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Box,
     Button,
@@ -23,7 +23,7 @@ import { ProjectEnvironmentDto } from "../../api/project/project-environment/res
 import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
 import { useTheme } from "@mui/material/styles";
 
-const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: string }> = ({ projectId, userId }) => {
+const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: string }> = ({projectId, userId}) => {
     const [form, setForm] = useState<UpdateProjectMemberForm>({
         userId: '',
         projectId: '',
@@ -35,7 +35,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
     const [projectMember, setProjectMember] = useState<ProjectMemberDto | null>(null);
     const [formError, setFormError] = useState<string | null>(null);
     const navigate = useNavigate();
-    const { t } = useTranslation('members');
+    const {t} = useTranslation('members');
     const theme = useTheme();
     const { t: t2 } = useTranslation('roles');
 
@@ -70,7 +70,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
     }, [projectId, userId]);
 
     const handleRoleChange = (event: SelectChangeEvent<Role>) => {
-        setForm({ ...form, role: event.target.value as Role });
+        setForm({...form, role: event.target.value as Role});
     };
 
     const handleEnvironmentChange = (envId: string) => {
@@ -91,16 +91,16 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
 
         try {
             const response = await api.projectMember.update(form);
-            navigate(`/project-member/${projectId}/${response.userId}`, { state: { showSnackbarEdit: true } });
+            navigate(`/project-member/${projectId}/${response.userId}`, {state: {showSnackbarEdit: true}});
         } catch (error) {
             console.error('Error updating project member:', error);
         }
     };
 
     return (
-        <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
-                <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
+        <Paper sx={{width: 'auto', mb: 2, margin: 3}}>
+            <Box sx={{display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2}}>
+                <Box sx={{width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2}}/>
                 <Typography variant="h5" component="div">
                     {t('editProjectMember')}
                 </Typography>
@@ -134,11 +134,11 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                     </Select>
                 </FormControl>
                 {formError && (
-                    <Typography color="error" sx={{ marginTop: 2 }}>
+                    <Typography color="error" sx={{marginTop: 2}}>
                         {formError}
                     </Typography>
                 )}
-                <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
+                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
                     {t('selectEnvironments')}
                 </Typography>
                 <List>
@@ -156,13 +156,14 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                         </ListItem>
                     ))}
                 </List>
-                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    {t('updateProjectMember')}
-                </Button>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <Button type="submit" variant="contained" color="primary" sx={{mt: 2}}>
+                        {t('updateProjectMember')}
+                    </Button>
+                </div>
             </Box>
         </Paper>
     );
 };
 
 export default UpdateProjectMemberFormComponent;
-

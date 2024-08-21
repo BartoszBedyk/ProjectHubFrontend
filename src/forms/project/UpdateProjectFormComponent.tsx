@@ -21,7 +21,7 @@ import { TechnologyDTO } from "../../api/project/technology/response/TechnologyD
 import { CreateTechnologyForm } from "../../api/project/technology/form/CreateTechnologyForm";
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from "@mui/material/styles";
 
 const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId }) => {
     const [form, setForm] = useState<UpdateProjectForm>({
@@ -38,16 +38,16 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
 
     const [existingTechnologies, setExistingTechnologies] = useState<TechnologyDTO[]>([]);
     const [filteredTechnologies, setFilteredTechnologies] = useState<TechnologyDTO[]>([]);
-    const [showExisting, setShowExisting] = useState<string>('existing'); // Default to 'existing'
+    const [showExisting, setShowExisting] = useState<string>('existing');
     const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>([]);
     const [formErrors, setFormErrors] = useState<{ name?: string; description?: string; technologyList?: string }>({});
     const [technologyErrors, setTechnologyErrors] = useState<{ name?: string; description?: string }>({});
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [listVisible, setListVisible] = useState<boolean>(false); // State to control list visibility
+    const [listVisible, setListVisible] = useState<boolean>(false);
     const navigate = useNavigate();
     const { t } = useTranslation('projects');
     const theme = useTheme();
-    const listRef = useRef<HTMLDivElement>(null); // Ref for the list container
+    const listRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchTechnologies = async () => {
@@ -146,7 +146,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
             });
             setSelectedTechnologies([...selectedTechnologies, tech]);
         }
-        setListVisible(false); // Close the list after selection
+        setListVisible(false);
     };
 
     const removeTechnology = (index: number) => {
@@ -213,7 +213,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
     };
 
     const handleClickInput = () => {
-        setListVisible(prev => !prev); // Toggle list visibility
+        setListVisible(prev => !prev);
     };
 
     return (
@@ -227,7 +227,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
             <Box
                 component="form"
                 onSubmit={handleSubmit}
-                sx={{ '& .MuiTextField-root': { m: 1, width: '100%' }, padding: 3 }}
+                sx={{'& .MuiTextField-root': {m: 1, width: '100%'}, padding: 3}}
                 noValidate
                 autoComplete="off"
             >
@@ -364,7 +364,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                             <ListItem key={tech.id}>
                                 <ListItemText primary={tech.name} secondary={tech.description} />
                                 <IconButton edge="end" aria-label="delete" onClick={() => removeTechnology(index)}>
-                                    <DeleteIcon />
+                                    <DeleteIcon/>
                                 </IconButton>
                             </ListItem>
                         ))}

@@ -79,12 +79,13 @@ const UserManagement = () => {
 
     return (
         <CustomLayout>
-            <UsersTable searchValue='' onAction={handleSnackbar}/>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2, mt: 3  }}>
                 <Button onClick={handleOnClick} type="submit" variant="contained" color="primary" sx={{ mr: 3 }}>
                     {t('createUser')}
                 </Button>
             </Box>
+            <UsersTable searchValue='' onAction={handleSnackbar}/>
+
             <CustomSnackbar
                 open={snackbarData.open}
                 onClose={handleSnackbarClose}

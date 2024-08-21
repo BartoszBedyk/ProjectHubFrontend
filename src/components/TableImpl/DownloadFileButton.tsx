@@ -56,12 +56,11 @@ export const DownloadFileButton = ({ children }: DownloadFileButtonProps) => {
     return (
         <form onSubmit={handleSubmit}>
             <Button
-                variant="contained"
                 size="medium"
                 type="submit"
                 title={t("downloadAttachment")}
             >
-                <Icon >
+                <Icon style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <DownloadSharp/>
                 </Icon>
             </Button>

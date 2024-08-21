@@ -29,8 +29,8 @@ export class UserManagementApiAxios implements UserManagementApi {
     }
     delete(id: string): Promise<void> {
         return axiosInstance.delete(`/user-management/delete/${id}`)
-            .then(() => {});
-    }
+            .then(() => {})
+            .catch(error => console.error(error))}
     search(form: SearchForm): Promise<SearchResponse<UserDto>> {
         return axiosInstance.post<SearchResponse<UserDto>>(`/user-management/search`, form)
             .then(response => response.data);

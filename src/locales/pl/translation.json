@@ -3,11 +3,13 @@
     "save": "Zapisz",
     "secretDialog" : "Zdemaskowany sekret",
     "copyTxt": "Skopiuj tekst",
-    "closeTxt": "Zamknij"
+    "closeTxt": "Zamknij",
+    "text": "Dokument",
+    "creationDate": "Utworzono"
   },
   "drawer": {
     "home": "Strona startowa",
-    "project": "Projekt",
+    "project": "Projekty",
     "addProject": "Utwórz projekt",
     "main": "Szczegóły projektu",
     "all": "Wszystkie",
@@ -76,7 +78,17 @@
       "correctEmail": "Link został wysłany na podany adres e-mail.",
       "errorNotEmail": "Podana wartość nie jest adresem e-mail.",
       "errorBadEmail": "Tego adresu e-mail nie ma w systemie.",
-      "errorUnknown": "Nieznany błąd."
+      "errorUnknown": "Nieznany błąd.",
+      "errorResetBlank": "Hasło nie może być puste",
+      "errorResetLength8": "Hasło musi mieć co najmniej 8 znaków",
+      "errorResetIdLength36": "Identyfikator musi mieć 36 znaków",
+      "errorResetIdNull": "Identyfikator nie może być nullem",
+      "errorResetPasswordMatch": "Hasła muszą być takie same",
+      "errorResetNotFound": "Token resetowania nie jest już dostępny",
+      "newPassword": "Nowe hasło",
+      "newPassword2": "Powtórz nowe hasło",
+      "correctResetPassword": "Hasło zostało zmienione pomyślnie."
+
     },
     "resources": {
       "resourcestxt": " - zasoby projektu.",
@@ -112,7 +124,7 @@
       "projectsTableTitle": "Projekty",
       "projectDetails": "Szczegłóy projektu",
       "open": "Otwórz",
-      "createProject": "Utwórz nowy projekt",
+      "createProject": "Utwórz projekt",
       "notFound": "Nie znaleziono projektu",
       "edit": "Edytuj projekt",
       "deleteProject": "Usuń projekt",
@@ -139,7 +151,7 @@
       "selectedTechnologies": "Wybrane technologie",
       "updateProject": "Zaktualizuj projekt",
       "noAccess": "Brak dostępu.",
-      "createEnvironment": "Nowe środowisko",
+      "createEnvironment": "Dodaj środowisko",
       "projectName": "Nazwa projektu",
       "deleted": "Projekt został usunięty.",
       "deleted2": " (usunięty)",
@@ -166,15 +178,14 @@
       "validationError": "Prosze umieść prawidłową wartość. ",
       "modifyDate": "Ostatnia edycja",
       "create": "Utwórz",
-      "linkValue" : "https://www.sensilabs.pl/",
-      "link" : "Link",
-      "text" : "Tekst",
+      "linkValue": "https://www.sensilabs.pl/",
+      "link": "Link",
+      "text": "Tekst",
       "secret": "Secret",
       "attachment": "Załącznik",
-      "chooseType" : "Wybierz typ",
-      "resourceType" : "Typ zasobu",
-      "cancel" : "Anuluj"
-
+      "chooseType": "Wybierz typ",
+      "resourceType": "Typ zasobu",
+      "cancel": "Anuluj"
     },
     "buttons": {
       "openLink": "Otwórz link ",
@@ -182,11 +193,16 @@
       "readSecret": "Odszyfruj sekret",
       "readText": "Odczytaj tekst",
       "details": "Pokaż szczegóły",
-      "resourcesTableTitle": "Zasoby"
+      "resourcesTableTitle": "Zasoby",
+      "copy": "Skopiuj",
+      "cancel": "Anuluj",
+      "link": "Szczegóły linku",
+      "text": "Dokument",
+      "creationDate": "Utworzono"
     },
-    "userManagement" : {
-      "createUser" : "Stwórz użytkownika",
-      "editUser" : "Edytuj użytkownika",
+    "userManagement": {
+      "createUser": "Stwórz użytkownika",
+      "editUser": "Edytuj użytkownika",
       "blockUser": "Zablokuj użytkownika",
       "unblockUser": "Odblokuj użytkownika",
       "deleteUser": "Usuń użytkownika",
@@ -213,7 +229,9 @@
       "confirmDeleteTitle": "Potwierdź usunięcie",
       "confirmDeleteMessage": "Czy na pewno chcesz usunąć tego użytkownika?\nTej operacji nie można cofnąć.",
       "cancel": "Anuluj",
-      "delete": "Usuń"
+      "delete": "Usuń",
+      "yes": "TAK",
+      "no": "NIE"
     },
     "members": {
       "selectUser": "Wybierz użytkownika",
@@ -226,11 +244,11 @@
       "visitor": "VISITOR",
       "selectEnvironments": "Wybierz środowiska",
       "selectedEnvironments": "Wybrane środowiska",
-      "createProjectMember": "Utwórz uczestnika projektu",
+      "createProjectMember": "Dodaj uczestnika",
       "emptyFieldError": "To pole nie może być puste",
       "editProjectMember": "Edytuj uczestnika projektu",
       "projectMemberName": "Nazwa uczestnika projektu",
-      "updateProjectMember": "Zaktualizuj uczestnika projektu",
+      "updateProjectMember": "Edytuj uczestnika",
       "addMember": "Dodaj uczestnika",
       "editMember": "Edytuj uczestnika",
       "deleteMember": "Usuń uczestnika",
@@ -265,8 +283,7 @@
       "encrypted": "Zaszyfrowane",
       "updateEnvironment": "Zaktualizuj środowisko",
       "newEnvironment": "Nowe środowisko",
-      "createEnvironment": "Utwórz środowisko",
-      "notFound": "Środowisko nie znalezione",
+      "createEnvironment": "Dodaj środowisko",
       "noAccess": "Brak dostępu",
       "yes": "Tak",
       "no": "Nie",
@@ -312,6 +329,13 @@
       "badOldPassword": "Wpisane przez Ciebie obecne hasło jest niepoprawne!",
       "passwordTooShort": "Nowe hasło ma mniej niż 8 znaków!",
       "passwordChangeSuccess": "Hasło zostało zmienione!"
+    },
+    "enum": {
+      "link": "Link",
+      "attachment": "Załącznik",
+      "secret": "Sekret",
+      "text": "Tekst"
+
     }
   },
   "enums": {

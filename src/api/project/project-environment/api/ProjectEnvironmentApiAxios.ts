@@ -11,15 +11,18 @@ export class ProjectEnvironmentApiAxios implements ProjectEnvironmentApi {
     }
     create(form: CreateProjectEnvironmentForm): Promise<ProjectEnvironmentDto> {
         return axiosInstance.post('/project-environment/save', form)
-            .then(response => response.data);
+            .then(response => response.data)
+            .catch(error => console.error(error));
     }
     update(form: UpdateProjectEnvironmentForm): Promise<ProjectEnvironmentDto> {
         return axiosInstance.put('/project-environment/update', form)
             .then(response => response.data)
+            .catch(error => console.error(error));
     }
     delete(id: string): Promise<void> {
         return axiosInstance.delete(`/project-environment/delete/${id}`)
-            .then(() => {});
+            .then(() => {})
+            .catch(error => console.error(error));;
     }
     findAll(projectId: string): Promise<ProjectEnvironmentDto[]> {
         return axiosInstance.get<ProjectEnvironmentDto[]>(`/project-environment/find-all/${projectId}`)
