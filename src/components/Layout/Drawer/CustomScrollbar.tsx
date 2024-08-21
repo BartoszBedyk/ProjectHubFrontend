@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-const CustomDrawerScrollbar = styled.div`
+const CustomScrollbar = styled.div`
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: 100%;
 
   &::-webkit-scrollbar {
@@ -24,4 +25,4 @@ const CustomDrawerScrollbar = styled.div`
   }
 `;
 
-export default CustomDrawerScrollbar;
+export default CustomScrollbar;

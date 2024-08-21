@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import { api } from "../../api/AppApi";
+import {api} from "../../api/AppApi";
 import CustomTable, {ColumnDefinition, RowData} from "../table/CustomTable";
 import {SearchFormCriteria} from "../../commons/Search/SearchFormCriteria";
 import {CriteriaOperator} from "../../commons/Search/CriteriaOperator";
@@ -9,9 +9,16 @@ import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
 import {SearchForm} from "../../commons/Search/SearchForm";
 import {SearchResponse} from "../../commons/Search/SearchResponse";
 import {UserDto} from "../../api/user-management/response/UserDto";
-import {IconButton, Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button} from "@mui/material";
-import TrueIcon from '@mui/icons-material/Check';
-import FalseIcon from '@mui/icons-material/Close';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    IconButton,
+    Tooltip
+} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import BlockIcon from '@mui/icons-material/Block';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -39,8 +46,6 @@ const UsersTable = ({ searchValue, onAction }: UsersTableProps) => {
         {id: 'createdBy', label: t('createdBy'), type: 'TEXT', minWidth: 100, sortable: true, filterable: true},
         {id: 'isBlocked', label: t('isBlocked'), type: 'TEXT', minWidth: 100, sortable: false, filterable: false},
         {id: 'action0', label: '', type: 'TEXT', minWidth: 10, sortable: false, filterable: false},
-        {id: 'action1', label: '', type: 'TEXT', minWidth: 10, sortable: false, filterable: false},
-        {id: 'action2', label: '', type: 'TEXT', minWidth: 10, sortable: false, filterable: false},
     ];
 
     const searchFormCriteria: SearchFormCriteria[] = [
@@ -82,8 +87,9 @@ const UsersTable = ({ searchValue, onAction }: UsersTableProps) => {
                     email: user.email,
                     createdOn: user.createdOn,
                     createdBy,
-                    isBlocked: user.blocked ? <TrueIcon /> : <FalseIcon />,
+                    isBlocked: user.blocked ? t('yes') : t('no'),
                     action0: (
+                        <div>
                         <Tooltip title={t('editUser')}>
                             <IconButton onClick={() => {
                                 navigate(`/user/edit/${user.id}`);
@@ -91,27 +97,24 @@ const UsersTable = ({ searchValue, onAction }: UsersTableProps) => {
                                 <EditIcon sx={{color: '#1876D2'}} />
                             </IconButton>
                         </Tooltip>
+                            <Tooltip title={user.blocked ? t('unblockUser') : t('blockUser')}>
+                                <IconButton onClick={async () => {
+                                    await handleBlockUnblock(user.id, user.blocked);
+                                    await fetchUsers();
+                                }}>
+                                    <BlockIcon sx={{color: '#1876D2'}} />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title={t('deleteUser')}>
+                                <IconButton onClick={() => {
+                                    setUserToDelete(user);
+                                    setOpenDialog(true);
+                                }}>
+                                    <DeleteIcon sx={{color: '#1876D2'}}/>
+                                </IconButton>
+                            </Tooltip>
+                        </div>
                     ),
-                    action1: (
-                        <Tooltip title={user.blocked ? t('unblockUser') : t('blockUser')}>
-                            <IconButton onClick={async () => {
-                                await handleBlockUnblock(user.id, user.blocked);
-                                await fetchUsers();
-                            }}>
-                                <BlockIcon sx={{color: '#1876D2'}} />
-                            </IconButton>
-                        </Tooltip>
-                    ),
-                    action2: (
-                        <Tooltip title={t('deleteUser')}>
-                            <IconButton onClick={() => {
-                                setUserToDelete(user);
-                                setOpenDialog(true);
-                            }}>
-                                <DeleteIcon sx={{color: '#1876D2'}}/>
-                            </IconButton>
-                        </Tooltip>
-                    )
                 };
                 return newRow;
             }));

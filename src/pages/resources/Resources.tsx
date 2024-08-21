@@ -144,7 +144,9 @@ function Resources() {
     }
     return (
         <CustomLayout>
-            <EnvironmentDropdown environmentId={environment!} projectId={projectId!} oldType={stringType!}></EnvironmentDropdown>
+            <Box sx={{mt: 1}}>
+                <EnvironmentDropdown environmentId={environment!} projectId={projectId!} oldType={stringType!}></EnvironmentDropdown>
+            </Box>
             <Box sx={{display: 'flex', justifyContent: 'flex-end', marginBottom: 2, margin: 3}}>
                 {currentUserRole != Role.VISITOR && currentUserRole != null && (
                     <>

@@ -1,20 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import {
-    Avatar,
-    Box,
-    IconButton,
-    ListItemButton,
-    ListItemText,
-    Menu,
-    MenuItem,
-    Tooltip,
-    Typography
-} from "@mui/material";
+import React, {useEffect, useState} from 'react';
+import {Avatar, Box, IconButton, ListItemButton, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import userImg from "../../../../assets/user-profile-image-test.png";
 import useNavLinksUserMenu from "./navLinksUserMenu";
-import { getUserId } from "../../../../storage/AuthStorage";
-import { api } from "../../../../api/AppApi";
-import { useNavigate } from "react-router-dom";
+import {getUserId} from "../../../../storage/AuthStorage";
+import {api} from "../../../../api/AppApi";
+import {useNavigate} from "react-router-dom";
 import logout from "../../../Login/LogoutButton";
 import {useTranslation} from "react-i18next";
 
@@ -56,7 +46,19 @@ const UserMenu = () => {
     return (
         <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open options">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p:0 }}>
+                <IconButton onClick={handleOpenUserMenu}
+                            sx={{
+                                p: 0,
+                                '&:hover': {
+                                    backgroundColor: 'transparent',
+                                },
+                                '&:focus': {
+                                    outline: 'none',
+                                    boxShadow: 'none',
+                                    backgroundColor: 'transparent',
+                                }
+                            }}
+                >
                     <Typography sx={{ pr: 1 }}><strong>{user.firstName} {user.lastName}</strong></Typography>
                     <Avatar alt="User image" src={userImg} />
                 </IconButton>
@@ -85,12 +87,16 @@ const UserMenu = () => {
                                     navigate(item.link!);
                                 }
                             }}
-                            style={{ cursor: "pointer",  }}
+                            sx={{
+                                cursor: "pointer",
+                                '&:focus': {
+                                    outline: '2px solid transparent',
+                                    boxShadow: 'none'
+                                }
+                            }}
                         >
                             {item.name}
                         </ListItemButton>
-
-
                     </MenuItem>
                 ))}
             </Menu>
