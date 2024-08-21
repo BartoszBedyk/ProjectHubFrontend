@@ -50,6 +50,18 @@ const useNavLinks = (): NavLink[] => {
             ]
         },
         {
+            name: t('userManagement'),
+            sortName: "User management",
+            icon: AdminPanelSettingsIcon,
+            link: "/user"
+        },
+        {
+            name: t('activities'),
+            sortName: "Activities",
+            icon: EventIcon,
+            link: "/activities"
+        },
+        {
             name: t('main'),
             sortName: "Main",
             icon: HomeIcon,
@@ -98,18 +110,6 @@ const useNavLinks = (): NavLink[] => {
             sortName: "MemberResources",
             icon: GroupIcon,
             link: "/project/:projectId/resources/members",
-        },
-        {
-            name: t('userManagement'),
-            sortName: "User management",
-            icon: AdminPanelSettingsIcon,
-            link: "/user"
-        },
-        {
-            name: t('activities'),
-            sortName: "Activities",
-            icon: EventIcon,
-            link: "/activities"
         },
     ];
 };
