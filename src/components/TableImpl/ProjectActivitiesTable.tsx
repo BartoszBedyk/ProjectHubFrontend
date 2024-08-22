@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import CustomTable, { ColumnDefinition, RowData } from "../../components/table/CustomTable";
-import { api } from "../../api/AppApi";
-import { ActivityDTO } from "../../api/activity/response/ActivityDto";
-import { SearchFormCriteria } from "../../commons/Search/SearchFormCriteria";
-import { SearchSort } from "../../commons/Search/SearchSort";
-import { SearchSortOrder } from "../../commons/Search/SearchSortOrder";
-import { SearchForm } from "../../commons/Search/SearchForm";
-import { SearchResponse } from "../../commons/Search/SearchResponse";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { getUserId } from "../../storage/AuthStorage";
-import {Container, Typography} from "@mui/material";
+import React, {useEffect, useState} from 'react';
+import CustomTable, {ColumnDefinition, RowData} from "../../components/table/CustomTable";
+import {api} from "../../api/AppApi";
+import {ActivityDTO} from "../../api/activity/response/ActivityDto";
+import {SearchFormCriteria} from "../../commons/Search/SearchFormCriteria";
+import {SearchSort} from "../../commons/Search/SearchSort";
+import {SearchSortOrder} from "../../commons/Search/SearchSortOrder";
+import {SearchForm} from "../../commons/Search/SearchForm";
+import {SearchResponse} from "../../commons/Search/SearchResponse";
+import {useTranslation} from "react-i18next";
+import {Typography} from "@mui/material";
+import {CriteriaOperator} from "../../commons/Search/CriteriaOperator";
 
-type ActivitiesTableProps = {
-    searchValue: string
+type ProjectActivitiesTableProps = {
+    projectId: string;
 }
 
-const ActivitiesTable = (props: ActivitiesTableProps) => {
-    const navigate = useNavigate();
+const ProjectActivitiesTable = ({ projectId}: ProjectActivitiesTableProps) => {
     const { t } = useTranslation("activity");
 
     const columns: ColumnDefinition[] = [
@@ -27,7 +25,18 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
         { id: 'params', label: t('params'), type: 'TEXT', minWidth: 250, sortable: false, filterable: false },
     ];
 
-    const searchFormCriteria: SearchFormCriteria[] = [];
+    const searchFormCriteria: SearchFormCriteria[] = [
+        {
+            fieldName: 'params.paramName',
+            value: 'PROJECT_ID',
+            operator: CriteriaOperator.EQUALS
+        },
+        {
+            fieldName: 'params.paramValue',
+            value: projectId,
+            operator: CriteriaOperator.EQUALS
+        }
+    ];
 
     const searchSort: SearchSort = {
         by: 'createdOn',
@@ -42,20 +51,10 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
     };
 
     const [rows, setRows] = useState<RowData[]>([]);
-    const [accessDenied, setAccessDenied] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchActivities = async () => {
             try {
-                const currentUserId = getUserId();
-                if (currentUserId) {
-                    const user = await api.userManagement.get(currentUserId);
-                    if (user.createdById !== "SYSTEM") {
-                        setAccessDenied(true);
-                        return;
-                    }
-                }
-
                 const response: SearchResponse<ActivityDTO> = await api.activity.search(searchForm);
                 const activityRows: RowData[] = response.items.map((activity) => {
                     const params = activity.params.map(param => `${param.name}: ${param.value}`).join('\n');
@@ -75,28 +74,18 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
                 });
                 setRows(activityRows);
             } catch (error) {
-                console.error('Error fetching activities:', error);
+                console.error('Error fetching project activities:', error);
             }
         };
 
         fetchActivities();
-    }, [props.searchValue, navigate]);
-
-    if (accessDenied) {
-        return (
-            <Container>
-                <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-                    {t('accessDenied')}
-                </Typography>
-            </Container>
-        );
-    }
+    }, [projectId]);
 
     return (
         <div>
-            <CustomTable columns={columns} rows={rows} title={t('activitiesTableTitle')}/>
+            <CustomTable columns={columns} rows={rows} title={t('projectActivitiesTableTitle')}/>
         </div>
     );
 }
 
-export default ActivitiesTable;
+export default ProjectActivitiesTable;

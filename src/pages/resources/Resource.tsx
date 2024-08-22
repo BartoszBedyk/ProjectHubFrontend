@@ -65,7 +65,7 @@ const ProjectPageComponent: React.FC = () => {
                 setCurrentUserRole(role);
 
                 if (response.createdById) {
-                    const creatorResponse = await api.projectMember.getByIds(response.createdById, resourceId!);
+                    const creatorResponse = await api.projectMember.getByIds(response.createdById, projectId!);
                     setCreator(creatorResponse);
                 }
             } catch (error) {
@@ -176,9 +176,8 @@ const ProjectPageComponent: React.FC = () => {
                         {t('forms.description')} {resource.description}
                     </Typography>
                     <Box sx={{display: 'flex', justifyContent: 'flex-end', marginTop: 3, gap: 2}}>
-                        {resource.resourceType !== ResourceType.text && (
                             <ButtonByResourceType id={resource.id} resourceType={resource.resourceType}
-                                                  value={resource.value}/>)}
+                                                  value={resource.value}/>
 
                         {currentUserRole != Role.VISITOR && currentUserRole != null && (
                             <>

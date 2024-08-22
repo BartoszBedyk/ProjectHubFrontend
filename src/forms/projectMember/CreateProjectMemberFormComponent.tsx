@@ -12,7 +12,10 @@ import {
     Select,
     InputLabel,
     FormControl,
-    SelectChangeEvent
+    SelectChangeEvent,
+    Checkbox,
+    FormControlLabel,
+    ListItemIcon
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {api} from "../../api/AppApi";
@@ -39,7 +42,6 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({proj
     });
 
     const [existingEnvironments, setExistingEnvironments] = useState<ProjectEnvironmentDto[]>([]);
-    const [selectedEnvironments, setSelectedEnvironments] = useState<ProjectEnvironmentDto[]>([]);
     const [users, setUsers] = useState<UserDto[]>([]);
     const [filteredUsers, setFilteredUsers] = useState<UserDto[]>([]);
     const [existingMembers, setExistingMembers] = useState<ProjectMemberDto[]>([]);
@@ -48,6 +50,7 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({proj
     const navigate = useNavigate();
     const {t} = useTranslation('members');
     const theme = useTheme()
+    const { t: t2 } = useTranslation('roles');
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -90,21 +93,6 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({proj
     }, [projectId]);
 
     useEffect(() => {
-        const fetchSelectedEnvironments = async () => {
-            const environments = await Promise.all(
-                form.environmentIds.map(envId => api.projectEnvironment.findById(envId))
-            );
-            setSelectedEnvironments(environments);
-        };
-
-        if (form.environmentIds.length > 0) {
-            fetchSelectedEnvironments();
-        } else {
-            setSelectedEnvironments([]);
-        }
-    }, [form.environmentIds]);
-
-    useEffect(() => {
         const filtered = users.filter(user => !existingMembers.some(member => member.userId === user.id));
         setFilteredUsers(filtered);
     }, [users, existingMembers]);
@@ -126,17 +114,14 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({proj
         }
     };
 
-    const addExistingEnvironment = (env: ProjectEnvironmentDto) => {
-        setForm(prevForm => ({
-            ...prevForm,
-            environmentIds: [...prevForm.environmentIds, env.id]
-        }));
-    };
+    const handleEnvironmentChange = (envId: string) => {
+        const updatedEnvironmentIds = form.environmentIds.includes(envId)
+            ? form.environmentIds.filter(id => id !== envId)
+            : [...form.environmentIds, envId];
 
-    const removeEnvironment = (index: number) => {
         setForm(prevForm => ({
             ...prevForm,
-            environmentIds: prevForm.environmentIds.filter((_, i) => i !== index)
+            environmentIds: updatedEnvironmentIds
         }));
     };
 
@@ -222,9 +207,9 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({proj
                         onChange={handleRoleChange}
                         label={t('selectRole')}
                     >
-                        <MenuItem value={Role.OWNER}>{t('owner')}</MenuItem>
-                        <MenuItem value={Role.MAINTAINER}>{t('maintainer')}</MenuItem>
-                        <MenuItem value={Role.VISITOR}>{t('visitor')}</MenuItem>
+                        <MenuItem value={Role.OWNER}>{t2(Role.OWNER)}</MenuItem>
+                        <MenuItem value={Role.MAINTAINER}>{t2(Role.MAINTAINER)}</MenuItem>
+                        <MenuItem value={Role.VISITOR}>{t2(Role.VISITOR)}</MenuItem>
                     </Select>
                 </FormControl>
                 {formError && (
@@ -237,34 +222,17 @@ const CreateProjectMemberFormComponent: React.FC<{ projectId: string }> = ({proj
                 </Typography>
                 <List>
                     {existingEnvironments.map(env => (
-                        <ListItem
-                            key={env.id}
-                            onClick={() => addExistingEnvironment(env)}
-                            sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
-                        >
-                            <ListItemText
-                                primary={env.name}
-                            />
-                        </ListItem>
-                    ))}
-                </List>
-                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
-                    {t('selectedEnvironments')}
-                </Typography>
-                <List>
-                    {selectedEnvironments.map((env, index) => (
-                        <ListItem
-                            key={env.id}
-                            secondaryAction={
-                                <IconButton edge="end" aria-label="delete" onClick={() => removeEnvironment(index)}>
-                                    <DeleteIcon/>
-                                </IconButton>
-                            }
-                            sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
-                        >
-                            <ListItemText
-                                primary={env.name}
-                            />
+                        <ListItem key={env.id}>
+                            <ListItemIcon>
+                                <Checkbox
+                                    edge="start"
+                                    checked={form.environmentIds.includes(env.id)}
+                                    tabIndex={-1}
+                                    disableRipple
+                                    onChange={() => handleEnvironmentChange(env.id)}
+                                />
+                            </ListItemIcon>
+                            <ListItemText primary={env.name} />
                         </ListItem>
                     ))}
                 </List>
