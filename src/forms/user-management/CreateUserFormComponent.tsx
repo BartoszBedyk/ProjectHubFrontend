@@ -141,9 +141,11 @@ const CreateUserFormComponent: React.FC = () => {
                         )
                     }}
                 />
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
                 <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, ml: 1 }}>
                     {t('create')}
                 </Button>
+                </Box>
 
             </Box>
         </Paper>

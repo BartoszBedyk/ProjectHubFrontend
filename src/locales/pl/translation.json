@@ -178,7 +178,8 @@
       "cancel": "Anuluj",
       "link": "Szczegóły linku",
       "text": "Dokument",
-      "creationDate": "Utworzono"
+      "creationDate": "Utworzono",
+      "unmaskedSecret": "Odszyfrowany sekret"
     },
     "userManagement": {
       "createUser": "Stwórz użytkownika",
@@ -288,7 +289,27 @@
       "createdById": "Stworzony przez",
       "params": "Parametry",
       "activitiesTableTitle": "Aktywności",
-      "accessDenied": "Brak dostępu."
+      "accessDenied": "Brak dostępu.",
+      "enum": {
+        "createUser": "Utworzyć użytkownika",
+        "userLogInSuccess": "Pomyślnie zalogowano użytkownika",
+        "userLogInFailed": "Nie udało się zalogować użytkownika",
+        "userLogOut": "Wylogować użytkownika",
+        "deleteUser": "Usunąć użytkownika",
+        "documentOpen": "Otworzyć dokument",
+        "keyOpen": "Otworzyć klucz",
+        "documentDownload": "Pobrać dokument",
+        "createProjectMember": "Utworzyć członka projektu",
+        "updateProjectMember": "Zaktualizować członka projektu",
+        "deleteProjectMember": "Usunąć członka projektu",
+        "createProjectEnvironment": "Utworzyć środowisko projektu",
+        "updateProjectEnvironment": "Zaktualizować środowisko projektu",
+        "deleteProjectEnvironment": "Usunąć środowisko projektu",
+        "updateProject": "Zaktualizować projekt",
+        "createResource": "Utworzyć zasób",
+        "updateResource": "Zaktualizować zasób",
+        "deleteResource": "Usunąć zasób"
+      }
     },
     "userProfile": {
       "userProfile": "Profil Użytkownika",
