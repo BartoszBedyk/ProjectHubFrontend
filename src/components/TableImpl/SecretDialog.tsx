@@ -10,18 +10,12 @@ import {Close, CopyAll, VisibilityOutlined} from "@mui/icons-material";
 import {api} from "../../api/AppApi";
 import {useTranslation} from "react-i18next";
 
-
-
-
 interface SecretProps {
-    children : string;
+    children: string;
 }
 
-
 const SecretDialog: React.FC<SecretProps> = ({ children }) => {
-
     const {t} = useTranslation("buttons");
-
 
     const [open, setOpen] = React.useState(false);
     const [secret, setSecret] = React.useState("");
@@ -33,29 +27,31 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
     const handleClose = () => {
         setOpen(false);
     };
-    const handleCopy = () => {
-        navigator.clipboard.writeText(secret)
-        handleClose();
 
+    const handleCopy = () => {
+        navigator.clipboard.writeText(secret);
+        handleClose();
     };
 
-    api.resources.readSecret(children).then((response: string)=>
-    {
-        setSecret(response);
-    });
+    React.useEffect(() => {
+        if (open) {
+            api.resources.readSecret(children).then((response: string) => {
+                setSecret(response);
+            });
+        }
+    }, [open, children]);
 
     return (
         <React.Fragment>
             <Button
-                     size="medium"
-                     onClick={handleClickOpen}
-                     title={t('readSecret')}
+                size="medium"
+                onClick={handleClickOpen}
+                title={t('readSecret')}
             >
-
                 <Icon
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
-                    <VisibilityOutlined></VisibilityOutlined>
+                    <VisibilityOutlined />
                 </Icon>
             </Button>
             <Dialog
@@ -76,20 +72,18 @@ const SecretDialog: React.FC<SecretProps> = ({ children }) => {
                 <DialogActions>
                     <Button onClick={handleClose} title={t('closeTxt')}>
                         <Icon>
-                            <Close></Close>
+                            <Close />
                         </Icon>
                     </Button>
                     <Button onClick={handleCopy} title={t('copyTxt')}>
                         <Icon>
-                            <CopyAll></CopyAll>
+                            <CopyAll />
                         </Icon>
                     </Button>
-
                 </DialogActions>
-
             </Dialog>
         </React.Fragment>
     );
-}
+};
 
 export default SecretDialog;
