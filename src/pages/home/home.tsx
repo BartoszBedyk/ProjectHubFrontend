@@ -173,7 +173,7 @@ function HomePage() {
                             </Button>
                         </Box>
                     ) : (
-                        <Grid container spacing={4} justifyContent="center">
+                        <Grid container spacing={4} justifyContent="left">
                             {projects.map((project) => (
                                 <Grid item xs={12} sm={6} md={4} key={project.id}>
                                     <Card
@@ -234,7 +234,7 @@ function HomePage() {
                             {t('no_resources')}
                         </Typography>
                     ) : (
-                        <Grid container spacing={4} justifyContent="center">
+                        <Grid container spacing={4} justifyContent="left">
                             {resources.map((resource) => (
                                 <Grid item xs={12} sm={6} md={4} key={resource.id}>
                                     <Card

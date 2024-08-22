@@ -25,6 +25,7 @@ import { getUserRole } from "../../components/authComponent";
 import {UserDto} from "../../api/user-management/response/UserDto";
 import {TIMEOUTS} from "../../utils/timeouts";
 import CustomSnackbar from "../../components/Alerts/CustomSnackbar";
+import ProjectActivitiesTable from "../../components/TableImpl/ProjectActivitiesTable";
 
 const ProjectPageComponent: React.FC = () => {
     const { projectId } = useParams<{ projectId: string }>();
@@ -221,7 +222,7 @@ const ProjectPageComponent: React.FC = () => {
             </Box>
         )}
             <ProjectEnvironmentsTable projectId={projectId!}/>
-
+            <ProjectActivitiesTable projectId={projectId!}/>
             <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
                 <DialogTitle>{t('confirmDeletion')}</DialogTitle>
                 <DialogContent>

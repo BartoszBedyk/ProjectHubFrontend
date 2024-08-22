@@ -315,7 +315,9 @@
       "createdById": "Created By",
       "params": "Parameters",
       "activitiesTableTitle": "Activities",
-      "accessDenied": "Access denied."
+      "accessDenied": "Access denied.",
+      "projectActivitiesTableTitle": "Project activities",
+      "resourcesActivitiesTableTitle": "Resources activities"
     },
     "userProfile": {
       "userProfile": "User Profile",

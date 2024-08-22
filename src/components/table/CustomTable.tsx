@@ -180,6 +180,17 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
         }
     };
 
+    const handleFilterChange = (newFilters: Record<string, { operator: string; value: string }>) => {
+        setFilters(newFilters);
+        setPage(0);
+    }
+
+    const handleClearFilters = () => {
+        setFilters({});
+        setPage(0);
+    };
+
+
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
@@ -190,8 +201,8 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
                 <Box sx={{ flexGrow: 2 }} />
                 <FilterContainer
                     columns={columns.filter(col => col.filterable)}
-                    onFilterChange={(filters) => setFilters(filters)}
-                    onClearFilters={() => setFilters({})}
+                    onFilterChange={handleFilterChange}
+                    onClearFilters={handleClearFilters}
                 />
             </Box>
             <TableContainer sx={{ padding: 2, width: 'auto' }}>

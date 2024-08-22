@@ -308,7 +308,9 @@
       "createdById": "Stworzony przez",
       "params": "Parametry",
       "activitiesTableTitle": "Aktywności",
-      "accessDenied": "Brak dostępu."
+      "accessDenied": "Brak dostępu.",
+      "projectActivitiesTableTitle": "Aktywności w projekcie",
+      "resourcesActivitiesTableTitle": "Aktywności w zasobach"
     },
     "userProfile": {
       "userProfile": "Profil Użytkownika",
