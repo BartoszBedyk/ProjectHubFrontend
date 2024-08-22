@@ -46,6 +46,19 @@
   },
   "pages": {
     "home": {
+      "welcome": "Witaj na stronie głównej!",
+      "check_projects": "Sprawdź swoje wszystkie projekty, klikając poniżej.",
+      "view_projects": "Zobacz projekty",
+      "no_projects": "Nie masz jeszcze żadnych projektów.",
+      "create_project": "Utwórz nowy projekt",
+      "your_projects": "Twoje ostatnie projekty",
+      "no_resources": "Nie masz jeszcze żadnych zasobów do wyświetlenia.",
+      "last_modified_resources": "Twoje ostatnio edytowane zasoby",
+      "last_modified": "Data ostatniej edycji: ",
+      "created_on": "Utworzono",
+      "your_role": "Twoja rola",
+      "project_description": "Opis projektu",
+      "resource_type": "Typ zasobu"
     },
     "login": {
       "login": "Zaloguj",
@@ -123,9 +136,16 @@
       "delete": "Usuń",
       "technologyError": "Wszystkie pola technologii muszą być wypełnione",
       "emptyFieldError": "Wszystkie pola projektu muszą być wypełnione",
+      "projectNameError": "Nazwa projektu jest wymagana.",
+      "projectDescriptionError": "Opis projektu jest wymagany.",
+      "technologyListError": "Minimum jedna technologia musi być wybrana.",
+      "technologyNameError": "Nazwa technologii jest wymagana.",
+      "technologyDescriptionError": "Opis technologii jest wymagany.",
+      "chooseTechnology": "Wybierz technologie",
+      "searchTechnology": "Szukaj",
       "addTechnology": "Dodaj technologie",
-      "new": "Nowe",
-      "exists": "Istniejące",
+      "new": "Wybierz nową",
+      "exists": "Szukaj",
       "technologyName": "Nazwa technologii",
       "technologyDescription": "Opis technologii",
       "selectedTechnologies": "Wybrane technologie",
@@ -239,7 +259,7 @@
       "memberNotFound": "Nie znaleziono uczestnika projektu",
       "createdOn": "Utworzono",
       "createdBy": "Utworzony przez",
-      "membersList": "Lista uczestników projektu",
+      "membersList": "Lista członków",
       "role": "Rola",
       "noPermission": "Brak dostępu",
       "environments": "Środowiska",
@@ -289,26 +309,28 @@
       "createdById": "Stworzony przez",
       "params": "Parametry",
       "activitiesTableTitle": "Aktywności",
+      "projectActivitiesTableTitle": "Aktywności w projekcie",
+      "resourcesActivitiesTableTitle": "Aktywności w zasobach",
       "accessDenied": "Brak dostępu.",
       "enum": {
-        "createUser": "Utworzyć użytkownika",
+        "createUser": "Utworzenie użytkownika",
         "userLogInSuccess": "Pomyślnie zalogowano użytkownika",
         "userLogInFailed": "Nie udało się zalogować użytkownika",
-        "userLogOut": "Wylogować użytkownika",
-        "deleteUser": "Usunąć użytkownika",
-        "documentOpen": "Otworzyć dokument",
-        "keyOpen": "Otworzyć klucz",
-        "documentDownload": "Pobrać dokument",
-        "createProjectMember": "Utworzyć członka projektu",
-        "updateProjectMember": "Zaktualizować członka projektu",
-        "deleteProjectMember": "Usunąć członka projektu",
-        "createProjectEnvironment": "Utworzyć środowisko projektu",
-        "updateProjectEnvironment": "Zaktualizować środowisko projektu",
-        "deleteProjectEnvironment": "Usunąć środowisko projektu",
-        "updateProject": "Zaktualizować projekt",
-        "createResource": "Utworzyć zasób",
-        "updateResource": "Zaktualizować zasób",
-        "deleteResource": "Usunąć zasób"
+        "userLogOut": "Wylogowanie użytkownika",
+        "deleteUser": "Usunięcie użytkownika",
+        "documentOpen": "Otwarcie dokumentu",
+        "keyOpen": "Otwarcie klucza",
+        "documentDownload": "Pobranie dokumentu",
+        "createProjectMember": "Utworzenie członka projektu",
+        "updateProjectMember": "Zaktualizaowanie członka projektu",
+        "deleteProjectMember": "Usunięcie członka projektu",
+        "createProjectEnvironment": "Utworzenie środowiska projektu",
+        "updateProjectEnvironment": "Zaktualizaowanie środowiska projektu",
+        "deleteProjectEnvironment": "Usunięcie środowiska projektu",
+        "updateProject": "Zaktualizaowanie projektu",
+        "createResource": "Utworzenie zasobu",
+        "updateResource": "Zaktualizaowanie zasobu",
+        "deleteResource": "Usunięcie zasobu"
       }
     },
     "userProfile": {
@@ -337,6 +359,13 @@
       "secret": "Sekret",
       "text": "Tekst"
 
+    }
+  },
+  "enums": {
+    "roles": {
+      "OWNER": "Właściciel",
+      "MAINTAINER": "Utrzymujący",
+      "VISITOR": "Odwiedzający"
     }
   }
 }

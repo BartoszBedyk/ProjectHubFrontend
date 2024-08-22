@@ -5,24 +5,23 @@ import {
     Typography,
     List,
     ListItem,
-    ListItemText,
     Paper,
-    IconButton,
     MenuItem,
     Select,
     InputLabel,
     FormControl,
-    SelectChangeEvent
+    SelectChangeEvent,
+    Checkbox,
+    FormControlLabel
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import {api} from "../../api/AppApi";
-import {useNavigate} from 'react-router-dom';
-import {useTranslation} from 'react-i18next';
-import {Role} from "../../api/project/project-member/response/Role";
-import {UpdateProjectMemberForm} from "../../api/project/project-member/form/UpdateProjectMemberForm";
-import {ProjectEnvironmentDto} from "../../api/project/project-environment/response/ProjectEnvironmentDto";
-import {ProjectMemberDto} from "../../api/project/project-member/response/ProjectMemberDto";
-import {useTheme} from "@mui/material/styles";
+import { api } from "../../api/AppApi";
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Role } from "../../api/project/project-member/response/Role";
+import { UpdateProjectMemberForm } from "../../api/project/project-member/form/UpdateProjectMemberForm";
+import { ProjectEnvironmentDto } from "../../api/project/project-environment/response/ProjectEnvironmentDto";
+import { ProjectMemberDto } from "../../api/project/project-member/response/ProjectMemberDto";
+import { useTheme } from "@mui/material/styles";
 
 const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: string }> = ({projectId, userId}) => {
     const [form, setForm] = useState<UpdateProjectMemberForm>({
@@ -33,12 +32,12 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
     });
 
     const [existingEnvironments, setExistingEnvironments] = useState<ProjectEnvironmentDto[]>([]);
-    const [selectedEnvironments, setSelectedEnvironments] = useState<ProjectEnvironmentDto[]>([]);
     const [projectMember, setProjectMember] = useState<ProjectMemberDto | null>(null);
     const [formError, setFormError] = useState<string | null>(null);
     const navigate = useNavigate();
     const {t} = useTranslation('members');
     const theme = useTheme();
+    const { t: t2 } = useTranslation('roles');
 
     useEffect(() => {
         const fetchEnvironments = async () => {
@@ -61,18 +60,6 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                 });
                 setProjectMember(response);
 
-                const selectedEnvs = await Promise.all(
-                    response.environmentIds.map(async (envId) => {
-                        try {
-                            return await api.projectEnvironment.findById(envId);
-                        } catch (error) {
-                            console.error(`Error fetching environment with id ${envId}:`, error);
-                            return null;
-                        }
-                    })
-                );
-                setSelectedEnvironments(selectedEnvs.filter((env) => env !== null) as ProjectEnvironmentDto[]);
-
             } catch (error) {
                 console.error('Error fetching project member:', error);
             }
@@ -86,20 +73,12 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
         setForm({...form, role: event.target.value as Role});
     };
 
-    const addExistingEnvironment = (env: ProjectEnvironmentDto) => {
-        if (!form.environmentIds.includes(env.id)) {
-            setForm({
-                ...form,
-                environmentIds: [...form.environmentIds, env.id]
-            });
-            setSelectedEnvironments((prev) => [...prev, env]);
-        }
-    };
+    const handleEnvironmentChange = (envId: string) => {
+        const updatedEnvironmentIds = form.environmentIds.includes(envId)
+            ? form.environmentIds.filter(id => id !== envId)
+            : [...form.environmentIds, envId];
 
-    const removeEnvironment = (index: number) => {
-        const newEnvironmentIds = form.environmentIds.filter((_, i) => i !== index);
-        setForm({...form, environmentIds: newEnvironmentIds});
-        setSelectedEnvironments((prev) => prev.filter((_, i) => i !== index));
+        setForm(prevForm => ({ ...prevForm, environmentIds: updatedEnvironmentIds }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -127,7 +106,7 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                 </Typography>
             </Box>
             {projectMember && (
-                <Box sx={{padding: 3}}>
+                <Box sx={{ padding: 2 }}>
                     <Typography variant="h6" component="div">
                         {t('projectMemberName')}: {projectMember.firstName} {projectMember.lastName}
                     </Typography>
@@ -136,11 +115,11 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
             <Box
                 component="form"
                 onSubmit={handleSubmit}
-                sx={{'& .MuiTextField-root': {m: 1, width: '100%'}, padding: 3}}
+                sx={{ '& .MuiTextField-root': { m: 1, width: '100%' }, padding: 2 }}
                 noValidate
                 autoComplete="off"
             >
-                <FormControl fullWidth sx={{mt: 2}}>
+                <FormControl fullWidth sx={{ mt: 0.5 }}>
                     <InputLabel id="role-select-label">{t('selectRole')}</InputLabel>
                     <Select
                         labelId="role-select-label"
@@ -149,9 +128,9 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                         value={form.role}
                         onChange={handleRoleChange}
                     >
-                        <MenuItem value={Role.OWNER}>{t('owner')}</MenuItem>
-                        <MenuItem value={Role.MAINTAINER}>{t('maintainer')}</MenuItem>
-                        <MenuItem value={Role.VISITOR}>{t('visitor')}</MenuItem>
+                        <MenuItem value={Role.OWNER}>{t2(Role.OWNER)}</MenuItem>
+                        <MenuItem value={Role.MAINTAINER}>{t2(Role.MAINTAINER)}</MenuItem>
+                        <MenuItem value={Role.VISITOR}>{t2(Role.VISITOR)}</MenuItem>
                     </Select>
                 </FormControl>
                 {formError && (
@@ -163,34 +142,17 @@ const UpdateProjectMemberFormComponent: React.FC<{ projectId: string, userId: st
                     {t('selectEnvironments')}
                 </Typography>
                 <List>
-                    {existingEnvironments.map((env) => (
-                        <ListItem
-                            key={env.id}
-                            onClick={() => addExistingEnvironment(env)}
-                            sx={{
-                                mb: 1,
-                                '&:hover': {backgroundColor: theme.palette.customHover.main, cursor: 'pointer'}
-                            }}
-                        >
-                            <ListItemText primary={env.name}/>
-                        </ListItem>
-                    ))}
-                </List>
-                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
-                    {t('selectedEnvironments')}
-                </Typography>
-                <List>
-                    {selectedEnvironments.map((env, index) => (
-                        <ListItem
-                            key={env.id}
-                            secondaryAction={
-                                <IconButton edge="end" aria-label="delete" onClick={() => removeEnvironment(index)}>
-                                    <DeleteIcon/>
-                                </IconButton>
-                            }
-                            sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
-                        >
-                            <ListItemText primary={env.name}/>
+                    {existingEnvironments.map(env => (
+                        <ListItem key={env.id}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={form.environmentIds.includes(env.id)}
+                                        onChange={() => handleEnvironmentChange(env.id)}
+                                    />
+                                }
+                                label={env.name}
+                            />
                         </ListItem>
                     ))}
                 </List>

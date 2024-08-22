@@ -13,6 +13,7 @@ import {ProjectDTO} from "../../api/project/response/ProjectDTO";
 import {getUserRole} from "../../components/authComponent";
 import {TIMEOUTS} from "../../utils/timeouts";
 import CustomSnackbar from "../../components/Alerts/CustomSnackbar";
+import ResourcesActivitiesTable from "../../components/TableImpl/ResourcesActivitiesTable";
 
 function Resources() {
     const {t} = useTranslation("resources");
@@ -164,6 +165,7 @@ function Resources() {
 
             </Box>
             <AllResourcesTable searchValue={projectId!} resourceType={type as ResourceType} environmentId ={environmentId!}></AllResourcesTable>
+            <ResourcesActivitiesTable projectId={projectId!} environmentId={environmentId!} resourceType={type as ResourceType}/>
             <CustomSnackbar
                 open={snackbarData.open}
                 onClose={handleSnackbarClose}
