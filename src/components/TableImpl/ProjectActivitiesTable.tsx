@@ -56,14 +56,23 @@ const ProjectActivitiesTable = ({ projectId}: ProjectActivitiesTableProps) => {
         const fetchActivities = async () => {
             try {
                 const response: SearchResponse<ActivityDTO> = await api.activity.search(searchForm);
-                const activityRows: RowData[] = response.items.map((activity) => {
+                const activityRows: RowData[] = await Promise.all(response.items.map(async (activity) => {
                     const params = activity.params.map(param => `${param.name}: ${param.value}`).join('\n');
+
+                    let createdBy = '';
+
+                    const createdById = activity.createdById;
+                    console.log("CREATED BY ID: " + createdById)
+                    const creator = await api.userManagement.get(createdById);
+                    console.log("CREATOR: " + creator.email)
+                    createdBy = `${creator.firstName} ${creator.lastName}`;
+                    console.log("CREATED BY: " + createdBy);
 
                     const newRow: RowData = {
                         id: activity.id,
                         type: activity.type.toString(),
                         createdOn: activity.createdOn,
-                        createdById: activity.createdById,
+                        createdById: createdBy,
                         params: (
                             <Typography style={{ whiteSpace: 'pre-wrap' }}>
                                 {params}
@@ -71,7 +80,7 @@ const ProjectActivitiesTable = ({ projectId}: ProjectActivitiesTableProps) => {
                         ),
                     };
                     return newRow;
-                });
+                }));
                 setRows(activityRows);
             } catch (error) {
                 console.error('Error fetching project activities:', error);
