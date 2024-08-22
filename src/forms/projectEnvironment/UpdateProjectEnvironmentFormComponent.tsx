@@ -107,9 +107,11 @@ const UpdateProjectEnvironmentFormComponent: React.FC<{ environmentId: string }>
                         {formError}
                     </Typography>
                 )}
-                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, marginTop: 3 }}>
-                    {t('updateEnvironment')}
-                </Button>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
+                    <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, marginTop: 3 }}>
+                        {t('updateEnvironment')}
+                    </Button>
+                </Box>
             </Box>
         </Paper>
     );

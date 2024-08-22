@@ -96,9 +96,11 @@ const CreateProjectEnvironmentFormComponent: React.FC<{ projectId: string }> = (
                         {formError}
                     </Typography>
                 )}
-                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    {t('createEnvironment')}
-                </Button>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
+                    <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+                        {t('createEnvironment')}
+                    </Button>
+                </Box>
             </Box>
         </Paper>
     );

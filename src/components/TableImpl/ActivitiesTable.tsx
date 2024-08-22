@@ -23,7 +23,7 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
     const columns: ColumnDefinition[] = [
         { id: 'type', label: t('type'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'createdOn', label: t('createdOn'), type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
-        { id: 'createdById', label: t('createdById'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
+        { id: 'createdById', label: t('createdById'), type: 'TEXT', minWidth: 150, sortable: false, filterable: true },
         { id: 'params', label: t('params'), type: 'TEXT', minWidth: 250, sortable: false, filterable: false },
     ];
 
@@ -57,14 +57,24 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
                 }
 
                 const response: SearchResponse<ActivityDTO> = await api.activity.search(searchForm);
-                const activityRows: RowData[] = response.items.map((activity) => {
+                const activityRows: RowData[] = await Promise.all(response.items.map(async (activity) => {
+
+                    let createdBy = '';
+
+                    const createdById = activity.createdById;
+                    console.log("CREATED BY ID: " + createdById)
+                    const creator = await api.userManagement.get(createdById);
+                    console.log("CREATOR: " + creator.email)
+                    createdBy = `${creator.firstName} ${creator.lastName}`;
+                    console.log("CREATED BY: " + createdBy);
+
                     const params = activity.params.map(param => `${param.name}: ${param.value}`).join('\n');
 
                     const newRow: RowData = {
                         id: activity.id,
                         type: activity.type.toString(),
                         createdOn: activity.createdOn,
-                        createdById: activity.createdById,
+                        createdById: createdBy,
                         params: (
                             <Typography style={{ whiteSpace: 'pre-wrap' }}>
                                 {params}
@@ -72,7 +82,7 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
                         ),
                     };
                     return newRow;
-                });
+                }));
                 setRows(activityRows);
             } catch (error) {
                 console.error('Error fetching activities:', error);
