@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     Box,
     Button,
@@ -11,8 +11,10 @@ import {
     IconButton,
     ToggleButtonGroup,
     ToggleButton,
+    InputAdornment,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchIcon from '@mui/icons-material/Search';
 import { UpdateProjectForm } from "../../api/project/form/UpdateProjectForm";
 import { api } from "../../api/AppApi";
 import { TechnologyDTO } from "../../api/project/technology/response/TechnologyDTO";
@@ -35,19 +37,24 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
     });
 
     const [existingTechnologies, setExistingTechnologies] = useState<TechnologyDTO[]>([]);
-    const [showExisting, setShowExisting] = useState<string>('new');
+    const [filteredTechnologies, setFilteredTechnologies] = useState<TechnologyDTO[]>([]);
+    const [showExisting, setShowExisting] = useState<string>('existing');
     const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>([]);
-    const [formError, setFormError] = useState<string | null>(null);
-    const [technologyError, setTechnologyError] = useState<string | null>(null);
+    const [formErrors, setFormErrors] = useState<{ name?: string; description?: string; technologyList?: string }>({});
+    const [technologyErrors, setTechnologyErrors] = useState<{ name?: string; description?: string }>({});
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [listVisible, setListVisible] = useState<boolean>(false);
     const navigate = useNavigate();
     const { t } = useTranslation('projects');
     const theme = useTheme();
+    const listRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchTechnologies = async () => {
             try {
                 const response = await api.technology.findAll();
                 setExistingTechnologies(response);
+                setFilteredTechnologies(response);
             } catch (error) {
                 console.error('Error fetching technologies:', error);
             }
@@ -77,6 +84,17 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
         fetchProject();
     }, [projectId]);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (listRef.current && !listRef.current.contains(event.target as Node)) {
+                setListVisible(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
@@ -88,12 +106,25 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
     };
 
     const addTechnology = async () => {
-        if (technology.name === '' || technology.description === '') {
-            setTechnologyError(t('technologyError'));
+        let hasError = false;
+        const newErrors: { name?: string; description?: string } = {};
+
+        if (technology.name === '') {
+            newErrors.name = t('technologyNameError');
+            hasError = true;
+        }
+
+        if (technology.description === '') {
+            newErrors.description = t('technologyDescriptionError');
+            hasError = true;
+        }
+
+        if (hasError) {
+            setTechnologyErrors(newErrors);
             return;
         }
 
-        setTechnologyError(null);
+        setTechnologyErrors({});
         try {
             const createdTechnology = await api.technology.create(technology);
             setForm({
@@ -115,6 +146,7 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
             });
             setSelectedTechnologies([...selectedTechnologies, tech]);
         }
+        setListVisible(false);
     };
 
     const removeTechnology = (index: number) => {
@@ -128,12 +160,30 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (form.name === '' || form.description === '' || form.technologyList.length === 0) {
-            setFormError(t('emptyFieldError'));
+        let hasError = false;
+        const newFormErrors: { name?: string; description?: string; technologyList?: string } = {};
+
+        if (form.name === '') {
+            newFormErrors.name = t('projectNameError');
+            hasError = true;
+        }
+
+        if (form.description === '') {
+            newFormErrors.description = t('projectDescriptionError');
+            hasError = true;
+        }
+
+        if (form.technologyList.length === 0) {
+            newFormErrors.technologyList = t('technologyListError');
+            hasError = true;
+        }
+
+        if (hasError) {
+            setFormErrors(newFormErrors);
             return;
         }
 
-        setFormError(null);
+        setFormErrors({});
         try {
             const response = await api.project.update(form);
             navigate(`/project/${response.id}`, { state: { showSnackbarEdit: true } });
@@ -148,10 +198,28 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
         }
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+        if (term) {
+            setFilteredTechnologies(
+                existingTechnologies.filter(tech =>
+                    tech.name.toLowerCase().includes(term.toLowerCase())
+                )
+            );
+        } else {
+            setFilteredTechnologies(existingTechnologies);
+        }
+    };
+
+    const handleClickInput = () => {
+        setListVisible(prev => !prev);
+    };
+
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, paddingTop: 4, paddingRight: 2 }}>
-                <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
+                <Box sx={{ width: 8, height: 32, backgroundColor: theme.palette.primary.main, marginRight: 2 }} />
                 <Typography variant="h5" component="div">
                     {t('edit')}
                 </Typography>
@@ -167,10 +235,11 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     required
                     id="name"
                     name="name"
-                    label={t('name')}
+                    label={t('projectName')}
                     value={form.name}
                     onChange={handleInputChange}
-                    error={!!formError}
+                    error={!!formErrors.name}
+                    helperText={formErrors.name}
                 />
                 <TextField
                     required
@@ -181,107 +250,136 @@ const UpdateProjectFormComponent: React.FC<{ projectId: string }> = ({ projectId
                     rows={4}
                     value={form.description}
                     onChange={handleInputChange}
-                    error={!!formError}
+                    error={!!formErrors.description}
+                    helperText={formErrors.description}
                 />
-                {formError && (
-                    <Typography color="error" sx={{marginTop: 2}}>
-                        {formError}
-                    </Typography>
-                )}
-                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
-                    {t('addTechnology')}
+                <Typography variant="h6" gutterBottom sx={{ marginTop: 3 }}>
+                    {t('chooseTechnology')}
                 </Typography>
-                <ToggleButtonGroup
-                    value={showExisting}
-                    exclusive
-                    onChange={handleToggleChange}
-                    aria-label="technology type"
-                    sx={{mb: 2, borderRadius: 1}}
-                    size="small"
-                >
-                    <ToggleButton value="new" aria-label="new technology"
-                                  sx={{'&.Mui-selected': {backgroundColor: '#1976d2', color: '#fff'}}}>
-                        {t('new')}
-                    </ToggleButton>
-                    <ToggleButton value="existing" aria-label="existing technology"
-                                  sx={{'&.Mui-selected': {backgroundColor: '#1976d2', color: '#fff'}}}>
-                        {t('exists')}
-                    </ToggleButton>
-                </ToggleButtonGroup>
-                {showExisting === 'new' ? (
-                    <>
-                        <TextField
-                            id="tech-name"
-                            name="name"
-                            label={t('technologyName')}
-                            value={technology.name}
-                            onChange={handleTechnologyChange}
-                            error={!!technologyError}
-                        />
-                        <TextField
-                            id="tech-description"
-                            name="description"
-                            label={t('technologyDescription')}
-                            value={technology.description}
-                            onChange={handleTechnologyChange}
-                            error={!!technologyError}
-                        />
-                        {technologyError && (
-                            <Typography color="error" sx={{marginTop: 2}}>
-                                {technologyError}
-                            </Typography>
-                        )}
-                        <Button variant="contained" color="primary" onClick={addTechnology} sx={{mt: 2}}>
-                            {t('addTechnology')}
-                        </Button>
-                    </>
-                ) : (
+                    <ToggleButtonGroup
+                        value={showExisting}
+                        exclusive
+                        onChange={handleToggleChange}
+                        aria-label="technology type"
+                        sx={{ mb: 2, borderRadius: 1 }}
+                        size="small"
+                    >
+                        <ToggleButton value="existing" aria-label="existing technology" sx={{ '&.Mui-selected': { backgroundColor: theme.palette.primary.main, color: '#fff' } }}>
+                            {t('exists')}
+                        </ToggleButton>
+                        <ToggleButton value="new" aria-label="new technology" sx={{ '&.Mui-selected': { backgroundColor: theme.palette.primary.main, color: '#fff' } }}>
+                            {t('new')}
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                    {showExisting === 'existing' ? (
+                        <>
+                            <TextField
+                                id="search"
+                                label={t('searchTechnology')}
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                onClick={handleClickInput}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <SearchIcon />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                sx={{ mb: 2 }}
+                                error={!!formErrors.technologyList}
+                            />
+                            {formErrors.technologyList && (
+                                <Typography color="error" sx={{ marginTop: 2 }}>
+                                    {formErrors.technologyList}
+                                </Typography>
+                            )}
+                            {listVisible && (
+                                <div ref={listRef}>
+                                    <List
+                                        sx={{
+                                            maxHeight: 300,
+                                            overflowY: 'auto',
+                                            backgroundColor: theme.palette.background.paper,
+                                            borderRadius: 1,
+                                            border: `1px solid ${theme.palette.divider}`,
+                                            mb: 2,
+                                            marginLeft: 1
+                                        }}
+                                    >
+                                        {filteredTechnologies.map((tech, index) => (
+                                            <ListItem
+                                                key={index}
+                                                onClick={() => addExistingTechnology(tech)}
+                                                sx={{
+                                                    mb: 1,
+                                                    backgroundColor: form.technologyList.includes(tech.id) ? theme.palette.action.selected : 'inherit',
+                                                    '&:hover': {
+                                                        backgroundColor: theme.palette.customHover.main,
+                                                        cursor: form.technologyList.includes(tech.id) ? 'default' : 'pointer',
+                                                    },
+                                                    cursor: form.technologyList.includes(tech.id) ? 'default' : 'pointer',
+                                                    opacity: form.technologyList.includes(tech.id) ? 0.5 : 1,
+                                                }}
+                                            >
+                                                <ListItemText
+                                                    primary={tech.name}
+                                                    secondary={tech.description}
+                                                />
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            <TextField
+                                id="tech-name"
+                                name="name"
+                                label={t('technologyName')}
+                                value={technology.name}
+                                onChange={handleTechnologyChange}
+                                error={!!technologyErrors.name}
+                                helperText={technologyErrors.name}
+                            />
+                            <TextField
+                                id="tech-description"
+                                name="description"
+                                label={t('technologyDescription')}
+                                value={technology.description}
+                                onChange={handleTechnologyChange}
+                                error={!!technologyErrors.description}
+                                helperText={technologyErrors.description}
+                            />
+                            <Button variant="contained" color="primary" onClick={addTechnology} sx={{ mt: 2 }}>
+                                {t('addTechnology')}
+                            </Button>
+                        </>
+                    )}
+                <Box sx={{ marginTop: 3 }}>
+                    <Typography variant="h6">{t('selectedTechnologies')}</Typography>
                     <List>
-                        {existingTechnologies.map((tech) => (
-                            <ListItem
-                                key={tech.id}
-                                onClick={() => addExistingTechnology(tech)}
-                                sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
-                            >
-                                <ListItemText
-                                    primary={tech.name}
-                                    secondary={tech.description}
-                                />
-                            </ListItem>
-                        ))}
-                    </List>
-                )}
-                <Typography variant="h6" gutterBottom sx={{marginTop: 3}}>
-                    {t('selectedTechnologies')}
-                </Typography>
-                <List>
-                    {selectedTechnologies.map((tech, index) => (
-                        <ListItem
-                            key={tech.id}
-                            secondaryAction={
+                        {selectedTechnologies.map((tech, index) => (
+                            <ListItem key={tech.id}>
+                                <ListItemText primary={tech.name} secondary={tech.description} />
                                 <IconButton edge="end" aria-label="delete" onClick={() => removeTechnology(index)}>
                                     <DeleteIcon/>
                                 </IconButton>
-                            }
-                            sx={{mb: 1, '&:hover': {backgroundColor: theme.palette.customHover.main}}}
-                        >
-                            <ListItemText
-                                primary={tech.name}
-                                secondary={tech.description}
-                            />
-                        </ListItem>
-                    ))}
-                </List>
-                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        sx={{mt: 2}}
-                    >
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
+                {formErrors.technologyList && (
+                    <Typography color="error" variant="caption">
+                        {formErrors.technologyList}
+                    </Typography>
+                )}
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3 }}>
+                    <Button variant="contained" type="submit">
                         {t('edit')}
                     </Button>
-                </div>
+                </Box>
             </Box>
         </Paper>
     );

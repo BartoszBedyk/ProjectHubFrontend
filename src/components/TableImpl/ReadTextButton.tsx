@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Dialog, DialogTitle, DialogContent, Icon, DialogContentText, DialogActions, Link} from '@mui/material';
-import TravelExploreOutlined from '@mui/icons-material/TravelExploreOutlined';
+import {Button, Dialog, DialogTitle, DialogContent, Icon, DialogContentText, DialogActions} from '@mui/material';
 import {useTranslation} from 'react-i18next';
-import {ChromeReaderModeOutlined, CopyAll} from "@mui/icons-material";
-import {useNavigate} from "react-router-dom";
+import {ChromeReaderModeOutlined} from "@mui/icons-material";
 import {api} from "../../api/AppApi";
 import {ResourceDto} from "../../api/resources/response/ResourceDto";
 
@@ -31,7 +29,7 @@ const OpenLinkButton = ({children}: ButtonProps) => {
                 setResponse(res)
             }
         ).catch(error => console.log(error))
-    }, [children]);
+    }, [children, open]);
 
 
     return (

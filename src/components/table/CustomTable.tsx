@@ -15,8 +15,8 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import FilterContainer from './FilterContainer';
-import {useNavigate} from "react-router-dom";
-import {useTranslation} from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export type ColumnType = 'DATE' | 'DATE_TIME' | 'TEXT' | 'NUMBER' | 'ENUM';
 
@@ -51,8 +51,8 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
     const [filters, setFilters] = useState<Record<string, { operator: string; value: string }>>({});
     const [fadeKey, setFadeKey] = useState(0);
     const navigate = useNavigate();
+    const { t } = useTranslation('table');
 
-    const{t} =useTranslation('table')
     const handleRequestSort = (property: string) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -160,11 +160,17 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
 
     const renderCellValue = (column: ColumnDefinition, value: any) => {
         if (column.type === 'DATE') {
+            if (!value || isNaN(new Date(value).getTime())) {
+                return "-";
+            }
             return new Date(value).toLocaleDateString();
         } else if (column.type === 'DATE_TIME') {
+            if (!value || isNaN(new Date(value).getTime())) {
+                return "-";
+            }
             return new Date(value).toLocaleString();
         } else {
-            return value;
+            return value || "-";
         }
     };
 
@@ -173,6 +179,17 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
             navigate(`${navigateTo}/${id}`);
         }
     };
+
+    const handleFilterChange = (newFilters: Record<string, { operator: string; value: string }>) => {
+        setFilters(newFilters);
+        setPage(0);
+    }
+
+    const handleClearFilters = () => {
+        setFilters({});
+        setPage(0);
+    };
+
 
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
@@ -184,8 +201,8 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
                 <Box sx={{ flexGrow: 2 }} />
                 <FilterContainer
                     columns={columns.filter(col => col.filterable)}
-                    onFilterChange={(filters) => setFilters(filters)}
-                    onClearFilters={() => setFilters({})}
+                    onFilterChange={handleFilterChange}
+                    onClearFilters={handleClearFilters}
                 />
             </Box>
             <TableContainer sx={{ padding: 2, width: 'auto' }}>
@@ -228,6 +245,10 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
                                     role="checkbox"
                                     tabIndex={-1}
                                     key={row.id}
+                                    onClick={() => handleNavigate(row.id)}
+                                    sx={{
+                                        cursor: navigateTo ? 'pointer' : 'default'
+                                    }}
                                 >
                                     {columns.map((column) => (
                                         <TableCell

@@ -37,7 +37,7 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
     const searchForm: SearchForm = {
         criteria: searchFormCriteria,
         page: 1,
-        size: 50,
+        size: 10000,
         sort: searchSort
     };
 
