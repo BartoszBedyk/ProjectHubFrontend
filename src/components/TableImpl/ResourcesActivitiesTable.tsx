@@ -9,6 +9,7 @@ import { Typography } from "@mui/material";
 import { CriteriaOperator } from "../../commons/Search/CriteriaOperator";
 import {ResourceDto, ResourceType} from "../../api/resources/response/ResourceDto";
 import { ActivityTypeDto } from "../../api/activity/response/ActivityTypeDto";
+import {useGetEnumString} from "../table/GetEnumString";
 
 type ResourcesActivitiesTableProps = {
     projectId: string;
@@ -18,7 +19,7 @@ type ResourcesActivitiesTableProps = {
 
 const ResourcesActivitiesTable = ({ projectId, environmentId, resourceType }: ResourcesActivitiesTableProps) => {
     const { t } = useTranslation("activity");
-
+    const { getEnumString } = useGetEnumString();
     const columns: ColumnDefinition[] = [
         { id: 'type', label: t('type'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'createdOn', label: t('createdOn'), type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
@@ -32,7 +33,6 @@ const ResourcesActivitiesTable = ({ projectId, environmentId, resourceType }: Re
     };
 
     const [rows, setRows] = useState<RowData[]>([]);
-
     useEffect(() => {
         const fetchActivities = async () => {
             try {
@@ -81,7 +81,7 @@ const ResourcesActivitiesTable = ({ projectId, environmentId, resourceType }: Re
                         if (resource && resource.environmentId === environmentId && (!resourceType || resource.resourceType === resourceType)) {
                             return {
                                 id: activity.id,
-                                type: activity.type.toString(),
+                                type: getEnumString(activity.type),
                                 createdOn: activity.createdOn,
                                 createdById: activity.createdById,
                                 params: (

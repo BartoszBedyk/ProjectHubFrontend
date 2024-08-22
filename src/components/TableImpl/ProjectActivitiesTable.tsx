@@ -10,6 +10,7 @@ import {SearchResponse} from "../../commons/Search/SearchResponse";
 import {useTranslation} from "react-i18next";
 import {Typography} from "@mui/material";
 import {CriteriaOperator} from "../../commons/Search/CriteriaOperator";
+import {useGetEnumString} from "../table/GetEnumString";
 
 type ProjectActivitiesTableProps = {
     projectId: string;
@@ -17,14 +18,13 @@ type ProjectActivitiesTableProps = {
 
 const ProjectActivitiesTable = ({ projectId}: ProjectActivitiesTableProps) => {
     const { t } = useTranslation("activity");
-
+    const { getEnumString } = useGetEnumString();
     const columns: ColumnDefinition[] = [
         { id: 'type', label: t('type'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'createdOn', label: t('createdOn'), type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
         { id: 'createdById', label: t('createdById'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'params', label: t('params'), type: 'TEXT', minWidth: 250, sortable: false, filterable: false },
     ];
-
     const searchFormCriteria: SearchFormCriteria[] = [
         {
             fieldName: 'params.paramName',
@@ -61,7 +61,7 @@ const ProjectActivitiesTable = ({ projectId}: ProjectActivitiesTableProps) => {
 
                     const newRow: RowData = {
                         id: activity.id,
-                        type: activity.type.toString(),
+                        type: getEnumString(activity.type),
                         createdOn: activity.createdOn,
                         createdById: activity.createdById,
                         params: (

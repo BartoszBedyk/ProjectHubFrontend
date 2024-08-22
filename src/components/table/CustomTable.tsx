@@ -245,7 +245,7 @@ function CustomTable({ columns, rows, title, navigateTo }: CustomTableProps) {
                                     role="checkbox"
                                     tabIndex={-1}
                                     key={row.id}
-                                    onClick={() => handleNavigate(row.id)}
+                                    //onClick={() => handleNavigate(row.id)}
                                     sx={{
                                         cursor: navigateTo ? 'pointer' : 'default'
                                     }}
