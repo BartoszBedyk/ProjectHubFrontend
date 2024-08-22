@@ -337,6 +337,13 @@
         "createResource": "Create Resource",
         "updateResource": "Update Resource",
         "deleteResource": "Delete Resource"
+      },
+      "param": {
+        "documentId": "Document id",
+        "userId": "User id",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "keyId": "Secret id"
       }
 
     },

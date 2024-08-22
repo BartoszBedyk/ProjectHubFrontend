@@ -331,8 +331,14 @@
         "createResource": "Utworzenie zasobu",
         "updateResource": "Zaktualizaowanie zasobu",
         "deleteResource": "Usunięcie zasobu"
-      }
-    },
+      },
+      "param": {
+        "documentId": "Id dokumentu",
+        "userId": "Id użytkownika",
+        "firstName": "Imię",
+        "lastName": "Nazwisko",
+        "keyId": "Id klucza"
+      }    },
     "userProfile": {
       "userProfile": "Profil Użytkownika",
       "name": "Imię i nazwisko",
