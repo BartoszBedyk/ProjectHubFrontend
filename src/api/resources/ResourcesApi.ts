@@ -12,4 +12,5 @@ export interface ResourcesApi {
     get(id: string): Promise<ResourceDto>
     create(form: CreateResourceForm, type: string): Promise<ResourceDto>
     delete(id: string): Promise<ResourceDto>
+    findByUserId(userId: string): Promise<Array<ResourceDto>>
 }

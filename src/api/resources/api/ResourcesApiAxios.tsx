@@ -74,5 +74,12 @@ export class ResourcesApiAxios implements ResourcesApi {
              })
     }
 
-
+    findByUserId(userId: string): Promise<Array<ResourceDto>> {
+    return axiosInstance.post(`/resource/user/${userId}`)
+        .then(response => response.data)
+        .catch(error => {
+            console.error('Delete resource error: ', error);
+            throw error;
+        })
+}
 }
