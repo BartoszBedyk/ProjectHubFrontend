@@ -9,7 +9,7 @@
   },
   "drawer": {
     "home": "Home",
-    "project": "Project",
+    "project": "Projects",
     "projectList": "Projects list",
     "addProject": "Create project",
     "main": "Project details",
@@ -216,7 +216,9 @@
       "confirmDeleteTitle": "Confirm deletion",
       "confirmDeleteMessage": "Are you sure you want to delete this user?\nThis operation cannot be undone.",
       "cancel": "Cancel",
-      "delete": "Delete"
+      "delete": "Delete",
+      "yes": "YES",
+      "no": "NO"
     },
     "members": {
       "selectUser": "Select user",

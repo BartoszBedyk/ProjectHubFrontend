@@ -9,7 +9,7 @@
   },
   "drawer": {
     "home": "Strona startowa",
-    "project": "Projekt",
+    "project": "Projekty",
     "addProject": "Utwórz projekt",
     "main": "Szczegóły projektu",
     "all": "Wszystkie",
@@ -209,7 +209,9 @@
       "confirmDeleteTitle": "Potwierdź usunięcie",
       "confirmDeleteMessage": "Czy na pewno chcesz usunąć tego użytkownika?\nTej operacji nie można cofnąć.",
       "cancel": "Anuluj",
-      "delete": "Usuń"
+      "delete": "Usuń",
+      "yes": "TAK",
+      "no": "NIE"
     },
     "members": {
       "selectUser": "Wybierz użytkownika",

@@ -66,7 +66,6 @@ const CreateUserFormComponent: React.FC = () => {
     return (
         <Paper sx={{ width: 'auto', mb: 2, margin: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, pt: 4, pr: 2 }}>
-
                 <Box sx={{ width: 8, height: 32, backgroundColor: '#1976d2', marginRight: 2 }} />
                 <Typography variant="h5" component="div">
                     {t('createUser')}
