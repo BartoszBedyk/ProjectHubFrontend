@@ -315,9 +315,37 @@
       "createdById": "Created By",
       "params": "Parameters",
       "activitiesTableTitle": "Activities",
-      "accessDenied": "Access denied.",
       "projectActivitiesTableTitle": "Project activities",
-      "resourcesActivitiesTableTitle": "Resources activities"
+      "resourcesActivitiesTableTitle": "Resources activities",
+      "accessDenied": "Access denied.",
+      "enum": {
+        "createUser": "Create User",
+        "userLogInSuccess": "User Log In Success",
+        "userLogInFailed": "User Log In Failed",
+        "userLogOut": "User Log Out",
+        "deleteUser": "Delete User",
+        "documentOpen": "Document Open",
+        "keyOpen": "Key Open",
+        "documentDownload": "Document Download",
+        "createProjectMember": "Create Project Member",
+        "updateProjectMember": "Update Project Member",
+        "deleteProjectMember": "Delete Project Member",
+        "createProjectEnvironment": "Create Project Environment",
+        "updateProjectEnvironment": "Update Project Environment",
+        "deleteProjectEnvironment": "Delete Project Environment",
+        "updateProject": "Update Project",
+        "createResource": "Create Resource",
+        "updateResource": "Update Resource",
+        "deleteResource": "Delete Resource"
+      },
+      "param": {
+        "documentId": "Document id",
+        "userId": "User id",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "keyId": "Secret id"
+      }
+
     },
     "userProfile": {
       "userProfile": "User Profile",

@@ -67,9 +67,9 @@ function HomePage() {
                     setRolesMap(roleMap);
 
                     const updatedResourceSearchForm = { ...searchForm, criteria: resourceCriteria };
-                    const resourceResponse = await api.resources.search(updatedResourceSearchForm);
+                    const resourceResponse = await api.resources.findByUserId(userId);
 
-                    const sortedResources = resourceResponse.items.sort((a, b) => {
+                    const sortedResources = resourceResponse.sort((a, b) => {
                         const dateA = a.lastModifiedOn ? new Date(a.lastModifiedOn) : new Date(a.createdOn);
                         const dateB = b.lastModifiedOn ? new Date(b.lastModifiedOn) : new Date(b.createdOn);
                         return dateB.getTime() - dateA.getTime();

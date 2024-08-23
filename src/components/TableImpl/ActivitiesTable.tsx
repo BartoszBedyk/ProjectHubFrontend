@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserId } from "../../storage/AuthStorage";
 import {Container, Typography} from "@mui/material";
+import {useGetEnumString} from "../table/GetEnumString";
 
 type ActivitiesTableProps = {
     searchValue: string
@@ -19,7 +20,7 @@ type ActivitiesTableProps = {
 const ActivitiesTable = (props: ActivitiesTableProps) => {
     const navigate = useNavigate();
     const { t } = useTranslation("activity");
-
+    const { getEnumString } = useGetEnumString();
     const columns: ColumnDefinition[] = [
         { id: 'type', label: t('type'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'createdOn', label: t('createdOn'), type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
@@ -72,7 +73,7 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
 
                     const newRow: RowData = {
                         id: activity.id,
-                        type: activity.type.toString(),
+                        type: getEnumString(activity.type),
                         createdOn: activity.createdOn,
                         createdById: createdBy,
                         params: (

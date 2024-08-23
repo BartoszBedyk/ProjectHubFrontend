@@ -177,5 +177,42 @@ export class ResourcesApiMock implements ResourcesApi {
         }));
     }
 
+    findByUserId(userId: string): Promise<Array<ResourceDto>> {
+        return mockTimeout(5000).then(() =>[
+            {
+                id: "111223",
+                name: 'Nazwa zasobu',
+                description: 'Opis zasobu',
+                value: 'Tekst zasobu może być naprawdę długi',
+                resourceType: ResourceType.text,
+                environmentId: '1',
+                projectId: '1',
+                createdById: 'Admin',
+                createdOn: "28-09-2023",
+                lastModifiedOn: "28-09-2023",
+                deletedById: "adminek",
+                deletedOn: "11.09.2001"
+            },
+            {
+                id: "111223",
+                name: 'Nazwa zasobu',
+                description: 'Opis zasobu',
+                value: 'Tekst zasobu może być naprawdę długi',
+                resourceType: ResourceType.text,
+                environmentId: '1',
+                projectId: '1',
+                createdById: 'Admin',
+                createdOn: "28-09-2023",
+                lastModifiedOn: "28-09-2023",
+                deletedById: "adminek",
+                deletedOn: "11.09.2001"
+            },
+
+        ])
+    }
+
+
+
+
 
 }

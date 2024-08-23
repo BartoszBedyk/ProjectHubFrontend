@@ -198,7 +198,8 @@
       "cancel": "Anuluj",
       "link": "Szczegóły linku",
       "text": "Dokument",
-      "creationDate": "Utworzono"
+      "creationDate": "Utworzono",
+      "unmaskedSecret": "Odszyfrowany sekret"
     },
     "userManagement": {
       "createUser": "Stwórz użytkownika",
@@ -308,10 +309,36 @@
       "createdById": "Stworzony przez",
       "params": "Parametry",
       "activitiesTableTitle": "Aktywności",
-      "accessDenied": "Brak dostępu.",
       "projectActivitiesTableTitle": "Aktywności w projekcie",
-      "resourcesActivitiesTableTitle": "Aktywności w zasobach"
-    },
+      "resourcesActivitiesTableTitle": "Aktywności w zasobach",
+      "accessDenied": "Brak dostępu.",
+      "enum": {
+        "createUser": "Utworzenie użytkownika",
+        "userLogInSuccess": "Pomyślnie zalogowano użytkownika",
+        "userLogInFailed": "Nie udało się zalogować użytkownika",
+        "userLogOut": "Wylogowanie użytkownika",
+        "deleteUser": "Usunięcie użytkownika",
+        "documentOpen": "Otwarcie dokumentu",
+        "keyOpen": "Otwarcie klucza",
+        "documentDownload": "Pobranie dokumentu",
+        "createProjectMember": "Utworzenie członka projektu",
+        "updateProjectMember": "Zaktualizaowanie członka projektu",
+        "deleteProjectMember": "Usunięcie członka projektu",
+        "createProjectEnvironment": "Utworzenie środowiska projektu",
+        "updateProjectEnvironment": "Zaktualizaowanie środowiska projektu",
+        "deleteProjectEnvironment": "Usunięcie środowiska projektu",
+        "updateProject": "Zaktualizaowanie projektu",
+        "createResource": "Utworzenie zasobu",
+        "updateResource": "Zaktualizaowanie zasobu",
+        "deleteResource": "Usunięcie zasobu"
+      },
+      "param": {
+        "documentId": "Id dokumentu",
+        "userId": "Id użytkownika",
+        "firstName": "Imię",
+        "lastName": "Nazwisko",
+        "keyId": "Id klucza"
+      }    },
     "userProfile": {
       "userProfile": "Profil Użytkownika",
       "name": "Imię i nazwisko",
