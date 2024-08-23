@@ -69,6 +69,15 @@ const ResourcesActivitiesTable = ({ projectId, environmentId, resourceType }: Re
                 const activityRows = await Promise.all(mergedActivities.map(async (activity) => {
                     const params = activity.params.map(param => `${param.name}: ${param.value}`).join('\n');
 
+                    let createdBy = '';
+
+                    const createdById = activity.createdById;
+                    console.log("CREATED BY ID: " + createdById)
+                    const creator = await api.userManagement.get(createdById);
+                    console.log("CREATOR: " + creator.email)
+                    createdBy = `${creator.firstName} ${creator.lastName}`;
+                    console.log("CREATED BY: " + createdBy);
+
                     let resourceId: string | undefined;
                      if (activity.type === ActivityTypeDto.KEY_OPEN) {
                         resourceId = activity.params.find(param => param.name === 'KEY_ID')?.value;
@@ -83,7 +92,7 @@ const ResourcesActivitiesTable = ({ projectId, environmentId, resourceType }: Re
                                 id: activity.id,
                                 type: activity.type.toString(),
                                 createdOn: activity.createdOn,
-                                createdById: activity.createdById,
+                                createdById: createdBy,
                                 params: (
                                     <Typography style={{ whiteSpace: 'pre-wrap' }}>
                                         {params}
