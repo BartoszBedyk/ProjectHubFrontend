@@ -15,6 +15,8 @@ export function useParamName() {
                 return t('param.lastName');
             case "KEY_ID":
                 return t('param.firstName');
+            case "ENVIRONMENT_ID":
+                return t('param.envId');
             default:
                 return 'Unknown enum type';
         }

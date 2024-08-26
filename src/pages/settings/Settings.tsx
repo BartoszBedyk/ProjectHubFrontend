@@ -20,15 +20,15 @@ const Settings = () => {
                     </Box>
                     <Box sx={{ height: 48 }} />
                     <Box sx={{ display: 'flex', flexDirection:'row' }}>
-                        <Typography variant='h6' component='div' sx={{ml: 3}}>
+                        <Typography variant='h6' component='div' sx={{ml: 3, mt: -1}}>
                             {t('theme')}:
                         </Typography>
                         <Box sx={{ ml: 3, mt: -1 }}>
                             <ChangeTheme />
                         </Box>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection:'row' }}>
-                        <Typography variant='h6' component='div' sx={{ml: 3}}>
+                    <Box sx={{ display: 'flex', flexDirection:'row', mt: 2 }}>
+                        <Typography variant='h6' component='div' sx={{ml: 3, mt: -1}}>
                             {t('language')}:
                         </Typography>
                         <Box sx={{ ml: 3 }}>

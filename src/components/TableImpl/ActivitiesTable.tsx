@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { getUserId } from "../../storage/AuthStorage";
 import {Container, Typography} from "@mui/material";
 import {useGetEnumString} from "../table/GetEnumString";
+import {useParamName} from "../table/GetParamName";
 
 type ActivitiesTableProps = {
     searchValue: string
@@ -21,6 +22,7 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
     const navigate = useNavigate();
     const { t } = useTranslation("activity");
     const { getEnumString } = useGetEnumString();
+    const {getParamName} = useParamName();
     const columns: ColumnDefinition[] = [
         { id: 'type', label: t('type'), type: 'TEXT', minWidth: 150, sortable: true, filterable: true },
         { id: 'createdOn', label: t('createdOn'), type: 'DATE_TIME', minWidth: 120, sortable: true, filterable: true },
@@ -61,13 +63,16 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
                 const activityRows: RowData[] = await Promise.all(response.items.map(async (activity) => {
 
                     let createdBy = '';
-
                     const createdById = activity.createdById;
-                    console.log("CREATED BY ID: " + createdById)
-                    const creator = await api.userManagement.get(createdById);
-                    console.log("CREATOR: " + creator.email)
-                    createdBy = `${creator.firstName} ${creator.lastName}`;
-                    console.log("CREATED BY: " + createdBy);
+                    if (createdById === "SYSTEM") {
+                        createdBy = createdById;
+                    } else {
+                        await api.userManagement.get(createdById).then(response => {
+                            createdBy = `${response.firstName} ${response.lastName}`
+                        });
+                        console.log("CREATED BY ID: " + createdBy);
+                    }
+
 
                     const params = activity.params.map(param => `${param.name}: ${param.value}`).join('\n');
 
@@ -91,7 +96,7 @@ const ActivitiesTable = (props: ActivitiesTableProps) => {
         };
 
         fetchActivities();
-    }, [props.searchValue, navigate]);
+    }, [props.searchValue]);
 
     if (accessDenied) {
         return (

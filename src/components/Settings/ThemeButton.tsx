@@ -6,9 +6,9 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import styled from 'styled-components';
 
 const IconContainer = styled(Icon)`
-    position: relative;
-    width: 35px;
-    height: 35px;
+    //position: relative;
+    width: 36px;
+    height: 36px;
 `;
 
 const IconStyled = styled.div<{ $fadeOut: boolean }>`
